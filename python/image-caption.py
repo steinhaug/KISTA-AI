@@ -1,8 +1,9 @@
 import openai
 import base64
+from scripts.credentials import read_api_key
 
 # Your OpenAI API key
-openai.api_key = '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'
+openai.api_key = read_api_key()
 
 def encode_image_to_base64(image_path):
     with open(image_path, "rb") as image_file:

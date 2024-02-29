@@ -1,4 +1,7 @@
 import openai
+from scripts.credentials import read_api_key
+
+OPENAI_API_KEY = read_api_key()
 
 # Function to ask GPT-4 a question
 def ask_gpt4(question, model="gpt-3.5-turbo-instruct", temperature=0.7):
@@ -15,7 +18,7 @@ def ask_gpt4(question, model="gpt-3.5-turbo-instruct", temperature=0.7):
     """
     try:
         # Ensure your API key is correctly configured here
-        openai.api_key = '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'
+        openai.api_key = OPENAI_API_KEY
 
         response = openai.Completion.create(
             engine=model,

@@ -1,5 +1,8 @@
 import json
 import requests
+from scripts.credentials import read_api_key
+
+OPENAI_API_KEY = read_api_key()
 
 def ask_openai_gpt4(message, model="gpt-4", api_key="your_openai_api_key_here"):
     """
@@ -72,7 +75,7 @@ Please provide a gourmet recipe, as if you were the best chef in the world with 
 # Example usage
 if __name__ == "__main__":
     message = my_prompt
-    api_key = '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'
+    api_key = OPENAI_API_KEY
     response_message = ask_openai_gpt4(message, api_key=api_key)
     if response_message:
         print(f"GPT-4 says: {response_message}")

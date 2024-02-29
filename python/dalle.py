@@ -1,8 +1,9 @@
 import requests
 import os
+from scripts.credentials import read_api_key
 
 # Replace 'your_openai_api_key_here' with your actual OpenAI API key
-api_key = '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'
+api_key = read_api_key()
 
 #img1 = 'Generate an image of Salsa Parmigiano Gherkin Rolls placed on a white plate with a golden brown texture on the cheese and a drizzle of red salsa wine reduction.'
 #img2 = 'Conjure an illustration of an Italian-Mexican fusion cuisine featuring Parmesan cheese rolls filled with sliced gherkins, black olives, and sweetcorn, topped with salsa wine reduction.'

@@ -1,5 +1,8 @@
 import json
 import requests
+from scripts.credentials import read_api_key
+
+OPENAI_API_KEY = read_api_key()
 
 def ask_openai_gpt4(conversation, model="gpt-4", api_key="your_openai_api_key_here"):
     """
@@ -73,7 +76,7 @@ Please provide a gourmet recipe, as if you were the best chef in the world with 
 
 # Example usage
 if __name__ == "__main__":
-    api_key = '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'
+    api_key = OPENAI_API_KEY
 
     # First question
     conversation = [{"role": "user", "content": my_prompt}]
