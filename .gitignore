@@ -2,3 +2,4 @@ node_modules/
 vendor/
 credentials.php
 logs/**/*
+.openai_api_key
