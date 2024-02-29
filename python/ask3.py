@@ -55,18 +55,18 @@ CONSIDER THE FOLLOWING WHEN COMPLETING THIS TASK
 
 LIST OF AVAILABLE INGREDIENTS
 
-- Old El Paso Salsa - 1 jar
-- Pickled Gherkins by Sainsbury's - 1 jar
-- Various pickled condiments - 3 jars (including the one that is only partially visible on the far left)
-- Mustard (brand starting with "Maille") - 1 jar
-- Raspberry conserve or jam (partially obscured label) - 1 jar
-- Sparkling wine, or similar beverage (with gold foil top) - at least 3 bottles
-- Chilled spreadable product  (which might be butter or margarine, like Lurpak) - 1 tub
-- Sweetcorn in water - 1 can
-- Other condiments/spreads (in white-to-cream colored containers with green/red caps) - 2 small jars
-- Parmesan cheese (or similar hard cheese) with plastic wrap - 1 piece
-- Black olives or similar in brine (judging by the lid)  - 1 container
-- Herb or seasoning container (with a green label) - 1 small tub
+- Eggs - Approximately 6 eggs in the door bin.
+- Whole grain oatmeal box - 1 box.
+- Condiment bottles - Various kinds, at least 10 (including hot sauce, soy sauce, mayonnaise, mustard, and other sauces).
+- Carbonated beverage cans - At least 3 visible Coca-Cola cans.
+- Drink bottle - 1 white bottle, possibly dairy or non-dairy milk/cream.
+- Containers with yellow lids - 2 containers (contents unknown).
+- Clear container in the upper shelf - 1 (contents unknown).
+- Small jars (possibly containing spices or condiments) - About 7 jars.
+- Butter or margarine tub - 1.
+- Gelatin powder box - 1.
+- Large beverage bottle (label has green text, possibly an oil or drink) - 1.
+- Large white bottle with red cap (possibly mayonnaise or a dairy product) - 1.
 
 Please provide a gourmet recipe, as if you were the best chef in the world with over 50 years of experience.'''
 
@@ -87,6 +87,7 @@ if __name__ == "__main__":
     conversation = ask_openai_gpt4(conversation, api_key=api_key)
     if conversation[-1]:
         print(f"GPT-4 says: {conversation[-1]['content']}")
+
 
 
 
@@ -153,5 +154,52 @@ GPT-4 says:
 3. "Generate an image of the process of making Salsa Parmigiano Gherkin Rolls, showing the thin slices of Parmesan cheese rolled with mixed fillings and the baking process."
 
 4. "Create an artistic representation of a gourmet dish named Salsa Parmigiano Gherkin Rolls with cheese slices melting around a mixture of gherkins, black olives, and sweetcorn, all served with salsa wine reduction on top."
+
+'''
+
+
+
+'''
+
+GPT-4 says: DISH NAME: Rich Creamy Oatmeal Carbonara
+
+Origin: Italy-Inspired
+
+Duration of Preparation: 30-40 minutes
+
+Estimated Calories: 800-900 cal
+
+INGREDIENTS:
+
+- Whole grain oatmeal box - 50g
+- Eggs - 2
+- Butter or margarine tub - 15g
+- Condiment bottles - freshly ground black pepper, a pinch of hot sauce, 1 teaspoon of mustard
+- Drink bottle - possibly dairy or non-dairy milk/cream. If it’s cream, then 50ml
+- Large white bottle with red cap - if it’s mayonnaise, then 1 tablespoon
+- Small jars - we'll use this if they contain spices (like garlic powder, onion powder). If so, then 1/4 teaspoon each.
+
+INSTRUCTIONS:
+
+1. Bring about 250ml of water to boil in a saucepan. Stir in the oats. Reduce heat to medium and cook for 10 minutes, stirring occasionally.
+
+2. In a blender, blend 1 egg with the cream (if it's cream in the bottle),  black pepper, mustard, a small pinch of hot sauce, mayonnaise (if it is indeed in the large white bottle with red cap), and 1/4 teaspoon each of garlic and onion powder (if available in the small jars). Blend until all ingredients are well combined into a creamy sauce.
+
+3. In a non-stick pan, add the butter and let it melt. Once it's melted, carefully crack in the other egg and cook it until the edges are crispy but yolk is still runny (also known as a fried egg).
+
+4. When the oats are cooked, remove from the heat. While it's still warm, slowly add the blended sauce into the oatmeal while consistently stirring to make sure the egg doesn't get cooked and scrambled in the hot oatmeal.
+
+5. Once all the sauce is added, put the oatmeal back on low heat and keep stirring for another 2 minutes.
+
+6. Serve the oatmeal in a bowl with the fried egg on top for a rich and hearty lunch or dinner.
+
+(KEY NOTE: The containers with yellow lids and the clear container in the upper shelf were not used as their contents are unknown. The carbonated beverage cans and the large beverage bottle with green text label were also not used in this recipe due to their unsuitability for this dish. These items might be handy for other creations or as accompaniments for the meal.)
+
+GPT-4 says: 
+1. "DALL-E, imagine a gourmet dish called Rich Creamy Oatmeal Carbonara, featuring a bowl of creamy oatmeal topped with a perfectly fried egg with the yolk still runny."    
+2. "DALL-E, could you visualize a decadent lunch scene that includes a creamy, steaming bowl of oatmeal carbonara with a beautifully fried egg on top on a rustic wooden table."
+3. "Imagine the preparation and cooking process of creating a gourmet dish known as Rich Creamy Oatmeal Carbonara from a chef's perspective, highlighting crucial steps such as blending 
+ingredients, frying an egg, and stirring in the creamy sauce."
+4. "DALL-E, illustrate a close-up shot of the final Rich Creamy Oatmeal Carbonara dish, showcasing the contrast between the creamy oatmeal and the fried egg on top, with a nice rustic background."
 
 '''
