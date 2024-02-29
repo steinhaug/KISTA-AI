@@ -1,0 +1,20 @@
+{
+    "name": "steinhaug/kista-ai",
+    "description": "Less is more, more or less...",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Steinhaug\\KistaAi\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kim Steinhaug",
+            "email": "kim@steinhaug.com"
+        }
+    ],
+    "require": {
+        "orhanerday/open-ai": "^5.1"
+    }
+}
