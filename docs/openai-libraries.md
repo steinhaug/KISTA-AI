@@ -9,8 +9,8 @@
 
 ### Other libraries:
 
-[webman-php/openai](https://github.com/webman-php/openai)
 [openai-php/client](https://github.com/openai-php/client)
+[webman-php/openai](https://github.com/webman-php/openai)
 
 ## Python libraries
 
