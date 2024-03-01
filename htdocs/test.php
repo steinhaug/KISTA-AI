@@ -41,5 +41,4 @@ echo "<br>";
 echo "<br>";
 // decode response
 $d = json_decode($chat);
-// Get Content
 echo($d->choices[0]->message->content);
