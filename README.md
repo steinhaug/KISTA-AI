@@ -10,7 +10,7 @@ Snap a photo of your fridge and let the AI come up with some dinner suggestions 
 
 ## Framework
 
-Website is built using PHP.
+Website is built using PHP (LAMP Stack), and we will be using the openai-php library for communicating with the API.
 
 ## Setup
 
@@ -42,9 +42,16 @@ Minimum PHP version 8.1
 
 [http://kista-ai.local/](http://kista-ai.local/)
 
+## Food for thought
+
+Less is more - more or less...  
+Hvis du to'an, kan du bare ta'an, du vant, ikke, jeg heller!  
+Før det braker løs, må vi være muse stille.  
+Up or down, actually, there is a difference.  
+
 ## Credits
 
 steinhaug@gmail.com 
 github.com/steinhaug
 
-Less is more - more or less...
+
