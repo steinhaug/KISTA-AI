@@ -1,4 +1,4 @@
-![Visitors](https://api.visitorbadge.io/api/combined?path=https%3A%2F%2Fcolab.research.google.com%2Fgithub%2Fsteinhaug%2FKISTAAI.md&label=hitcount&countColor=%23263759&style=flat) <a href="https://github.com/steinhaug/" target="_blank"><img alt="Open Github profile" src="https://img.shields.io/badge/Steinhaug-Profile-black?logo=github"></a>
+<img src="https://api.visitorbadge.io/api/combined?path=https%3A%2F%2Fcolab.research.google.com%2Fgithub%2Fsteinhaug%2FKISTAAI.md&label=hitcount&countColor=%23263759&style=flat"> <a href="https://github.com/steinhaug/" target="_blank"><img alt="Open Github profile" src="https://img.shields.io/badge/Steinhaug-Profile-black?logo=github"></a>
 
 # KISTA-AI
 
