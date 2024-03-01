@@ -38,6 +38,8 @@ Create a file credentials.php
 
 ## Local developer server
 
+Minimum PHP version 8.1  
+
 [http://kista-ai.local/](http://kista-ai.local/)
 
 ## Credits

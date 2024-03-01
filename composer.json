@@ -20,7 +20,8 @@
         "psr/http-client-implementation": "*",
         "psr/http-factory-implementation": "*",
         "psr/http-client": "^1.0",
-        "openai-php/client": "^0.8.4"
+        "openai-php/client": "^0.8.4",
+        "mmucklo/krumo": "^0.7.0"
     },
     "config": {
         "allow-plugins": {
