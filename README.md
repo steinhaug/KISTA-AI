@@ -36,6 +36,24 @@ Create a file credentials.php
   - images, css and possible external js files needed for the website
 - src
 
+## Roadmap / milestones overview
+
+Itallic is completed.
+
+_v0.5.0 - Proof of concept, make sure all the required tasks needed to complete the app are solved._  
+_v0.6.0 - Create a roadmap with milestones for an overview on whats left to do._  
+v0.7.0 - Design the website for the app, the site will have an upload feature and a gallery of previous uploads from other users. Design a super simple spinner mode for use while upload is being processed. Complete mockup.  
+v0.8.0 - Complete the upload part of the app, and the display of the reciepe.  
+v0.8.1 - Setup database and connect it to the website, make sure all images are saved and cached ready for a possible gallery mode.  
+v0.8.2 - Initial pre-release of the KISTA AI app with all required functionality needed to deliver the AI experience.  
+v0.9.0 - Complete the gallery mode of the app.  
+v0.9.1 - Increase the amount of reciepes generated from 1 to 3 for each upload.  
+v0.9.2 - Redo the spinner page with fancier graphics.  
+v0.9.3 - Analyze logs and user creations, goal is to improve vision, completion and imagination. Descide what metrics we will focus on for theese goals.  
+v0.9.4 - Release candidate 1  
+v0.9.5 - Do an iteration over the webdesign, business logic for cache and DB.  
+v1.0.0 - Official release!  
+
 ## Local developer server
 
 Minimum PHP version 8.1  
