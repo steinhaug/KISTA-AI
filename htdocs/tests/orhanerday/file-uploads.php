@@ -4,8 +4,8 @@
     <input type="submit" value="Upload File" name="submit">
 </form>
 <?php
-require '../vendor/autoload.php';
-require '../credentials.php';
+require '../../../vendor/autoload.php';
+require '../../../credentials.php';
 
 use Orhanerday\OpenAi\OpenAi;
 

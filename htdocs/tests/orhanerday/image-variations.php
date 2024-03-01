@@ -1,5 +1,5 @@
 <h1>Variations</h1>
-<form action="/image-variations.php" method="post" enctype="multipart/form-data">
+<form action="image-variations.php" method="post" enctype="multipart/form-data">
     Select PNG file to upload (less than 4mb): <br>
     <label for="image">Image</label>
     <input type="file" name="image" id="image">
@@ -7,8 +7,8 @@
     <input type="submit" value="Upload File" name="submit">
 </form>
 <?php
-require '../vendor/autoload.php';
-require '../credentials.php';
+require '../../../vendor/autoload.php';
+require '../../../credentials.php';
 
 use Orhanerday\OpenAi\OpenAi;
 
