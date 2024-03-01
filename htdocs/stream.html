@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Stream Test</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='css/main.css'>
+    <script src='js/main.js'></script>
+</head>
+<body>
+
+Stream repository:
+https://github.com/orhanerday/ChatGPT/blob/main/event-stream.php
+
+<div id="divID">Hello</div>
+<script>
+   var eventSource = new EventSource("/stream.php?");
+   var div = document.getElementById('divID');
+
+
+   eventSource.onmessage = function (e) {
+      if(e.data == "[DONE]")
+      {
+          div.innerHTML += "<br><br>Hello";
+      }
+       div.innerHTML += JSON.parse(e.data).choices[0].text;
+   };
+   eventSource.onerror = function (e) {
+       console.log(e);
+   };
+
+
+
+
+</script>
+
+</body>
+</html>>
