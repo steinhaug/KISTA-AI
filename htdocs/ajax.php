@@ -7,11 +7,13 @@ if (isset($_SERVER['HTTP_HOST']) and ('forhandler-network.local' == $_SERVER['HT
     session_start();
 }
 
+define('AJAX_URI', '/admin/ajax.php');
+define('AJAX_FOLDER', 'ajax');
+define('AJAX_FOLDER_PATH', dirname(__FILE__) . '/' . AJAX_FOLDER);
 define('APPDATA_PATH', dirname(__FILE__) . '/inc_appdata');
 define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 
 require_once 'func.inc.php';
 require_once 'func.login.php';
 
-require_once 'ajax/openai/run-tasks.php';
-
+require_once AJAX_FOLDER_PATH . '/openai/run-tasks.php';
