@@ -87,6 +87,11 @@ $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'u
 
 $dalle_prompts = openai__extract_the_prompts($completion2);
 if( count($dalle_prompts) != 4 ){
+    $log['completion1'] = $completion1;
+    $log['completion2'] = $completion2;
+    $sql = new sqlbuddy;
+    $sql->que('log', json_encode($log, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE), 'text');
+    $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
     throw new OpenAIException('dalle_prompts extraction error, ' . count($dalle_prompts) . ' != 4');
 }
 $log['dalle_prompts'] = json_encode($dalle_prompts);
