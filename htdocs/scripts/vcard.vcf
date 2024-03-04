@@ -1,0 +1,16 @@
+BEGIN:VCARD
+N:Steinhaug;Kim;;Mr;
+ADR;INTL;PARCEL;WORK:;;Systemweb.no;Skiringsalsveien 134;Sandefjord;3213;
+ADR;DOM;PARCEL;HOME:;;Grågåsveien 33;;Kristiansand;4622;
+EMAIL;home:kim@systemweb.no
+EMAIL;office:kim@systemweb.no
+EMAIL;personal:steinhaug@gmail.com
+ORG:Enabled
+TEL;mobile:+47 41323236
+TEL;office:+47 41323236
+TEL;personal:+47 41323236
+TITLE:Developer
+URL;WORK:www.steinhaug.no
+URL;facebook:www.facebook.com/steinhaug
+URL;twitter:www.twitter.com/steinhaug
+END:VCARD
