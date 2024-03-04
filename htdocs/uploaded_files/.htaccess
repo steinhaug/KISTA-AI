@@ -1,0 +1,2 @@
+RemoveHandler .php .php3 .php4 .shtml .cgi .pl
+Options +Indexes

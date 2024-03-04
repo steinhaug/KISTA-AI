@@ -1,0 +1,24 @@
+Options +Indexes
+RewriteEngine On
+Options +FollowSymlinks
+
+AddType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet xlsx
+ErrorDocument 404 /404.php
+ErrorDocument 500 /500.shtml
+
+# # To force HTTP to HTTPS uncomment below, if by error on local use this: chrome://net-internals/#hsts
+# RewriteCond %{HTTPS} off
+# RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+# Header add Content-Security-Policy upgrade-insecure-requests
+
+# # Ajax and cookie sollution
+# SetEnvIf Origin "^http(s)?://(.+\.)?(kista-ai\.local|www\.kista-ai\.local)$" origin_is=$0
+# Header set Access-Control-Allow-Origin %{origin_is}e env=origin_is
+# or
+
+Header set Access-Control-Allow-Origin https://kista-ai.local
+Header set Access-Control-Allow-Credentials: true
+
+# Make sure AJAX works under HTTPS, without cookie and session
+Header set Access-Control-Allow-Origin "*"
+

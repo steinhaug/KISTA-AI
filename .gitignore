@@ -4,3 +4,5 @@ credentials.php
 logs/**/*
 .openai_api_key
 __pycache__
+_files/**/*
+htdocs/xhtml/**/*
