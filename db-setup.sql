@@ -31,3 +31,8 @@ ALTER TABLE `kistaai_uploaded_files`
 	ADD COLUMN `error` TEXT NULL AFTER `status`;
 ALTER TABLE `kistaai_uploaded_files`
 	ADD COLUMN `log` TEXT NULL DEFAULT NULL AFTER `status`;
+ALTER TABLE `kistaai_uploaded_files`
+	CHANGE COLUMN `thumbnail` `thumbnail` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci' AFTER `filesize`,
+	ADD COLUMN `reciepe_image` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci' AFTER `thumbnail`;
+ALTER TABLE `kistaai_uploaded_files`
+	ADD COLUMN `reciepe` TEXT NOT NULL AFTER `reciepe_image`;
