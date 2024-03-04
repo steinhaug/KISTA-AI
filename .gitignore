@@ -6,3 +6,4 @@ logs/**/*
 __pycache__
 _files/**/*
 htdocs/xhtml/**/*
+htdocs/uploaded_files/**/*
