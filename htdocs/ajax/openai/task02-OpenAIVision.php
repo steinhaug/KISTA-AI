@@ -58,6 +58,7 @@
         }
 
         $list_of_ingredients = openai__parse_vision_completion($chatgpt_result1);
+        $log['list'] = $list_of_ingredients;
 
         if( empty($list_of_ingredients) ){
             throw new OpenAIException('Missing ingredients');
