@@ -1,5 +1,5 @@
 <?php
-
+class OpenAIException extends Exception {};
 
 $upload_id = (int) $_SESSION['task']['aiid'];
 $res = $mysqli->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `upload_id`=" . $upload_id . " AND `user_id`=" . $USER_ID);
@@ -39,11 +39,78 @@ if ($res->num_rows) {
         $log[] = 'Thumbnail, DB updated.';
 
 
+
+
+        $client = OpenAI::client($open_ai_key);
+        $base64Image = imageToBase64($imgIn);
+        $promptQue = [];
+        $promptQue[] = [
+            'type' => 'image_url',
+            'image_url' => ['url' => $base64Image]
+        ];
+        $promptQue[] = [
+            'type' => 'text',
+            'text' => 'Analyse this photograph and provide a detailed description of its contents. Focus on identifying and listing all visible items, with particular attention to food items present. '
+        ];
+        $messagesArray = [];
+        $messagesArray[] = [
+            'role' => 'user',
+            'content' => $promptQue
+        ];
+        $settings['model'] = 'gpt-4-vision-preview';
+        $settings['messages'] = $messagesArray;
+        $settings['max_tokens'] = 1200;
+        try {
+            $response = $client->chat()->create($settings);
+            $additionalQuestion = [
+                'role' => 'user',
+                'content' => [['type' => 'text', 'text' => 'If there is a refridgerator visible in the image answer answer one word only YES, if no refridgerator is visible answer one word only NO.']]
+            ];
+            $settings['messages'][] = $additionalQuestion;
+            $response2 = $client->chat()->create($settings);
+        } catch (Exception $e) {
+            throw new OpenAIException($e->getMessage());
+        }
+
+        $chatgpt_result1 = '';
+        $chatgpt_result2 = '';
+
+        foreach ($response->choices as $result) {
+            $chatgpt_result1 = $result->message->content;
+        }
+        $json_all = $response->toArray();
+        $meta = $response->meta();
+        $json_meta = $meta->toArray();
+        $log[] = 'ChatGPT Vision:';
+        $log[] = ' - first question:';
+        $log[] = json_encode($json_meta);
+        $log[] = json_encode($json_all);
+
+        foreach ($response2->choices as $result) {
+            $chatgpt_result2 = $result->message->content;
+        }
+        $json_all = $response2->toArray();
+        $meta = $response2->meta();
+        $json_meta = $meta->toArray();
+        $log[] = ' - second question:';
+        $log[] = json_encode($json_meta);
+        $log[] = json_encode($json_all);
+
+        if( $chatgpt_result2 == 'NO' ){
+            throw new OpenAIException('Missing refridgerator');
+        }
+
         $sql = new sqlbuddy;
         $sql->que('status', 'complete', 'string');
         $sql->que('log', json_encode($log), 'text');
         $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
 
+    } catch (OpenAIException $e) {
+        $error = $e->getMessage();
+        $sql = new sqlbuddy;
+        $sql->que('status', 'error', 'string');
+        $sql->que('error', 'OpenAI error: ' . $error, 'text');
+        $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
     } catch (Exception $e) {
         $error = $e->getMessage();
         $sql = new sqlbuddy;
@@ -55,3 +122,9 @@ if ($res->num_rows) {
 } else {
     $_SESSION['error_msg'] = 'An APP error has occured. Task ' . (int) $upload_id . ' does not exist.';
 }
+
+echo 'Done!';
+echo htmlentities($chatgpt_result1);
+echo '<hr>';
+echo htmlentities($chatgpt_result2);
+krumo($response);

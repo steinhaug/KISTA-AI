@@ -13,3 +13,5 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 require_once 'func.inc.php';
 require_once 'func.login.php';
 
+require_once 'ajax/openai/run-tasks.php';
+
