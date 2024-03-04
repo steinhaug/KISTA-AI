@@ -28,6 +28,7 @@ if (count($dalle_prompts) != 4) {
     echo 'Error: ' . count($dalle_prompts) . ' != 4';
 }
 
+
 print_r($dalle_prompts);
 var_dump($dalle_prompts);
 

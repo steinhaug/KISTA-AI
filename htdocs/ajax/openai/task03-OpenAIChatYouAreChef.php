@@ -87,9 +87,9 @@ $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'u
 
 $dalle_prompts = openai__extract_the_prompts($completion2);
 if( count($dalle_prompts) != 4 ){
-    $log['dalle_prompts'] = json_encode($dalle_prompts);
     throw new OpenAIException('dalle_prompts extraction error, ' . count($dalle_prompts) . ' != 4');
 }
+$log['dalle_prompts'] = json_encode($dalle_prompts);
 
 try {
     $json_all = $response1->toArray();
@@ -104,6 +104,7 @@ try {
     $json_meta = $meta->toArray();
     $log['chat_m2'] = json_encode($json_meta);
     $log['chat_q2'] = json_encode($json_all);
+
 } catch (Exception $e) {
     throw new OpenAIException('cp1-2 log, ' . $e->getMessage());
 }

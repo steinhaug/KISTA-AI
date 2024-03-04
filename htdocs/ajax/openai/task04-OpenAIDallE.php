@@ -16,6 +16,11 @@ try {
         'response_format' => 'url',
     ]);
 
+} catch (Exception $e) {
+    throw new OpenAIException('Dall-E create, ' . $e->getMessage());
+}
+
+try {
     foreach ($response->data as $data) {
         $dalle_image_url = $data->url;
     }
@@ -25,7 +30,7 @@ try {
     $log['dalle-img1'] = json_encode($json_all);
 
 } catch (Exception $e) {
-    throw new OpenAIException('Dall-E, ' . $e->getMessage());
+    throw new OpenAIException('Dall-E extract, ' . $e->getMessage());
 }
 
 try {
@@ -59,5 +64,5 @@ try {
     }
 
 } catch (Exception $e) {
-    throw new OpenAIException('Dall-E, ' . $e->getMessage());
+    throw new OpenAIException('Dall-E download error, ' . $e->getMessage());
 }

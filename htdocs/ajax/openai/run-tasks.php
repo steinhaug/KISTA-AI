@@ -17,12 +17,16 @@ if ($res->num_rows) {
                 throw new Exception('Image format not supported');
             }
 
+
             require AJAX_FOLDER_PATH . '/openai/task01-createThumbnail.php';
             $mysqli->query("UPDATE `" . $kista_dp . "uploaded_files` SET `status`='task1' WHERE `upload_id`=" . $upload_id);
             require AJAX_FOLDER_PATH . '/openai/task02-OpenAIVision.php';
             $mysqli->query("UPDATE `" . $kista_dp . "uploaded_files` SET `status`='task2' WHERE `upload_id`=" . $upload_id);
+logfile('task03-now');
             require AJAX_FOLDER_PATH . '/openai/task03-OpenAIChatYouAreChef.php';
             $mysqli->query("UPDATE `" . $kista_dp . "uploaded_files` SET `status`='task3' WHERE `upload_id`=" . $upload_id);
+
+logfile('task04-now');
             require AJAX_FOLDER_PATH . '/openai/task04-OpenAIDallE.php';
             $mysqli->query("UPDATE `" . $kista_dp . "uploaded_files` SET `status`='task4' WHERE `upload_id`=" . $upload_id);
 
