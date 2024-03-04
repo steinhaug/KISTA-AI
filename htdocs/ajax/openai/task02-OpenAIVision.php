@@ -56,3 +56,5 @@
         if( $chatgpt_result2 == 'NO' ){
             throw new OpenAIException('Missing refridgerator');
         }
+
+        $list_of_ingredients = openai__parse_vision_completion($chatgpt_result1);
