@@ -44,7 +44,7 @@ require_once 'func.login.php';
     <div id="footer-bar" class="footer-bar-6">
         <a href="index-components.html"><i class="fa fa-layer-group"></i><span>Features</span></a>
         <a href="index-pages.html"><i class="fa fa-file"></i><span>Pages</span></a>
-        <a href="index.html" class="circle-nav"><i class="fa fa-home"></i><span>Welcome</span></a>
+        <a href="upload.php" class="circle-nav"><i class="fa fa-home"></i><span>Last opp</span></a>
         <a href="index-projects.html" class="active-nav"><i class="fa fa-camera"></i><span>Projects</span></a>
         <a href="#" data-menu="menu-main"><i class="fa fa-bars"></i><span>Menu</span></a>
     </div>
