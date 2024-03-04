@@ -23,7 +23,9 @@
         "openai-php/client": "^0.8.4",
         "mmucklo/krumo": "^0.7.0",
         "steinhaug/sqlbuddy": "^1.3",
-        "steinhaug/mysqli": "^1.6"
+        "steinhaug/mysqli": "^1.6",
+        "intervention/image": "^3.4",
+        "matthiasmullie/minify": "^1.3"
     },
     "config": {
         "allow-plugins": {
