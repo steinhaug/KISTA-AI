@@ -81,6 +81,16 @@ try {
     throw new OpenAIException('cp1-2 extract, ' . $e->getMessage());
 }
 
+$sql = new sqlbuddy;
+$sql->que('reciepe', $completion1, 'string');
+$success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
+
+$dalle_prompts = openai__extract_the_prompts($completion2);
+if( count($dalle_prompts) != 4 ){
+    $log['dalle_prompts'] = json_encode($dalle_prompts);
+    throw new OpenAIException('dalle_prompts extraction error, ' . count($dalle_prompts) . ' != 4');
+}
+
 try {
     $json_all = $response1->toArray();
     $meta = $response1->meta();
