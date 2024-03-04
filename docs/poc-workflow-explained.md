@@ -1,19 +1,19 @@
 # The parts
 
-## vision.py
+## vision.py / vision-v2.php
 
 Uploads the image and in return gets a list of possible items / groceries in the refridgerator.
 
-## parse.py
+## parse.py / parse.php
 
 Takes the response from vision.py and reformats the ingredients list to a list starting with dashes.
 
-## ask3.py
+## ask3.py / completion-multiprompt.php
 
 The list from parse.py is added to the prompt which GPT-4 will use to come up with a reciepe. 
 When GPT-4 answers a follow up question is given to get 4 possible DALL-E prompts.
 
-## dalle.py
+## dalle.py / image-create.php
 
 Instructs DALL-E to generate the different 4 images from ask3.py
 

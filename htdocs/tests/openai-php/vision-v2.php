@@ -3,29 +3,6 @@ require '../../../vendor/autoload.php';
 require '../../../credentials.php';
 $client = OpenAI::client($open_ai_key);
 
-function imageToBase64($image_path, $add_pre_markup=true) {
-
-    // Check if the file exists
-    if (!file_exists($image_path)) {
-        return false;
-    }
-    
-    // Get the file extension
-    $extension = pathinfo($image_path, PATHINFO_EXTENSION);
-    
-    // Read the image file contents
-    $image_data = file_get_contents($image_path);
-    
-    // Convert the image data to Base64 encoding
-    if( $add_pre_markup )
-        $base64_image = 'data:image/' . $extension . ';base64,' . base64_encode($image_data);
-        else
-        $base64_image = base64_encode($image_data);
-
-    // Return the Base64 encoded image
-    return $base64_image;
-}
-
 $base64Image = imageToBase64('../../../assets/fridge/003.jpg');
 
 $promptQue = [];
