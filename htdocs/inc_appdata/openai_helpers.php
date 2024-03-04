@@ -3,12 +3,12 @@
 /**
  * openai__parse_vision_completion
  *
- * @param string $string_before Completion for ingredients
+ * @param string $string Completion for ingredients
  * @return string Rewritten list of ingredients
  */
-function openai__parse_vision_completion($string_before) {
+function openai__parse_vision_completion($string) {
     // Split the string into an array of lines
-    $lines = explode("\n", $string_before);
+    $lines = explode("\n", $string);
     $result = "";
 
     foreach ($lines as $line) {
@@ -22,4 +22,26 @@ function openai__parse_vision_completion($string_before) {
     }
 
     return trim($result);
+}
+
+/**
+ * openai__extract_prompts
+ *
+ * @param string $string
+ * @return void
+ */
+function openai__extract_prompts($string) {
+    // Split the string into lines
+    $lines = explode("\n", $string);
+    $array = [];
+
+    foreach ($lines as $line) {
+        // Use regex to capture the title and description, ignoring the numbering
+        if (preg_match('/^\d+\.\s*"([^"]+)"\s*:\s*(.*)$/', $line, $matches)) {
+            // Add the title and description as a single entry to the array
+            $array[] = '"' . $matches[1] . '": ' . $matches[2];
+        }
+    }
+
+    return $array;
 }
