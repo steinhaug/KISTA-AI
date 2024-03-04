@@ -10,7 +10,7 @@ require_once 'func.inc.php';
 require_once 'func.login.php';
 
 $callbackURL = 'upload.php';
-$continueURL = 'openai.php';
+$continueURL = 'processing.php';
 
 if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
 
@@ -176,4 +176,6 @@ if(isset($_SESSION['error_msg'])){
 }
 ?>
 
-</body>
+</body><?php
+ob_end_flush();
+?>

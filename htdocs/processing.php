@@ -34,7 +34,7 @@ require_once 'func.login.php';
 <div id="page">
 
     <div class="header header-fixed header-logo-center">
-        <a href="index.html" class="header-title">Galleri</a>
+        <a href="index.html" class="header-title">Processing</a>
         <a href="#" data-back-button class="header-icon header-icon-1"><i class="fa fa-chevron-left"></i></a>
         <a href="#" data-toggle-theme class="header-icon header-icon-3 show-on-theme-dark"><i class="fas fa-sun"></i></a>
         <a href="#" data-toggle-theme class="header-icon header-icon-3 show-on-theme-light"><i class="fas fa-moon"></i></a>
@@ -53,32 +53,19 @@ require_once 'func.login.php';
 
             <div class="card card-style">
                 <div class="content">
-                    <p class="mb-n1 color-highlight font-600">Classic Thumbs</p>
-                    <h1>Squared</h1>
-                    <p class="mb-3">
-                        The classic squared thumbnail gallery. A must have for any basic gallery.
-                    </p>
-                    <div class="row row-cols-3 px-1 mb-0">
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
+                    <p class="mb-n1 color-highlight font-600">Analyzing...</p>
+                    <h1>Processing your image</h1>
+
+                    <div class="d-flex justify-content-center mb-3">
+                        <div class="spinner-border color-blue-dark" style="border-width: 7px;" role="status"></div>
                     </div>
-                </div>
+
+                    <div class="progress rounded-l" style="height:28px">
+                        <div id="kista-ai-progress" class="progress-bar bg-highlight text-start ps-3 color-white" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+                            10% Complete
+                        </div>
+                    </div>
+               </div>
             </div>
 
 
