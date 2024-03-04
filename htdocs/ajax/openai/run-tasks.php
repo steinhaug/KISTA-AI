@@ -50,7 +50,7 @@ if ($res->num_rows) {
         ];
         $promptQue[] = [
             'type' => 'text',
-            'text' => 'Analyse this photograph and provide a detailed description of its contents. Focus on identifying and listing all visible items, with particular attention to food items present. '
+            'text' => 'Your job is to detect as many different groceries / seperate items currently inside of the refrigerator as possible. If you find more items of the same type try to estimate pcs / quanta and return your findings as an item list with quantities.'
         ];
         $messagesArray = [];
         $messagesArray[] = [
@@ -82,9 +82,8 @@ if ($res->num_rows) {
         $meta = $response->meta();
         $json_meta = $meta->toArray();
         $log[] = 'ChatGPT Vision:';
-        $log[] = ' - first question:';
-        $log[] = json_encode($json_meta);
-        $log[] = json_encode($json_all);
+        $log['vision_m1'] = json_encode($json_meta);
+        $log['vision_q1'] = json_encode($json_all);
 
         foreach ($response2->choices as $result) {
             $chatgpt_result2 = $result->message->content;
@@ -92,9 +91,8 @@ if ($res->num_rows) {
         $json_all = $response2->toArray();
         $meta = $response2->meta();
         $json_meta = $meta->toArray();
-        $log[] = ' - second question:';
-        $log[] = json_encode($json_meta);
-        $log[] = json_encode($json_all);
+        $log['vision_m2'] = json_encode($json_meta);
+        $log['vision_q2'] = json_encode($json_all);
 
         if( $chatgpt_result2 == 'NO' ){
             throw new OpenAIException('Missing refridgerator');
@@ -128,3 +126,5 @@ echo htmlentities($chatgpt_result1);
 echo '<hr>';
 echo htmlentities($chatgpt_result2);
 krumo($response);
+krumo($response2);
+
