@@ -22,13 +22,32 @@ class KistaDashboardException extends Exception
 }
 define('LF', "\n");
 require '../vendor/autoload.php';
-
 require '../credentials.php';
+
+require APPDATA_PATH . '/image_helpers.php';
 
 if(!function_exists('sqlError__alertAndStop')){ function sqlError__alertAndStop($sql_error, $sql_query, $reference = '', $UserID = 0, $trace = null){
     return time();
 } }
 
+/**
+ * Logging for debugging when working local
+ */
+if( !function_exists('logfile') ){
+    function logfile(...$strings ){
+        $lf = "\n";
+        $logfile = dirname(dirname(__FILE__)) . '/logs/snaketail.log';
+        if( $fh = @fopen( $logfile, "a+" ) ){
+            foreach($strings as $the_string){
+                fputs( $fh, $the_string . $lf, strlen($the_string . $lf) );
+            }
+            fclose( $fh );
+            return( true );
+        } else {
+            return( false );
+        }
+    }
+}
 
 /* This function is not identical in EWS and ECMS */
 /* Example:      ECMS          EWS                */

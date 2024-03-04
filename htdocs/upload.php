@@ -49,10 +49,13 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
             $sql->que('filename', $filename['file'], 'string');
             $sql->que('extension', $file_extension, 'string');
             $sql->que('filesize', $file1_size, 'int');
-            $sql->que('thumbnail', '', 'text');
+            $sql->que('thumbnail', '', 'string');
+            $sql->que('status', 'start', 'string');
+            $sql->que('log', 'NULL', 'raw');
+            $sql->que('error', 'NULL', 'raw');
             $mysqli->query( $sql->build('insert', $kista_dp . "uploaded_files") );
             $aiid = $mysqli->insert_id;
-            $_SESSION['aiid'] = [$aiid, ''];
+            $_SESSION['task'] = ['aiid'=>$aiid, 'status'=>'start', 'progress'=>0];
             header('Location: ' . $continueURL . '?aiid=' . $aiid);
             exit;
 

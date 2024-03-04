@@ -26,3 +26,8 @@ COLLATE='utf8mb4_danish_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=1
 ;
+ALTER TABLE `kistaai_uploaded_files`
+	ADD COLUMN `status` VARCHAR(64) NOT NULL DEFAULT '' AFTER `thumbnail`,
+	ADD COLUMN `error` TEXT NULL AFTER `status`;
+ALTER TABLE `kistaai_uploaded_files`
+	ADD COLUMN `log` TEXT NULL DEFAULT NULL AFTER `status`;
