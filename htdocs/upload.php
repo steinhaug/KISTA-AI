@@ -50,6 +50,8 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
             $sql->que('extension', $file_extension, 'string');
             $sql->que('filesize', $file1_size, 'int');
             $sql->que('thumbnail', '', 'string');
+            $sql->que('reciepe_image', '', 'string');
+            $sql->que('reciepe', '', 'string');
             $sql->que('status', 'start', 'string');
             $sql->que('log', 'NULL', 'raw');
             $sql->que('error', 'NULL', 'raw');

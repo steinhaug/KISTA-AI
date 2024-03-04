@@ -21,9 +21,9 @@ class KistaDashboardException extends Exception
 {
 }
 define('LF', "\n");
-require '../vendor/autoload.php';
-require '../credentials.php';
 
+require dirname(dirname(APPDATA_PATH)) . '/vendor/autoload.php';
+require dirname(dirname(APPDATA_PATH)) . '/credentials.php';
 require APPDATA_PATH . '/image_helpers.php';
 
 if(!function_exists('sqlError__alertAndStop')){ function sqlError__alertAndStop($sql_error, $sql_query, $reference = '', $UserID = 0, $trace = null){
