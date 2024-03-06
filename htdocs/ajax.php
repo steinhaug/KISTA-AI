@@ -1,7 +1,7 @@
 <?php
 ob_start();
 session_cache_expire(720);
-if (isset($_SERVER['HTTP_HOST']) and ('forhandler-network.local' == $_SERVER['HTTP_HOST'])) {
+if (isset($_SERVER['HTTP_HOST']) and ('kista-ai.local' == $_SERVER['HTTP_HOST'])) {
     session_start(['read_and_close' => true]);
 } else {
     session_start();
@@ -20,4 +20,11 @@ ignore_user_abort(true);
 set_time_limit(0);
 
 require_once APPDATA_PATH . '/openai_helpers.php';
-require_once AJAX_FOLDER_PATH . '/openai/run-tasks.php';
+
+if( !empty($_SESSION['task']['aiid']) ){
+    require_once AJAX_FOLDER_PATH . '/openai/run-tasks.php';
+} else {
+    http_response_code(200);
+    echo json_encode(['message'=>'Nothing to do.']);
+    exit;
+}

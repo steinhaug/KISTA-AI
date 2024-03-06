@@ -49,13 +49,17 @@ if ($res->num_rows) {
         }
 
     } else {
-        echo $item['status'];
+        http_response_code(102);
+        echo json_encode(['message'=>$item['status']]);
         exit;
     }
 
 } else {
     $error = 'An APP error has occured. Task ' . (int) $upload_id . ' does not exist.';
     $_SESSION['error_msg'] = $error;
+    http_response_code(404);
+    echo json_encode(['error'=>$error]);
+    exit;
 }
 
 echo '<hr><div style="text-align:center;">COMPLETE</div><hr>';
