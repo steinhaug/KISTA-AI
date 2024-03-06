@@ -23,16 +23,6 @@ function stripQuotes($string){
   $string = str_replace('"',"",$string);
   return $string;
 }
-function reslash($string,$extra=0){
-  if($extra)
-    $string = str_replace("'",'&#039;',$string);
-  return $string;
-}
-function deslash($string,$extra=0){
-  if($extra)
-    $string = str_replace("'",'&#039;',$string);
-  return $string;
-}
 
 
 /* Returns a string with single whitespace */
@@ -40,7 +30,6 @@ function deslash($string,$extra=0){
 function normalize_whitespace($string){
   return trim(preg_replace("/\s\s+/", ' ', $string));
 }
-
 
 /**
  * Seperate a block of code by sub blocks. Example, removing all <script>...<script> tags from HTML kode
@@ -142,6 +131,12 @@ function line_pad($lines, $pad_length = 4, $pad_string = ' ')
     return rtrim($out);
 }
 
+/**
+ * parse url params
+ *
+ * @param string $str Eg. some=value&another=value
+ * @return array Parsed values
+ */
 function proper_parse_str($str) {
   # result array
   $arr = array();

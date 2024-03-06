@@ -153,3 +153,68 @@ function openai__guzzleDownloader($url, $code404_mode = false){
 
 }
 
+
+
+
+
+function getArray__splitAtNeedle($string, $needle){
+
+    if( ($pos=strpos($string, $needle)) === false )
+        return [$string, ''];
+
+    $str_before = substr($string, 0, $pos);
+    $str_after  = substr($string, $pos);
+
+    return [$str_before, $str_after];
+}
+
+/**
+ * Prepare the reciepe for Markdown
+ *
+ * @param [type] $string
+ * @return void
+ */
+function openai__parse_reciepe($string){
+
+    $title = '';
+    $header = '';
+    $ingredients = '';
+    $instructions = '';
+
+    [$string, $instructions] = getArray__splitAtNeedle($string, 'Instructions:');
+    [$string, $ingredients] = getArray__splitAtNeedle($string, 'Ingredients:');
+
+    $ingredients = str_replace('Optional Ingredients:', '### Optional Ingredients:', $ingredients);
+
+    $lines = explode("\n", $string);
+    $title = str_replace('Recipe:', '', array_shift($lines));
+    $header = implode("\n", $lines);
+
+    $arr = [$title, $header, $ingredients, $instructions];
+
+    return array_map(function($val) {
+        return trim($val);
+    }, $arr);
+}
+
+
+function openai__generateReciepe($string, $img){
+
+    $img_src = '/uploaded_files/' . $img;
+    $thumb_src = '/uploaded_files/_thumbs/' . $img;
+
+    $parts = openai__parse_reciepe($string);
+    $Parsedown = new Parsedown();
+    echo $Parsedown->text( '# ' . $parts[0] );
+    if(!empty($img))
+        echo '<a href="' . $img_src . '" data-gallery="gallery-1"><img src="' . $thumb_src . '" alt="" style="float:right"></a>';
+    echo $Parsedown->text( '' . $parts[1] );
+    echo $Parsedown->text( '## ' . $parts[2] );
+    echo $Parsedown->text( '## ' . $parts[3] );
+
+}
+
+
+function reciepe_thumb($image_name){
+    return '/uploaded_files/_thumbs/' . $image_name;
+}

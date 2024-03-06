@@ -34,20 +34,11 @@ require_once 'func.login.php';
 <div id="page">
 
     <div class="header header-fixed header-logo-center">
-        <a href="index.html" class="header-title">Reciepe</a>
-        <a href="#" data-back-button class="header-icon header-icon-1"><i class="fa fa-chevron-left"></i></a>
-        <a href="#" data-toggle-theme class="header-icon header-icon-3 show-on-theme-dark"><i class="fas fa-sun"></i></a>
-        <a href="#" data-toggle-theme class="header-icon header-icon-3 show-on-theme-light"><i class="fas fa-moon"></i></a>
-        <a href="#" data-menu="menu-main" class="header-icon header-icon-4"><i class="fas fa-bars"></i></a>
+        <a href="gallery.php" class="header-title">Reciepe</a>
+        <?=HTML_HEADER('header-fixed')?>
     </div>
 
-    <div id="footer-bar" class="footer-bar-6">
-        <a href="index-components.html"><i class="fa fa-layer-group"></i><span>Features</span></a>
-        <a href="index-pages.html"><i class="fa fa-file"></i><span>Pages</span></a>
-        <a href="upload.php" class="circle-nav"><i class="fa fa-home"></i><span>Last opp</span></a>
-        <a href="index-projects.html" class="active-nav"><i class="fa fa-camera"></i><span>Projects</span></a>
-        <a href="#" data-menu="menu-main"><i class="fa fa-bars"></i><span>Menu</span></a>
-    </div>
+    <?=HTML_FOOTER(2)?>
 
     <div class="page-content header-clear-medium">
 
@@ -55,14 +46,17 @@ require_once 'func.login.php';
                 <div class="content">
                     <p class="mb-n1 color-highlight font-600">Reciepe</p>
 <?php
-$upload_id = (int) $_SESSION['task']['aiid'];
-$res = $mysqli->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `upload_id`=" . $upload_id . " AND `user_id`=" . $USER_ID);
+//$upload_id = (int) $_SESSION['task']['aiid'];
+$upload_id = (int) $_GET['rid'];
+$res = $mysqli->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `upload_id`=" . $upload_id . " AND `user_id`=" . $USER_ID . " AND `status`='complete'");
 if ($res->num_rows) {
     $item = $res->fetch_assoc();
     if($item['status']=='complete'){
-        $Parsedown = new Parsedown();
-        echo $Parsedown->text( $item['reciepe'] );
+        openai__generateReciepe($item['reciepe'], $item['reciepe_image']);
     }
+} else {
+    echo '<h1>Reciepe not found!</h1>';
+    echo '<p>Could not find the reciepe you were looking for.</p>';
 }
 ?>
 
