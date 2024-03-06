@@ -25,6 +25,9 @@ define('LF', "\n");
 require dirname(dirname(APPDATA_PATH)) . '/vendor/autoload.php';
 require dirname(dirname(APPDATA_PATH)) . '/credentials.php';
 require APPDATA_PATH . '/image_helpers.php';
+require APPDATA_PATH . '/db_helpers.php';
+require APPDATA_PATH . '/session_helpers.php';
+require APPDATA_PATH . '/string_manipulation.php';
 
 if(!function_exists('sqlError__alertAndStop')){ function sqlError__alertAndStop($sql_error, $sql_query, $reference = '', $UserID = 0, $trace = null){
     return time();
@@ -48,6 +51,28 @@ if( !function_exists('logfile') ){
         }
     }
 }
+
+/**
+ * Prepare URL for use in header.location
+ *
+ * @return string The complete URI for the current page including params
+ */
+function prepareLocation(){
+    $uri = $_SERVER['SCRIPT_NAME'];
+    if(!empty($_SERVER['QUERY_STRING'])){
+        parse_str($_SERVER['QUERY_STRING'], $arr);
+        $params = '';
+        foreach($arr as $k=>$v){
+            if(strlen($params))
+                $params .= '&';
+            $params .= $k . '=' . rawurlencode($v);
+        }
+        $uri = $uri . '?' . $params;
+
+    }
+    return $uri;
+}
+
 
 /* This function is not identical in EWS and ECMS */
 /* Example:      ECMS          EWS                */
