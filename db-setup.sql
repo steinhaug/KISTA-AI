@@ -1,38 +1,58 @@
-CREATE TABLE `kistaai_users__sessions` (
-	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`sessionid` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8_swedish_ci',
-	`userid` INT(11) UNSIGNED NOT NULL,
-	`validto` DATETIME NULL DEFAULT NULL,
-    PRIMARY KEY (`id`) USING BTREE,
-	KEY (`sessionid`) USING BTREE
-)
-COLLATE='utf8_swedish_ci'
-ENGINE=InnoDB,
-AUTO_INCREMENT=1;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-CREATE TABLE `kistaai_uploaded_files` (
-	`upload_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`user_id` INT(10) NULL DEFAULT NULL,
-	`created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`updated` DATETIME NULL DEFAULT NULL,
-	`realname` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Presentation' COLLATE 'utf8mb4_danish_ci',
-	`filename` VARCHAR(255) NULL DEFAULT NULL COMMENT 'On disk' COLLATE 'utf8mb4_danish_ci',
-	`extension` VARCHAR(32) NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
-	`filesize` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-	`thumbnail` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
-	PRIMARY KEY (`upload_id`) USING BTREE
-)
-COLLATE='utf8mb4_danish_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=1
-;
-ALTER TABLE `kistaai_uploaded_files`
-	ADD COLUMN `status` VARCHAR(64) NOT NULL DEFAULT '' AFTER `thumbnail`,
-	ADD COLUMN `error` TEXT NULL AFTER `status`;
-ALTER TABLE `kistaai_uploaded_files`
-	ADD COLUMN `log` TEXT NULL DEFAULT NULL AFTER `status`;
-ALTER TABLE `kistaai_uploaded_files`
-	CHANGE COLUMN `thumbnail` `thumbnail` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci' AFTER `filesize`,
-	ADD COLUMN `reciepe_image` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci' AFTER `thumbnail`;
-ALTER TABLE `kistaai_uploaded_files`
-	ADD COLUMN `reciepe` TEXT NOT NULL AFTER `reciepe_image`;
+DROP TABLE IF EXISTS `kistaai_uploaded_files`;
+CREATE TABLE IF NOT EXISTS `kistaai_uploaded_files` (
+  `upload_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) DEFAULT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` datetime DEFAULT NULL,
+  `realname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_danish_ci DEFAULT NULL COMMENT 'Presentation',
+  `filename` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_danish_ci DEFAULT NULL COMMENT 'On disk',
+  `extension` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_danish_ci DEFAULT NULL,
+  `filesize` int(10) unsigned NOT NULL DEFAULT '0',
+  `thumbnail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_danish_ci NOT NULL DEFAULT '',
+  `reciepe_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_danish_ci NOT NULL DEFAULT '',
+  `reciepe` text COLLATE utf8mb4_danish_ci NOT NULL,
+  `status` varchar(64) COLLATE utf8mb4_danish_ci NOT NULL DEFAULT '',
+  `log` text COLLATE utf8mb4_danish_ci,
+  `error` text COLLATE utf8mb4_danish_ci,
+  PRIMARY KEY (`upload_id`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
+
+DROP TABLE IF EXISTS `kistaai_uploaded_files__openai`;
+CREATE TABLE IF NOT EXISTS `kistaai_uploaded_files__openai` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `upload_id` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `valid_from` datetime NOT NULL,
+  `valid_to` datetime DEFAULT NULL,
+  `status` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_danish_ci NOT NULL,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_danish_ci,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `uploadId` (`upload_id`) USING BTREE,
+  KEY `userId` (`user_id`) USING BTREE,
+  KEY `validTo` (`valid_to`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
+
+DROP TABLE IF EXISTS `kistaai_users__sessions`;
+CREATE TABLE IF NOT EXISTS `kistaai_users__sessions` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `sessionid` varchar(255) CHARACTER SET utf8 COLLATE utf8_swedish_ci NOT NULL DEFAULT '',
+  `userid` int(11) unsigned NOT NULL,
+  `validto` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `sessionid` (`sessionid`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;

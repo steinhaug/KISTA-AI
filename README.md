@@ -43,7 +43,7 @@ Itallic is completed.
 _v0.5.0 - Proof of concept, make sure all the required tasks needed to complete the app are solved._  
 _v0.6.0 - Create a roadmap with milestones for an overview on whats left to do._  
 _v0.7.0 - Design the website for the app, the site will have an upload feature and a gallery of previous uploads from other users. Design a super simple spinner mode for use while upload is being processed. Complete mockup._  
-v0.8.0 - Complete the upload part of the app, and the display of the reciepe.  
+_v0.8.0 - Complete the upload part of the app, and the display of the reciepe._  
 v0.8.1 - Setup database and connect it to the website, make sure all images are saved and cached ready for a possible gallery mode.  
 v0.8.2 - Initial pre-release of the KISTA AI app with all required functionality needed to deliver the AI experience.  
 v0.9.0 - Complete the gallery mode of the app.  
