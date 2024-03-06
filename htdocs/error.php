@@ -33,40 +33,22 @@ require_once 'func.login.php';
 <div id="page">
 
     <div class="header header-fixed header-logo-center">
-        <a href="index.html" class="header-title">Galleri</a>
+        <a href="index.html" class="header-title">Processing</a>
         <?=HTML_HEADER('header-fixed')?>
     </div>
 
-    <?=HTML_FOOTER(4)?>
+    <?=HTML_FOOTER(3)?>
+
 
     <div class="page-content header-clear-medium">
 
             <div class="card card-style">
                 <div class="content">
-                    <p class="mb-n1 color-highlight font-600">Gallery</p>
-                    <h1>Your reciepes</h1>
-                    <p class="mb-3">
-                        Click on the thumbnail to view the reciepe.
-                    </p>
-                    <div class="row row-cols-3 px-1 mb-0">
-<?php
-
-$items = $mysqli->result('assoc')->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != ''");
-foreach($items as $item){
-    #var_dump($item);
-    echo '
-                        <a class="col p-2" href="reciepe.php?rid=' . $item['upload_id'] . '" _data-gallery="gallery-a">
-                            <img src="' . reciepe_thumb($item['reciepe_image']) . '" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
-    ';
-}
-
-?>
-
-                    </div>
-                </div>
+                    <p class="mb-n1 color-highlight font-600">Error report...</p>
+                    <h1>An error has occured in the app</h1>
+                    <p>Something has gone wrong, view the error message or try again.</p>
+               </div>
             </div>
-
 
         <div data-menu-load="menu-footer.html"></div>
     </div>
@@ -74,14 +56,11 @@ foreach($items as $item){
     
     <!-- Main Menu--> 
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>
-    
     <!-- Share Menu-->
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
-    
     <!-- Colors Menu-->
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
-     
-    
+
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>

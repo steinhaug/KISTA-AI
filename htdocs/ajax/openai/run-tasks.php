@@ -50,7 +50,7 @@ if ($res->num_rows) {
 
     } else {
         http_response_code(102);
-        echo json_encode(['message'=>$item['status']]);
+        echo json_encode(['status'=>$item['status']]);
         exit;
     }
 

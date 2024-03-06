@@ -24,7 +24,6 @@ require_once 'func.login.php';
 <link rel="stylesheet" type="text/css" href="fonts/css/fontawesome-all.min.css">
 <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
 <link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
-<div class="menu-hider"></div>
 </head>
 
 <body class="theme-light">
@@ -84,27 +83,7 @@ if ($res->num_rows) {
 <script type="text/javascript" src="scripts/custom.js"></script>
 
 <?php
-if(isset($_SESSION['error_msg'])){
-    echo '
-    <div id="notification-1" data-dismiss="notification-1" data-bs-delay="3000" data-bs-autohide="true" class="notification notification-ios bg-dark-dark ms-2 me-2 mt-2 rounded-s">
-        <span class="notification-icon color-white rounded-s">
-            <i class="fa fa-bell"></i>
-            <em>Error</em>
-            <i data-dismiss="notification-1" class="fa fa-times-circle"></i>
-        </span>
-        <h1 class="font-18 color-white mb-n3">All Good</h1>
-        <p class="pt-1">
-            ' . $_SESSION['error_msg'] . '
-        </p>
-    </div>  
-    <script>
-    var toastID = document.getElementById("notification-1");
-    toastID = new bootstrap.Toast(toastID);
-    toastID.show();
-    </script>
-    ';
-    unset($_SESSION['error_msg']);
-}
+output_session_error();
 ?>
 
 </body><?php

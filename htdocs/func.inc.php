@@ -327,3 +327,39 @@ function cleanString($text) {
 	return $res;
 }
 
+/**
+ * Display error on page
+ *
+ * @return void
+ */
+function output_session_error(){
+    if(isset($_SESSION['error_msg'])){
+        echo '
+    <div id="error-1" data-dismiss="error-1" data-bs-delay="10000" data-bs-autohide="true" class="notification notification-ios bg-pink2-light ms-2 me-2 mt-2 rounded-s">
+    <div class="card card-style alert" role="alert">
+            <div class="d-flex py-2">
+                <div>
+                    <i class="fa fa-exclamation-circle me-3 scale-box fa-4x color-night-dark"></i>
+                </div>
+                <div>
+                    <p class="color-white mb-n1 font-12 font-600">APP crash</p>
+                    <h1 class="mb-0">AN ERROR HAS OCCURED</h1>
+                    <p class="pt-1">
+                        ' . $_SESSION['error_msg'] . '
+                    </p>
+                </div>
+                <div class="ms-auto align-self-center">
+                    <div data-bs-dismiss="alert" aria-label="Close"><i class="fa fa-times-circle font-16 color-night-dark"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    var toastID = document.getElementById("error-1");
+    toastID = new bootstrap.Toast(toastID);
+    toastID.show();
+    </script>
+        ';
+        unset($_SESSION['error_msg']);
+    }
+}

@@ -8,8 +8,6 @@ var CACHE_NAME = APP_NAME + '-' + APP_VER;
 // Add all files you want to view offline below.
 // Leave REQUIRED_FILES = [] to disable offline.
 var REQUIRED_FILES = [
-	// HTML Files
-	'index.html',
 	// Styles
 	'styles/style.css',
 	'styles/bootstrap.css',

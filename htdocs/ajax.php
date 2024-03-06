@@ -22,7 +22,8 @@ set_time_limit(0);
 if( !empty($_SESSION['task']['aiid']) ){
     require_once AJAX_FOLDER_PATH . '/openai/run-tasks.php';
 } else {
-    http_response_code(200);
-    echo json_encode(['message'=>'Nothing to do.']);
+    //http_response_code(102);
+    header('HTTP/1.0 200 OK');
+    echo json_encode(['status'=>'idle','progress'=>35,'message'=>'Nothing to do.']);
     exit;
 }
