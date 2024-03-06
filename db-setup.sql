@@ -7,7 +7,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-DROP TABLE IF EXISTS `kistaai_uploaded_files`;
 CREATE TABLE IF NOT EXISTS `kistaai_uploaded_files` (
   `upload_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(10) DEFAULT NULL,
@@ -24,9 +23,8 @@ CREATE TABLE IF NOT EXISTS `kistaai_uploaded_files` (
   `log` text COLLATE utf8mb4_danish_ci,
   `error` text COLLATE utf8mb4_danish_ci,
   PRIMARY KEY (`upload_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
-DROP TABLE IF EXISTS `kistaai_uploaded_files__openai`;
 CREATE TABLE IF NOT EXISTS `kistaai_uploaded_files__openai` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `upload_id` int(11) unsigned NOT NULL,
@@ -39,9 +37,8 @@ CREATE TABLE IF NOT EXISTS `kistaai_uploaded_files__openai` (
   KEY `uploadId` (`upload_id`) USING BTREE,
   KEY `userId` (`user_id`) USING BTREE,
   KEY `validTo` (`valid_to`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_danish_ci;
 
-DROP TABLE IF EXISTS `kistaai_users__sessions`;
 CREATE TABLE IF NOT EXISTS `kistaai_users__sessions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `sessionid` varchar(255) CHARACTER SET utf8 COLLATE utf8_swedish_ci NOT NULL DEFAULT '',
@@ -49,24 +46,8 @@ CREATE TABLE IF NOT EXISTS `kistaai_users__sessions` (
   `validto` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `sessionid` (`sessionid`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_swedish_ci;
 
-/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET NAMES utf8 */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-DROP TABLE IF EXISTS `kistaai_users__sessions_data`;
 CREATE TABLE IF NOT EXISTS `kistaai_users__sessions_data` (
   `session_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `data` text COLLATE utf8_swedish_ci NOT NULL,
