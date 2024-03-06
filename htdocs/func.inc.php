@@ -28,10 +28,48 @@ require APPDATA_PATH . '/image_helpers.php';
 require APPDATA_PATH . '/db_helpers.php';
 require APPDATA_PATH . '/session_helpers.php';
 require APPDATA_PATH . '/string_manipulation.php';
+require APPDATA_PATH . '/openai_helpers.php';
 
 if(!function_exists('sqlError__alertAndStop')){ function sqlError__alertAndStop($sql_error, $sql_query, $reference = '', $UserID = 0, $trace = null){
     return time();
 } }
+
+
+function setActiveIf($x,$y){
+    if($x == $y)
+        return 'active-nav';
+    return '';
+}
+function HTML_FOOTER($i){
+    return '
+    <div id="footer-bar" class="footer-bar-6">
+        <!-- <a href="index-components.html" class="' . setActiveIf($i,1) . '"><i class="fa fa-layer-group"></i><span>Features</span></a> -->
+        <a href="gallery.php" class="' . setActiveIf($i,2) . '"><i class="fa fa-file"></i><span>Pages</span></a>
+        <a href="upload.php" class="circle-nav ' . setActiveIf($i,3) . '"><i class="fa fa-home"></i><span>Last opp</span></a>
+        <a href="gallery.php" class="' . setActiveIf($i,4) . '"><i class="fa fa-camera"></i><span>Gallery</span></a>
+        <!-- <a href="#" data-menu="menu-main" class="' . setActiveIf($i,5) . '"><i class="fa fa-bars"></i><span>Menu</span></a> -->
+    </div>
+    ';
+}
+function HTML_HEADER($part){
+    if (strtolower($part) == 'header-fixed') {
+        return '
+            <a href="#" data-back-button class="header-icon header-icon-1"><i class="fa fa-chevron-left"></i></a>
+            <a href="#" class="header-icon header-icon-3" data-menu="menu-share"><i class="fa fa-share-alt"></i></a>
+            <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-dark"><i class="fas fa-sun"></i></a>
+            <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-light"><i class="fas fa-moon"></i></a>
+            <!-- <a href="#" data-menu="menu-main" class="header-icon header-icon-4"><i class="fas fa-bars"></i></a> -->
+        ';
+    } else if (strtolower($part) == 'page-title-fixed') {
+        return '
+        <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-share"><i class="fa fa-share-alt"></i></a>
+        <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-light" data-toggle-theme><i class="fa fa-moon"></i></a>
+        <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i class="fa fa-lightbulb color-yellow-dark"></i></a>
+        <!-- <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars"></i></a> -->
+        ';
+    }
+}
+
 
 /**
  * Logging for debugging when working local

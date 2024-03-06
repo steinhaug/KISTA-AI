@@ -19,8 +19,6 @@ require_once 'func.login.php';
 ignore_user_abort(true);
 set_time_limit(0);
 
-require_once APPDATA_PATH . '/openai_helpers.php';
-
 if( !empty($_SESSION['task']['aiid']) ){
     require_once AJAX_FOLDER_PATH . '/openai/run-tasks.php';
 } else {

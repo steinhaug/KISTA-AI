@@ -35,48 +35,35 @@ require_once 'func.login.php';
 
     <div class="header header-fixed header-logo-center">
         <a href="index.html" class="header-title">Galleri</a>
-        <a href="#" data-back-button class="header-icon header-icon-1"><i class="fa fa-chevron-left"></i></a>
-        <a href="#" data-toggle-theme class="header-icon header-icon-3 show-on-theme-dark"><i class="fas fa-sun"></i></a>
-        <a href="#" data-toggle-theme class="header-icon header-icon-3 show-on-theme-light"><i class="fas fa-moon"></i></a>
-        <a href="#" data-menu="menu-main" class="header-icon header-icon-4"><i class="fas fa-bars"></i></a>
+        <?=HTML_HEADER('header-fixed')?>
     </div>
 
-    <div id="footer-bar" class="footer-bar-6">
-        <a href="index-components.html"><i class="fa fa-layer-group"></i><span>Features</span></a>
-        <a href="index-pages.html"><i class="fa fa-file"></i><span>Pages</span></a>
-        <a href="upload.php" class="circle-nav"><i class="fa fa-home"></i><span>Last opp</span></a>
-        <a href="index-projects.html" class="active-nav"><i class="fa fa-camera"></i><span>Projects</span></a>
-        <a href="#" data-menu="menu-main"><i class="fa fa-bars"></i><span>Menu</span></a>
-    </div>
+    <?=HTML_FOOTER(4)?>
 
     <div class="page-content header-clear-medium">
 
             <div class="card card-style">
                 <div class="content">
-                    <p class="mb-n1 color-highlight font-600">Classic Thumbs</p>
-                    <h1>Squared</h1>
+                    <p class="mb-n1 color-highlight font-600">Gallery</p>
+                    <h1>Your reciepes</h1>
                     <p class="mb-3">
-                        The classic squared thumbnail gallery. A must have for any basic gallery.
+                        Click on the thumbnail to view the reciepe.
                     </p>
                     <div class="row row-cols-3 px-1 mb-0">
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
+<?php
+
+$items = $mysqli->result('assoc')->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != ''");
+foreach($items as $item){
+    #var_dump($item);
+    echo '
+                        <a class="col p-2" href="reciepe.php?rid=' . $item['upload_id'] . '" _data-gallery="gallery-a">
+                            <img src="' . reciepe_thumb($item['reciepe_image']) . '" alt="img" class="img-fluid rounded-s shadow-xl">
                         </a>
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
-                        <a class="col p-2" href="images/pictures/150x150.jpg" data-gallery="gallery-a">
-                            <img src="images/pictures/150x150.jpg" alt="img" class="img-fluid rounded-s shadow-xl">
-                        </a>
+    ';
+}
+
+?>
+
                     </div>
                 </div>
             </div>

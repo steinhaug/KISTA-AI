@@ -1292,16 +1292,16 @@
         },
         {
             "name": "steinhaug/mysqli",
-            "version": "v1.6.2",
+            "version": "v1.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/steinhaug/mysqli.git",
-                "reference": "8b4b49261c92ec70d043557ad7da257647e7b8ad"
+                "reference": "37c16b7b98590273f9d746d6d5b6b1e8f8ab776f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/steinhaug/mysqli/zipball/8b4b49261c92ec70d043557ad7da257647e7b8ad",
-                "reference": "8b4b49261c92ec70d043557ad7da257647e7b8ad",
+                "url": "https://api.github.com/repos/steinhaug/mysqli/zipball/37c16b7b98590273f9d746d6d5b6b1e8f8ab776f",
+                "reference": "37c16b7b98590273f9d746d6d5b6b1e8f8ab776f",
                 "shasum": ""
             },
             "require": {
@@ -1350,7 +1350,7 @@
                     "type": "Suck up to the developer"
                 }
             ],
-            "time": "2024-01-05T01:49:53+00:00"
+            "time": "2024-03-06T19:52:59+00:00"
         },
         {
             "name": "steinhaug/sqlbuddy",
