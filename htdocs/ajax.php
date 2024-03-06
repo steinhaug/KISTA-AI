@@ -1,4 +1,6 @@
 <?php
+if(!(in_array($_SERVER['SERVER_NAME'],['kista-ai.steinhaug.no','kista-ai.local']))) { http_response_code(404); exit; }
+
 ob_start();
 session_cache_expire(720);
 if (isset($_SERVER['HTTP_HOST']) and ('kista-ai.local' == $_SERVER['HTTP_HOST'])) {
