@@ -1,5 +1,12 @@
 <?php
 class OpenAIException extends Exception {};
+function updateUploadFile($upload_id, $status, $log){
+    global $mysqli, $kista_dp;
+    $sql = new sqlbuddy;
+    $sql->que('status', $status, 'string');
+    $sql->que('log', json_encode($log), 'text');
+    $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
+}
 
 $error = null;
 $upload_id = (int) $_SESSION['task']['aiid'];
@@ -17,20 +24,28 @@ if ($res->num_rows) {
                 throw new Exception('Image format not supported');
             }
 
-
             require AJAX_FOLDER_PATH . '/openai/task01-createThumbnail.php';
-            $mysqli->query("UPDATE `" . $kista_dp . "uploaded_files` SET `status`='task1' WHERE `upload_id`=" . $upload_id);
+            updateUploadFile($upload_id, 'task1', $log);
+
             require AJAX_FOLDER_PATH . '/openai/task02-OpenAIVision.php';
-            $mysqli->query("UPDATE `" . $kista_dp . "uploaded_files` SET `status`='task2' WHERE `upload_id`=" . $upload_id);
+            updateUploadFile($upload_id, 'task2', $log);
+            setUploadStatus($upload_id, 'task2', ['chatgpt_result1'=>$chatgpt_result1,'chatgpt_result2'=>$chatgpt_result2]);
+
             require AJAX_FOLDER_PATH . '/openai/task03-OpenAIChatYouAreChef.php';
-            $mysqli->query("UPDATE `" . $kista_dp . "uploaded_files` SET `status`='task3' WHERE `upload_id`=" . $upload_id);
+            updateUploadFile($upload_id, 'task3', $log);
+            setUploadStatus($upload_id, 'task3', ['completion1'=>$completion1,'completion2'=>$completion2]);
+
             require AJAX_FOLDER_PATH . '/openai/task04-OpenAIDallE.php';
-            $mysqli->query("UPDATE `" . $kista_dp . "uploaded_files` SET `status`='task4' WHERE `upload_id`=" . $upload_id);
+            updateUploadFile($upload_id, 'task4', $log);
+            setUploadStatus($upload_id, 'task4', ['dalle_image_url'=>$dalle_image_url]);
 
             $sql = new sqlbuddy;
             $sql->que('status', 'complete', 'string');
             $sql->que('log', json_encode($log), 'text');
             $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
+
+            unset($_SESSION['task']);
+            echo json_encode(['status'=>'complete','progress'=>100,'message'=>'All tasks completed.']); exit;
 
         } catch (OpenAIException $e) {
             $error = $e->getMessage();
@@ -38,6 +53,8 @@ if ($res->num_rows) {
             $sql->que('status', 'error', 'string');
             $sql->que('error', 'OpenAI error: ' . $error, 'text');
             $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
+            unset($_SESSION['task']);
+            echo json_encode(['status'=>'failed','progress'=>100,'error'=>'Task returned an error and was aborted.']); exit;
             var_dump($success);
         } catch (Exception $e) {
             $error = $e->getMessage();
@@ -45,19 +62,32 @@ if ($res->num_rows) {
             $sql->que('status', 'error', 'string');
             $sql->que('error', $error, 'text');
             $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
+            unset($_SESSION['task']);
+            echo json_encode(['status'=>'failed','progress'=>100,'error'=>'Task returned an error and was aborted.']); exit;
             var_dump($success);
         }
 
     } else {
-        http_response_code(102);
-        echo json_encode(['status'=>$item['status']]);
+        http_response_code(200);
+        switch ($item['status']) {
+            case 'start': $progress = 10; break;
+            case 'task1': $progress = 20; break;
+            case 'task2': $progress = 40; break;
+            case 'task3': $progress = 60; break;
+            case 'task4': $progress = 80; break;
+            case 'complete': $progress = 100; break;
+            case 'error': $progress = 100; break;
+            case 'failed': $progress = 100; break;
+        }
+        echo json_encode(['status'=>$item['status'], 'progress'=>$progress]);
         exit;
     }
 
 } else {
     $error = 'An APP error has occured. Task ' . (int) $upload_id . ' does not exist.';
     $_SESSION['error_msg'] = $error;
-    http_response_code(404);
+    unset($_SESSION['task']);
+    http_response_code(200);
     echo json_encode(['error'=>$error]);
     exit;
 }

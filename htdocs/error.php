@@ -44,7 +44,7 @@ require_once 'func.login.php';
 
             <div class="card card-style">
                 <div class="content">
-                    <p class="mb-n1 color-highlight font-600">Error report...</p>
+                    <p class="mb-n1 color-highlight font-600">Task error: <?php if(!empty($_GET['rid'])){echo $_GET['rid'];} else {echo '-';}; ?></p>
                     <h1>An error has occured in the app</h1>
                     <p>Something has gone wrong, view the error message or try again.</p>
                </div>

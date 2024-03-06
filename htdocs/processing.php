@@ -48,7 +48,7 @@ if( empty($_GET['aiid']) ){
     <div class="page-content header-clear-medium">
 
             <div class="card card-style">
-                <div class="content">
+                <div class="content" id="page-content">
                     <p class="mb-n1 color-highlight font-600">Analyzing...</p>
                     <h1>Processing your image</h1>
 
@@ -85,7 +85,7 @@ if( empty($_GET['aiid']) ){
 $rid = (int) $_GET['aiid'];
 ?>
 <script>
-function executeAjaxRequest() {
+function initiateImageProcessing(){
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/ajax.php?aiid=<?=$rid?>", true);
     xhr.onreadystatechange = function() {
@@ -93,11 +93,35 @@ function executeAjaxRequest() {
             var json = JSON.parse(xhr.responseText);
             if (json.status === "complete") {
                 window.location.href = "reciepe.php?rid=<?=$rid?>";
+            } else if(json.status === "error") {
+                window.location.href = "error.php?rid=<?=$rid?>";
+            } else if(json.status === "idle") {
+                var progressElement = document.getElementById('page-content');
+                progressElement.innerHTML = '<h1>Page idle</h1><p>Nothing to do...</p>';
+            }
+        }
+    };
+    xhr.send();
+}
+function pollImageProcessing() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/ajax.php?aiid=<?=$rid?>", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var json = JSON.parse(xhr.responseText);
+            console.log(xhr.responseText);
+            if (json.status === "idle") {
+                var progressElement = document.getElementById('page-content');
+                progressElement.innerHTML = '<h1>Page idle</h1><p>Nothing to do...</p>';
+            } else if (json.status === "complete") {
+                window.location.href = "reciepe.php?rid=<?=$rid?>";
+            } else if (json.status === "error") {
+                window.location.href = "error.php?rid=<?=$rid?>";
             } else {
                 if (json.hasOwnProperty('progress') && Number.isInteger(json.progress)) {
                     updateProgress(json.progress);
                 }
-                setTimeout(executeAjaxRequest, 10000);
+                setTimeout(pollImageProcessing, 5000);
             }
         }
     };
@@ -112,7 +136,8 @@ function updateProgress(value) {
     }
 }
 document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(executeAjaxRequest, 2000);
+    initiateImageProcessing();
+    setTimeout(pollImageProcessing, 2000);
 });
 </script>
 

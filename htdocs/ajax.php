@@ -24,6 +24,6 @@ if( !empty($_SESSION['task']['aiid']) ){
 } else {
     //http_response_code(102);
     header('HTTP/1.0 200 OK');
-    echo json_encode(['status'=>'idle','progress'=>35,'message'=>'Nothing to do.']);
+    echo json_encode(['status'=>'idle','progress'=>0,'message'=>'Nothing to do.']);
     exit;
 }
