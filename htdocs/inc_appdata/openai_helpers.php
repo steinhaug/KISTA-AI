@@ -60,15 +60,15 @@ function openai__extract_prompts($string) {
 function openai__extract_the_prompts($str){
     $arr = [];
 
-    $match = '2. A';
+    $match = '2. ';
     $p2 = strpos($str, $match);
     $arr[] = substr($str, 0, $p2);
 
-    $match = '3. A';
+    $match = '3. ';
     $p3 = strpos($str, $match);
     $arr[] = substr($str, $p2, ($p3-$p2));
 
-    $match = '4. A';
+    $match = '4. ';
     $p4 = strpos($str, $match);
     $arr[] = substr($str, $p3, ($p4-$p3));
 
