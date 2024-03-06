@@ -9,6 +9,11 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 require_once 'func.inc.php';
 require_once 'func.login.php';
 
+if( empty($_GET['aiid']) ){
+    header('Location: error.php');
+    exit;
+}
+
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -24,7 +29,6 @@ require_once 'func.login.php';
 <link rel="stylesheet" type="text/css" href="fonts/css/fontawesome-all.min.css">
 <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
 <link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
-<div class="menu-hider"></div>
 </head>
 
 <body class="theme-light">
@@ -39,6 +43,7 @@ require_once 'func.login.php';
     </div>
 
     <?=HTML_FOOTER(3)?>
+
 
     <div class="page-content header-clear-medium">
 
@@ -66,41 +71,53 @@ require_once 'func.login.php';
     
     <!-- Main Menu--> 
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>
-    
     <!-- Share Menu-->
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
-    
     <!-- Colors Menu-->
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
-     
-    
+
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js"></script>
 
 <?php
-if(isset($_SESSION['error_msg'])){
-    echo '
-    <div id="notification-1" data-dismiss="notification-1" data-bs-delay="3000" data-bs-autohide="true" class="notification notification-ios bg-dark-dark ms-2 me-2 mt-2 rounded-s">
-        <span class="notification-icon color-white rounded-s">
-            <i class="fa fa-bell"></i>
-            <em>Error</em>
-            <i data-dismiss="notification-1" class="fa fa-times-circle"></i>
-        </span>
-        <h1 class="font-18 color-white mb-n3">All Good</h1>
-        <p class="pt-1">
-            ' . $_SESSION['error_msg'] . '
-        </p>
-    </div>  
-    <script>
-    var toastID = document.getElementById("notification-1");
-    toastID = new bootstrap.Toast(toastID);
-    toastID.show();
-    </script>
-    ';
-    unset($_SESSION['error_msg']);
+$rid = (int) $_GET['aiid'];
+?>
+<script>
+function executeAjaxRequest() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/ajax.php?aiid=<?=$rid?>", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var json = JSON.parse(xhr.responseText);
+            if (json.status === "complete") {
+                window.location.href = "reciepe.php?rid=<?=$rid?>";
+            } else {
+                if (json.hasOwnProperty('progress') && Number.isInteger(json.progress)) {
+                    updateProgress(json.progress);
+                }
+                setTimeout(executeAjaxRequest, 10000);
+            }
+        }
+    };
+    xhr.send();
 }
+function updateProgress(value) {
+    var progressElement = document.getElementById('kista-ai-progress');
+    if (progressElement) {
+        progressElement.style.width = value + '%';
+        progressElement.innerHTML = value + '% Complete';
+        progressElement.setAttribute('aria-valuenow', value);
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(executeAjaxRequest, 2000);
+});
+</script>
+
+<?php
+output_session_error();
 ?>
 
 </body><?php
