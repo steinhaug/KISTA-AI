@@ -96,7 +96,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
 <div id="page">
 
     <div class="header header-fixed header-logo-center header-auto-show">
-        <a href="index.html" class="header-title">Last opp bilde</a>
+        <a href="upload.php" class="header-title">Last opp bilde</a>
         <?=HTML_HEADER('header-fixed')?>
     </div>
 

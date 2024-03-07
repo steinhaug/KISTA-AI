@@ -44,7 +44,7 @@ function HTML_FOOTER($i){
     return '
     <div id="footer-bar" class="footer-bar-6">
         <!-- <a href="index-components.html" class="' . setActiveIf($i,1) . '"><i class="fa fa-layer-group"></i><span>Features</span></a> -->
-        <a href="gallery.php" class="' . setActiveIf($i,2) . '"><i class="fa fa-file"></i><span>Pages</span></a>
+        <a href="index.php" class="' . setActiveIf($i,2) . '"><i class="fa fa-file"></i><span>Pages</span></a>
         <a href="upload.php" class="circle-nav ' . setActiveIf($i,3) . '"><i class="fa fa-home"></i><span>Last opp</span></a>
         <a href="gallery.php" class="' . setActiveIf($i,4) . '"><i class="fa fa-camera"></i><span>Gallery</span></a>
         <!-- <a href="#" data-menu="menu-main" class="' . setActiveIf($i,5) . '"><i class="fa fa-bars"></i><span>Menu</span></a> -->

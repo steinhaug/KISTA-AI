@@ -35,7 +35,7 @@ require_once 'func.login.php';
 <div id="page">
 
     <div class="header header-fixed header-logo-center">
-        <a href="index.html" class="header-title">Galleri</a>
+        <a href="gallery.php" class="header-title">Galleri</a>
         <?=HTML_HEADER('header-fixed')?>
     </div>
 

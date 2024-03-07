@@ -40,7 +40,7 @@ if( empty($_GET['aiid']) ){
 <div id="page">
 
     <div class="header header-fixed header-logo-center">
-        <a href="index.html" class="header-title">Processing</a>
+        <a href="processing.php" class="header-title">Processing</a>
         <?=HTML_HEADER('header-fixed')?>
     </div>
 

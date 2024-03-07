@@ -11,6 +11,11 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 require_once 'func.inc.php';
 require_once 'func.login.php';
 
+if(empty($_GET['rid'])){
+    header('Location: gallery.php');
+    exit;
+}
+
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -35,7 +40,7 @@ require_once 'func.login.php';
 <div id="page">
 
     <div class="header header-fixed header-logo-center">
-        <a href="gallery.php" class="header-title">Reciepe</a>
+        <a href="reciepe.php" class="header-title">Reciepe</a>
         <?=HTML_HEADER('header-fixed')?>
     </div>
 

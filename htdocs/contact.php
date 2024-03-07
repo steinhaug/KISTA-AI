@@ -35,7 +35,7 @@ require_once 'func.login.php';
 <div id="page">
 
     <div class="header header-fixed header-logo-center">
-        <a href="index.html" class="header-title">Contact</a>
+        <a href="contact.php" class="header-title">Contact</a>
         <?=HTML_HEADER('header-fixed')?>
     </div>
 
