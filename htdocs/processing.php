@@ -89,7 +89,7 @@ $rid = (int) $_GET['aiid'];
 <script>
 function initiateImageProcessing(){
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/ajax.php?aiid=<?=$rid?>", true);
+    xhr.open("GET", "/ajax.php?aiid=<?=$rid?>&t=init", true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var json = JSON.parse(xhr.responseText);
@@ -107,7 +107,8 @@ function initiateImageProcessing(){
 }
 function pollImageProcessing() {
     var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/ajax.php?aiid=<?=$rid?>", true);
+    var timestamp = new Date().getTime();
+    xhr.open("GET", "/ajax.php?aiid=<?=$rid?>" + "&t=" + timestamp, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             var json = JSON.parse(xhr.responseText);
@@ -138,7 +139,7 @@ function updateProgress(value) {
     }
 }
 document.addEventListener('DOMContentLoaded', function() {
-    initiateImageProcessing();
+    setTimeout(initiateImageProcessing, 1);
     setTimeout(pollImageProcessing, 2000);
 });
 </script>
