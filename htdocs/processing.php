@@ -124,7 +124,7 @@ function pollImageProcessing() {
                 if (json.hasOwnProperty('progress') && Number.isInteger(json.progress)) {
                     updateProgress(json.progress);
                 }
-                setTimeout(pollImageProcessing, 5000);
+                setTimeout(pollImageProcessing, 7500);
             }
         }
     };
