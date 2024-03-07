@@ -101,7 +101,7 @@ require_once 'func.login.php';
             <div class="content">
                 <p class="mb-n1 color-highlight font-600">Magic Meal Maker</p>
                 <h1>
-                    Din Kjøleskaps Hemmelige Kokk!
+                    Kjøleskapets hemmelige kokk!
                 </h1>
                 <p>
                     Har du noen gang stirret inn i kjøleskapet ditt, lurer på hva du skal lage? Si farvel til kulinariske gåter med Magic Meal Maker! Vår innovative app forvandler innholdet i kjøleskapet ditt til deilige, enkle å følge oppskrifter med et knappetrykk.
