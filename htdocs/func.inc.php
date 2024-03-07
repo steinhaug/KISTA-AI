@@ -17,6 +17,12 @@ if( !isset($_SERVER['HTTP_ACCEPT_ENCODING']) )
 if( !isset($_SERVER['HTTP_USER_AGENT']) )
     $_SERVER['HTTP_USER_AGENT'] = '';
 
+if( str_contains($_SERVER['HTTP_ACCEPT_LANGUAGE'], 'nb-NO') ){
+    $lang = 'nb';
+} else {
+    $lang = 'en';
+}
+
 class KistaDashboardException extends Exception
 {
 }
@@ -363,3 +369,5 @@ function output_session_error(){
         unset($_SESSION['error_msg']);
     }
 }
+
+
