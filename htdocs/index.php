@@ -58,7 +58,7 @@ require_once 'func.login.php';
         <div class="card rounded-0 bg-fpnb" data-card-height="450">
             <div class="card-bottom text-end pe-3 pb-4 mb-4">
                 <h1 class="color-white font-21 mb-n1">
-                    KISTA AI
+                    KISTA AI <sup>v1.0</sup>
                 </h1>
                 <p class="color-white font-12">
                     Another AI app doing AI stuff
@@ -85,9 +85,9 @@ require_once 'func.login.php';
                 </p>
                 <h3>How It Works:</h3>
                 <ol>
-                    <li>Snap & Upload: Simply take a picture of your refrigerator's contents and upload it to our app.</li>
-                    <li>AI-Powered Analysis: Our advanced AI chef quickly identifies your ingredients and suggests a variety of recipes you can create.</li>
-                    <li>Cook & Enjoy: Choose a recipe that tantalizes your taste buds, follow the step-by-step instructions, and dive into a delightful meal made from your own kitchen!</li>
+                    <li><b>Snap & Upload:</b> Simply take a picture of your refrigerator's contents and upload it to our app.</li>
+                    <li><b>AI-Powered Analysis:</b> Our advanced AI chef quickly identifies your ingredients and suggests a variety of recipes you can create.</li>
+                    <li><b>Cook & Enjoy:</b> Choose a recipe that tantalizes your taste buds, follow the step-by-step instructions, and dive into a delightful meal made from your own kitchen!</li>
                 </ol>
                 <p>
                     With Magic Meal Maker, unleash your inner chef, reduce food waste, and discover new ways to enjoy the ingredients you already have. Whether you're a cooking novice or a culinary wizard, our app is designed to inspire creativity and bring joy to your mealtime. Let's turn your fridge finds into your next gastronomic adventure!
@@ -108,9 +108,9 @@ require_once 'func.login.php';
                 </p>
                 <h3>Hvordan det fungerer:</h3>
                 <ol>
-                    <li>Knips og Last opp: Ta ganske enkelt et bilde av innholdet i kjøleskapet ditt og last det opp til appen vår.</li>
-                    <li>AI-drevet Analyse: Vår avanserte AI-kokk identifiserer raskt ingrediensene dine og foreslår en rekke oppskrifter du kan lage.</li>
-                    <li>Lag mat og Nyt: Velg en oppskrift som frister smaksløkene dine, følg trinn-for-trinn-instruksjonene, og dykk inn i et deilig måltid laget fra ditt eget kjøkken!</li>
+                    <li><b>Knips og Last opp:</b> Ta ganske enkelt et bilde av innholdet i kjøleskapet ditt og last det opp til appen vår.</li>
+                    <li><b>AI-drevet Analyse:</b> Vår avanserte AI-kokk identifiserer raskt ingrediensene dine og foreslår en rekke oppskrifter du kan lage.</li>
+                    <li><b>Lag mat og Nyt:</b> Velg en oppskrift som frister smaksløkene dine, følg trinn-for-trinn-instruksjonene, og dykk inn i et deilig måltid laget fra ditt eget kjøkken!</li>
                 </ol>
                 <p>
                     Med Magic Meal Maker, frigjør din indre kokk, reduser matsvinn, og oppdag nye måter å nyte ingrediensene du allerede har. Enten du er en matlagingsnovise eller en kulinarisk trollmann, er vår app designet for å inspirere kreativitet og bringe glede til måltidet ditt. La oss forvandle funnene fra kjøleskapet ditt til ditt neste gastronomiske eventyr!
