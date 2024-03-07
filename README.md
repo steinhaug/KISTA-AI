@@ -4,6 +4,10 @@
 
 A simple APP that utilizes the AI offered via API from OpenAPI in a quick and dirty way, hopefully showcasing some of the possibilities.
 
+## APP Demo
+
+[https://kista-ai.steinhaug.no/](https://kista-ai.steinhaug.no/)
+
 ## The idea
 
 Snap a photo of your fridge and let the AI come up with some dinner suggestions presented as sexy as possible.
@@ -46,7 +50,7 @@ _v0.7.0 - Design the website for the app, the site will have an upload feature a
 _v0.8.0 - Complete the upload part of the app, and the display of the reciepe._  
 _v0.8.1 - Setup database and connect it to the website, make sure all images are saved and cached ready for a possible gallery mode._  
 _v0.8.2 - Initial pre-release of the KISTA AI app with all required functionality needed to deliver the AI experience._  
-v0.9.0 - Complete the gallery mode of the app.  
+_v0.9.0 - Complete the gallery mode of the app._  
 v0.9.1 - Increase the amount of reciepes generated from 1 to 3 for each upload.  
 v0.9.2 - Redo the spinner page with fancier graphics.  
 v0.9.3 - Analyze logs and user creations, goal is to improve vision, completion and imagination. Descide what metrics we will focus on for theese goals.  
