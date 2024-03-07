@@ -19,8 +19,14 @@ if( !isset($_SERVER['HTTP_USER_AGENT']) )
 
 if( str_contains($_SERVER['HTTP_ACCEPT_LANGUAGE'], 'nb-NO') ){
     $lang = 'nb';
+    $appConf = [
+        'menuFooter' => 'menu-footer-nb.html'
+    ];
 } else {
     $lang = 'en';
+    $appConf = [
+        'menuFooter' => 'menu-footer-en.html'
+    ];
 }
 
 class KistaDashboardException extends Exception
