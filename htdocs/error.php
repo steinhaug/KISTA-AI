@@ -52,7 +52,7 @@ require_once 'func.login.php';
                </div>
             </div>
 
-        <div data-menu-load="menu-footer.html"></div>
+        <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
     </div>
     <!-- Page content ends here-->
     

@@ -129,7 +129,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
         </div>
 
 
-        <div data-menu-load="menu-footer.html"></div>
+        <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
     </div>
     <!-- Page content ends here-->
 
