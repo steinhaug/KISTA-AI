@@ -32,6 +32,8 @@ var REQUIRED_FILES = [
 	'fonts/webfonts/fa-solid-900.woff2',
 	// Images
 	'images/empty.png',
+	'images/pictures/refrigerator-700-en.png',
+	'images/pictures/refrigerator-700-nb.png',
 ];
 
 // Service Worker Diagnostic. Set true to get console logs.
