@@ -26,6 +26,18 @@ require_once 'func.login.php';
 <link rel="stylesheet" type="text/css" href="fonts/css/fontawesome-all.min.css">
 <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
 <link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
+
+<style>
+<?php if($lang=='en'){ ?>
+.bg-fpnb { background-image: url(/images/pictures/refrigerator-700-en.png); }
+<?php } else { ?>
+.bg-fpnb { background-image: url(/images/pictures/refrigerator-700-nb.png); }
+<?php } ?>
+.bg-gradient-2 {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.8) 80%, black 100%) !important;
+}
+</style>
+
 </head>
 
 <body class="theme-light">
@@ -34,42 +46,100 @@ require_once 'func.login.php';
 
 <div id="page">
 
-    <div class="header header-fixed header-logo-center">
-        <a href="index.php" class="header-title">KISTA AI</a>
+    <div class="header header-fixed header-logo-center header-auto-show">
+        <a href="index.php" class="header-title">Magic Meal Maker</a>
         <?=HTML_HEADER('header-fixed')?>
     </div>
 
     <?=HTML_FOOTER(2)?>
 
-    <div class="page-content header-clear-medium">
+    <div class="page-content">
 
-            <div class="card card-style">
-                <div class="content">
-                    <p class="mb-n1 color-highlight font-600">Refrigerator reciepe</p>
-                    <h1>KISTA AI</h1>
-                    <p class="mb-3">
-                        Take a photo of your opened refrigerator and upload it here, and let the AI come up with a reciepe you can make.
-                    </p>
-                    <p>
-                        <a href="upload.php">Upload refrigerator image</a>
-                    </p>
-                </div>
+        <div class="card rounded-0 bg-fpnb" data-card-height="450">
+            <div class="card-bottom text-end pe-3 pb-4 mb-4">
+                <h1 class="color-white font-21 mb-n1">
+                    KISTA AI
+                </h1>
+                <p class="color-white font-12">
+                    Another AI app doing AI stuff
+                </p>
             </div>
+            <div class="card-top mt-3 pb-5 ps-3">
+                <a href="#" data-back-button class="icon icon-s bg-theme rounded-xl float-start me-3"><i class="fa color-theme fa-arrow-left"></i></a>
+                <a href="#" data-menu="menu-share"  class="icon icon-s bg-theme rounded-xl float-end me-3"><i class="fa color-theme fa-share-alt"></i></a>
+                <a href="#" data-menu="menu-heart"  class="icon icon-s bg-theme rounded-xl float-end me-2"><i class="fa color-red-dark fa-bookmark"></i></a>
+            </div>
+            <div class="card-overlay bg-gradient-2"></div>
+        </div>
+        
+<?php if($lang=='en'){ ?>
+        <!-- margin top  negative value repesent how much you want the article to go over the above image-->
+        <div class="card card-style card-full-left" style="margin-top:-100px; z-index:1">
+            <div class="content">
+                <p class="mb-n1 color-highlight font-600">Magic Meal Maker</p>
+                <h1>
+                    Your Refrigerator's Secret Chef!
+                </h1>
+                <p>
+                    Ever stare at your fridge, wondering what to cook? Say goodbye to culinary conundrums with Magic Meal Maker! Our innovative app transforms your fridge contents into delicious, easy-to-follow recipes at the touch of a button.
+                </p>
+                <h3>How It Works:</h3>
+                <ol>
+                    <li>Snap & Upload: Simply take a picture of your refrigerator's contents and upload it to our app.</li>
+                    <li>AI-Powered Analysis: Our advanced AI chef quickly identifies your ingredients and suggests a variety of recipes you can create.</li>
+                    <li>Cook & Enjoy: Choose a recipe that tantalizes your taste buds, follow the step-by-step instructions, and dive into a delightful meal made from your own kitchen!</li>
+                </ol>
+                <p>
+                    With Magic Meal Maker, unleash your inner chef, reduce food waste, and discover new ways to enjoy the ingredients you already have. Whether you're a cooking novice or a culinary wizard, our app is designed to inspire creativity and bring joy to your mealtime. Let's turn your fridge finds into your next gastronomic adventure!
+                </p>
+                <p><a href="/upload.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start ">To the upload page</a></p>
+            </div>
+        </div>
+<?php } else { ?>
+        <!-- margin top  negative value repesent how much you want the article to go over the above image-->
+        <div class="card card-style card-full-left" style="margin-top:-100px; z-index:1">
+            <div class="content">
+                <p class="mb-n1 color-highlight font-600">Magic Meal Maker</p>
+                <h1>
+                    Din Kjøleskaps Hemmelige Kokk!
+                </h1>
+                <p>
+                    Har du noen gang stirret inn i kjøleskapet ditt, lurer på hva du skal lage? Si farvel til kulinariske gåter med Magic Meal Maker! Vår innovative app forvandler innholdet i kjøleskapet ditt til deilige, enkle å følge oppskrifter med et knappetrykk.
+                </p>
+                <h3>Hvordan det fungerer:</h3>
+                <ol>
+                    <li>Knips og Last opp: Ta ganske enkelt et bilde av innholdet i kjøleskapet ditt og last det opp til appen vår.</li>
+                    <li>AI-drevet Analyse: Vår avanserte AI-kokk identifiserer raskt ingrediensene dine og foreslår en rekke oppskrifter du kan lage.</li>
+                    <li>Lag mat og Nyt: Velg en oppskrift som frister smaksløkene dine, følg trinn-for-trinn-instruksjonene, og dykk inn i et deilig måltid laget fra ditt eget kjøkken!</li>
+                </ol>
+                <p>
+                    Med Magic Meal Maker, frigjør din indre kokk, reduser matsvinn, og oppdag nye måter å nyte ingrediensene du allerede har. Enten du er en matlagingsnovise eller en kulinarisk trollmann, er vår app designet for å inspirere kreativitet og bringe glede til måltidet ditt. La oss forvandle funnene fra kjøleskapet ditt til ditt neste gastronomiske eventyr!
+                </p>
+                <p><a href="/upload.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start ">Til opplastningssiden</a></p>
+            </div>
+        </div>
+<?php } ?>
 
-
-        <div data-menu-load="menu-footer.html"></div>
+        <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
     </div>
     <!-- Page content ends here-->
-    
-    <!-- Main Menu--> 
+        
+    <!-- Added to Bookmarks Menu-->
+    <div id="menu-heart" 
+         class="menu menu-box-modal rounded-m" 
+         data-menu-hide="800"
+         data-menu-width="250"
+         data-menu-height="170">
+        
+        <h1 class="text-center mt-3 pt-2">
+            <i class="fa fa-check-circle color-green-dark fa-3x"></i>
+        </h1>
+        <h3 class="text-center pt-2">Added to Bookmarks</h3>
+    </div>
+
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>
-    
-    <!-- Share Menu-->
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
-    
-    <!-- Colors Menu-->
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
-     
     
 </div>
 
