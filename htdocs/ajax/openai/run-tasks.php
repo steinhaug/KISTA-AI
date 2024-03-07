@@ -18,6 +18,9 @@ if ($res->num_rows) {
 
     if( $item['status'] == 'start' ){
 
+        // Release the session file
+        session_write_close();
+
         try {
 
             if (!($item['extension'] == 'png' or $item['extension'] == 'jpg')) {
@@ -44,7 +47,7 @@ if ($res->num_rows) {
             $sql->que('log', json_encode($log), 'text');
             $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
 
-            unset($_SESSION['task']);
+            #unset($_SESSION['task']);
             echo json_encode(['status'=>'complete','progress'=>100,'message'=>'All tasks completed.']); exit;
 
         } catch (OpenAIException $e) {
@@ -53,7 +56,7 @@ if ($res->num_rows) {
             $sql->que('status', 'error', 'string');
             $sql->que('error', 'OpenAI error: ' . $error, 'text');
             $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
-            unset($_SESSION['task']);
+            #unset($_SESSION['task']);
             echo json_encode(['status'=>'failed','progress'=>100,'error'=>'Task returned an error and was aborted.']); exit;
             var_dump($success);
         } catch (Exception $e) {
@@ -62,7 +65,7 @@ if ($res->num_rows) {
             $sql->que('status', 'error', 'string');
             $sql->que('error', $error, 'text');
             $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
-            unset($_SESSION['task']);
+            #unset($_SESSION['task']);
             echo json_encode(['status'=>'failed','progress'=>100,'error'=>'Task returned an error and was aborted.']); exit;
             var_dump($success);
         }
@@ -75,9 +78,9 @@ if ($res->num_rows) {
             case 'task2': $progress = 40; break;
             case 'task3': $progress = 60; break;
             case 'task4': $progress = 80; break;
-            case 'complete': $progress = 100; break;
-            case 'error': $progress = 100; break;
-            case 'failed': $progress = 100; break;
+            case 'complete': $progress = 100; unset($_SESSION['task']); break;
+            case 'error': $progress = 100; unset($_SESSION['task']); break;
+            case 'failed': $progress = 100; unset($_SESSION['task']); break;
         }
         echo json_encode(['status'=>$item['status'], 'progress'=>$progress]);
         exit;
