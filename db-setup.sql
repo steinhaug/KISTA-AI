@@ -59,3 +59,14 @@ CREATE TABLE IF NOT EXISTS `kistaai_users__sessions_data` (
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+
+
+CREATE TABLE `kistaai_users__google` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `google_id` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+ `name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+ `email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+ `profile_image` text COLLATE utf8mb4_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `google_id` (`google_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=UTF8MB4_UNICODE_CI;

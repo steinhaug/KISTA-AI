@@ -7,3 +7,4 @@ __pycache__
 _files/**/*
 htdocs/xhtml/**/*
 htdocs/uploaded_files/**/*
+credentials/**/*
