@@ -1,4 +1,5 @@
 <?php
+logfile('Task1: init');
 
         $imgIn  = UPLOAD_PATH . DIRECTORY_SEPARATOR . $item['filename'];
         $imgOut = UPLOAD_PATH . DIRECTORY_SEPARATOR . '_thumbs' . DIRECTORY_SEPARATOR . basename($item['filename'], "." . $item['extension']) . '.jpg';

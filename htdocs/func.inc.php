@@ -36,6 +36,7 @@ define('LF', "\n");
 
 require dirname(dirname(APPDATA_PATH)) . '/vendor/autoload.php';
 require dirname(dirname(APPDATA_PATH)) . '/credentials.php';
+require APPDATA_PATH . '/error_handling.php';
 require APPDATA_PATH . '/image_helpers.php';
 require APPDATA_PATH . '/db_helpers.php';
 require APPDATA_PATH . '/session_helpers.php';
@@ -99,6 +100,8 @@ if( !function_exists('logfile') ){
         $logfile = dirname(dirname(__FILE__)) . '/logs/snaketail.log';
         if( $fh = @fopen( $logfile, "a+" ) ){
             foreach($strings as $the_string){
+                if(!is_string($the_string))
+                    $the_string = json_encode($the_string);
                 fputs( $fh, $the_string . $lf, strlen($the_string . $lf) );
             }
             fclose( $fh );

@@ -1,4 +1,5 @@
 <?php
+logfile('Task3: init');
 
 $prompt1 = <<<EOF
 You are a gourmet chef with 50+ years of experience, your task is to come up with a food reciepe. For this task you will have a 

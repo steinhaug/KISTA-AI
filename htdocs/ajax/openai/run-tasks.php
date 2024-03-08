@@ -1,5 +1,7 @@
 <?php
 class OpenAIException extends Exception {};
+class SegWayImage extends Exception {};
+
 function updateUploadFile($upload_id, $status, $log){
     global $mysqli, $kista_dp;
     $sql = new sqlbuddy;
@@ -50,6 +52,15 @@ if ($res->num_rows) {
             #unset($_SESSION['task']);
             echo json_encode(['status'=>'complete','progress'=>100,'message'=>'All tasks completed.']); exit;
 
+
+        } catch (SegWayImage $e) {
+            $error = $e->getMessage();
+            $sql = new sqlbuddy;
+            $sql->que('reciepe', '<no_fridge />', 'string');
+            $sql->que('status', 'complete', 'string');
+            $sql->que('error', 'OpenAI error: ' . $error, 'text');
+            $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
+            echo json_encode(['status'=>'complete','progress'=>100,'error'=>'No fridge']); exit;
         } catch (OpenAIException $e) {
             $error = $e->getMessage();
             $sql = new sqlbuddy;

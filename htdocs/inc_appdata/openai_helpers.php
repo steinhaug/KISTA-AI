@@ -218,3 +218,103 @@ function openai__generateReciepe($string, $img){
 function reciepe_thumb($image_name){
     return '/uploaded_files/_thumbs/' . $image_name;
 }
+
+
+
+function promptDalle($prompt, $imgInt=1){
+    global $mysqli, $open_ai_key, $upload_id, $USER_ID, $kista_dp;
+
+    try {
+        $client = OpenAI::client($open_ai_key);
+
+        $dalle_image_url = null;
+
+        $response = $client->images()->create([
+            'model' => 'dall-e-3',
+            'prompt' => $prompt,
+            'n' => 1,
+            'size' => '1024x1024',
+            'response_format' => 'url',
+        ]);
+
+        foreach ($response->data as $data) {
+            $dalle_image_url = $data->url;
+        }
+        $log[] = 'func(Dall-E), completed.';
+
+        if(empty($dalle_image_url))
+            throw new Exception('func(Dall-E) image_url error, empty.');
+
+        $data = openai__guzzleDownloader($dalle_image_url);
+        if($data[0]=='200' and $data[2]=='png'){
+            if( is_string($imgInt) ){
+                $filename = $imgInt;
+            } else {
+                $filename = str_pad($upload_id, 5, '0', STR_PAD_LEFT) . '-' . str_pad($USER_ID, 5, '0', STR_PAD_LEFT) . '-' . $imgInt . '.png';
+            }
+            file_put_contents(UPLOAD_PATH . '/' . $filename, $data[1]);
+            $log[] = 'func(Dall-E), downloaded.';
+            createThumbnail(
+                UPLOAD_PATH . '/' . $filename,
+                UPLOAD_PATH . '/_thumbs/' . $filename,
+                ['resize' => [150, 150]]
+            );
+            $log[] = 'func(Dall-E) thumbnail, created.';
+
+            if( $upload_id ){
+                $sql = new sqlbuddy;
+                $sql->que('reciepe_image', $filename, 'string');
+                $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
+            }
+
+            $dalle_img1 = [
+                'path' => UPLOAD_PATH . '/' . $filename,
+                'thumb_path' => UPLOAD_PATH . '/_thumbs/' . $filename,
+                'src' => UPLOAD_URI . '/' . $filename,
+                'thumb_src' => UPLOAD_URI . '/_thumbs/' . $filename,
+            ];
+
+        } else {
+            throw new Exception('func(Dall-E) download error, http_status: ' . $data[0] . ', ' . $e->getMessage());
+        }
+
+    } catch (Exception $e) {
+        //throw new OpenAIException($e->getMessage());
+        return false;
+    }
+
+    return true;
+    //return $filename;
+}
+
+/**
+ * queryChatGPT
+ *
+ * @param string $prompt The prompt
+ * @return string The completion
+ */
+function promptChatGPT3($prompt){
+    global $mysqli, $open_ai_key, $upload_id, $USER_ID, $kista_dp;
+    try {
+        $client = OpenAI::client($open_ai_key);
+        $settings = [
+            'model' => 'gpt-3.5-turbo', // 'gpt-4-1106-preview', // 'gpt-3.5-turbo',
+            'messages' => [
+                ['role' => 'user', 'content' => $prompt],
+            ],
+        ];
+        $response1 = $client->chat()->create($settings);
+        $completion = '';
+        foreach ($response1->choices as $result) {
+            $completion = $result->message->content;
+        }
+    } catch (Exception $e) {
+        debug_log_error($e->getMessage());
+        return '';
+    }
+
+    return $completion;
+}
+
+
+

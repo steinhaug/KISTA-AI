@@ -30,6 +30,9 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
     $filename = prepare_available_filename($_real_filename_from_upload, UPLOAD_PATH);
     $file_extension = get_extension($_real_filename_from_upload);
 
+
+    $allowedExtensions = ['jpg','png','gif','tif','bmp','webp','jpeg'];
+
     $deniedExtensions = [
         'php','php1','php2','php3','php4','shtml','pl','cgi','asp'
     ];
@@ -39,10 +42,25 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
         $_SESSION['error_msg'] = $msg;
         header('Location: ' . $callbackURL . '?error');
         exit;
-    } else {
+    } else if(in_array($file_extension, $allowedExtensions)){
+
+        // Make sure we don't have jpeg files
+        $file_extension = str_replace('jpeg','jpg',strtolower($file_extension));
+
         $myU1->changeFilename($filename['file']);
         $myU1->xCopy($filename['file']);
         if (!$myU1->show_progressStatus()){
+
+            // Make sure we only have png or jpg files in the database, convert anything else into jpg
+            $convertExtensions = ['gif','tif','bmp','webp'];
+            if(in_array($file_extension, $convertExtensions)){
+                convertImage(UPLOAD_PATH . '/' . $filename['file'], UPLOAD_PATH . '/' . pathinfo($filename['file'], PATHINFO_FILENAME) . '.jpg');
+                unlink(UPLOAD_PATH . '/' . $filename['file']);
+                logfile('Unlink: ' . UPLOAD_PATH . '/' . $filename['file']);
+                $filename['file'] = pathinfo($filename['file'], PATHINFO_FILENAME) . '.jpg';
+                $file_extension = 'jpg';
+            }
+
             $sql = new sqlbuddy;
             $sql->push('user_id', $USER_ID,'int');
             $sql->push('created', 'NOW()','raw');
@@ -69,6 +87,11 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
             header('Location: ' . $callbackURL . '?error');
             exit;
         }
+    } else {
+        $msg = 'Filtypen du har forsøkt laste opp er ikke støttet, forsøk igjen med å leaste opp et JPG eller PNG bilde.';
+        $_SESSION['error_msg'] = $msg;
+        header('Location: upload.php?error');
+        exit;
     }
 }
 

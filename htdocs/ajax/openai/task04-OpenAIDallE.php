@@ -1,5 +1,5 @@
 <?php
-
+logfile('Task4: init');
 
 $client = OpenAI::client($open_ai_key);
 

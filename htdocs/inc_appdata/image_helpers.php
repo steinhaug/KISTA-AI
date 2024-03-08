@@ -410,10 +410,22 @@ function createThumbnail($imgIn, $imgOut, $conf = [])
 }
 
 /**
+ * Convert image => image
+ *
+ * @param string $source_image Image path
+ * @param string $destination_image Image path
+ * @return void
+ */
+function convertImage($source_image, $destination_image){
+    $image = Image::make($source_image)->save($destination_image);
+}
+
+
+/**
  * Detect the PDF resolution in PX using PDFLIB.
  *
- * @param [string] $pdf_searchpath
- * @param [string] $pdf_filename
+ * @param string $pdf_searchpath
+ * @param string $pdf_filename
  *
  * @return array PDF meta: version, pages, x, y and possible error
  */
