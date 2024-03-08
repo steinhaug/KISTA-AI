@@ -139,9 +139,9 @@ function updateProgress(value) {
     }
 }
 document.addEventListener('DOMContentLoaded', function() {
-    //setTimeout(initiateImageProcessing, 1);
-    //setTimeout(pollImageProcessing, 2000);
-    console.log('disabled!');
+    setTimeout(initiateImageProcessing, 1);
+    setTimeout(pollImageProcessing, 2000);
+    //console.log('disabled!');
 });
 </script>
 
