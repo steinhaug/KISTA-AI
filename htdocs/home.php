@@ -12,7 +12,7 @@ if(!isset($_SESSION['login_id'])){
     exit;
 }
 $id = $_SESSION['login_id'];
-$get_user = mysqli_query($db_connection, "SELECT * FROM `kistaai_users__google` WHERE `google_id`='$id'");
+$get_user = mysqli_query($db_connection, "SELECT * FROM `" . $kista_dp . "users__google` WHERE `google_id`='$id'");
 if(mysqli_num_rows($get_user) > 0){
     $user = mysqli_fetch_assoc($get_user);
 }

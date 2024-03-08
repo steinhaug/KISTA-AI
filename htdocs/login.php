@@ -39,7 +39,7 @@ if(isset($_GET['code'])):
         $email = mysqli_real_escape_string($db_connection, $google_account_info->email);
         $profile_pic = mysqli_real_escape_string($db_connection, $google_account_info->picture);
         // checking user already exists or not
-        $get_user = mysqli_query($db_connection, "SELECT `google_id` FROM `kistaai_users__google` WHERE `google_id`='$id'");
+        $get_user = mysqli_query($db_connection, "SELECT `google_id` FROM `" . $kista_dp . "users__google` WHERE `google_id`='$id'");
         if(mysqli_num_rows($get_user) > 0){
             $_SESSION['login_id'] = $id; 
             header('Location: home.php');
@@ -47,7 +47,7 @@ if(isset($_GET['code'])):
         }
         else{
             // if user not exists we will insert the user
-            $insert = mysqli_query($db_connection, "INSERT INTO `kistaai_users__google`(`google_id`,`name`,`email`,`profile_image`) VALUES('$id','$full_name','$email','$profile_pic')");
+            $insert = mysqli_query($db_connection, "INSERT INTO `" . $kista_dp . "users__google`(`google_id`,`name`,`email`,`profile_image`) VALUES('$id','$full_name','$email','$profile_pic')");
             if($insert){
                 $_SESSION['login_id'] = $id; 
                 header('Location: home.php');

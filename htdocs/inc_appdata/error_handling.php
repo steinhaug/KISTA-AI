@@ -16,7 +16,7 @@ if (($pos = strpos(__FILE__, $relative_path_for_this_file)) !== false) {
 }
 
 function debug_log_error($reference, $trace = null){
-    global $mysqli, $USER_ID;
+    global $mysqli, $USER_ID, $kista_dp;
 
     if (null === $trace) {
         $trace = debug_backtrace(0);
@@ -46,7 +46,7 @@ function debug_log_error($reference, $trace = null){
     $sql->que('reference', $reference, 'string:255');
     $sql->que('state', json_encode($state_arrays), 'text');
     $sql->que('backtrace', json_encode($trace), 'text');
-    $mysqli->query($sql->build('insert', 'kistaai_debug__errors'));
+    $mysqli->query($sql->build('insert', $kista_dp . 'debug__errors'));
     $ErrorID = $mysqli->insert_id;
 
     return $ErrorID;
