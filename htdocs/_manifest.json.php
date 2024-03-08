@@ -1,4 +1,6 @@
-{
+<?php
+header("Content-type: application/json;charset=utf-8");
+?>{
 "version": "2.5",
 "comment": "---Above version must be the same as data-pwa-version",
 "comment": "---data-pwa-version can be found in index.html in the manifest tag",
