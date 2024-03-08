@@ -11,4 +11,7 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, reciepe page has swipe page for ingredients list.
 - fixed, $kista_dp prefixing all db_queries
 - changed, enabled ChatGPT4 for all queries
-
+- added, language added on frontpage
+- added, languagea added on upload
+- added, language added on reciepe
+- fixed, top image frontpage set with inline style
