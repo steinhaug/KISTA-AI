@@ -30,10 +30,10 @@ require_once 'func.login.php';
 <style>
 <?php
 if($lang=='en'){
-    $bgImgStyle = 'background-image: url(/images/pictures/refrigerator-700-en.png);';
+    $bgImgStyle = "background-image: url('/images/pictures/refrigerator-700-en.png');";
     //.bg-fpnb { background-image: url(/images/pictures/refrigerator-700-en.png); }
 } else {
-    $bgImgStyle = 'background-image: url(/images/pictures/refrigerator-700-nb.png);';
+    $bgImgStyle = "background-image: url('/images/pictures/refrigerator-700-nb.png');";
     // .bg-fpnb { background-image: url(/images/pictures/refrigerator-700-nb.png); }
 }
 ?>

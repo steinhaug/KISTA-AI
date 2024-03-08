@@ -11,6 +11,53 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 require_once 'func.inc.php';
 require_once 'func.login.php';
 
+
+if( isset($_POST['name']) and isset($_POST['email']) and isset($_POST['message']) ){
+
+    // currate the fields
+    $email = $_POST['name'];
+    $email = $_POST['email'];
+    $email = $_POST['tel'];
+    $email = $_POST['message'];
+
+    $sql = new sqlbuddy;
+    $sql->que('created', 'now()', 'raw');
+    $sql->que('name', $_POST['name'], 'str');
+    $sql->que('email', $_POST['email'], 'str');
+    $sql->que('tel', $_POST['tel'], 'str');
+    $sql->que('message', $_POST['message'], 'str');
+
+    $mysqli->query( $sql->build('insert', 'table_name') );
+
+}
+
+
+
+CREATE TABLE `kistaai_contact` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`user_id` INT(10) NULL DEFAULT NULL,
+	`created` DATETIME NOT NULL DEFAULT current_timestamp(),
+	`updated` DATETIME NULL DEFAULT NULL,
+	`realname` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Presentation' COLLATE 'utf8mb4_danish_ci',
+	`filename` VARCHAR(255) NULL DEFAULT NULL COMMENT 'On disk' COLLATE 'utf8mb4_danish_ci',
+	`extension` VARCHAR(32) NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
+	`filesize` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`thumbnail` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
+	`reciepe_image` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
+	`reciepe` TEXT NOT NULL COLLATE 'utf8mb4_danish_ci',
+	`status` VARCHAR(64) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
+	`log` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
+	`error` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
+	PRIMARY KEY (`upload_id`) USING BTREE
+)
+COLLATE='utf8mb4_danish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=29
+;
+
+
+
+
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -43,21 +90,117 @@ require_once 'func.login.php';
 
     <div class="page-content header-clear-medium">
 
-            <div class="card card-style">
-                <div class="content">
-                    <p class="mb-n1 color-highlight font-600">Get in touch</p>
-                    <h1>Contact</h1>
-                    <p class="mb-3">
-                        <a href="mailto:steinhaug@gmail.com">steinhaug@gmail.com</a>
-                    </p>
 
-
-                    <blockquote class="twitter-tweet"><p lang="no" dir="ltr">Damn, hvordan tegner man et sykehus altså... <a href="https://t.co/4dNIDgXZMS">https://t.co/4dNIDgXZMS</a></p>&mdash; Kim Steinhaug (@steinhaug) <a href="https://twitter.com/steinhaug/status/1511688808852602886?ref_src=twsrc%5Etfw">April 6, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-
+        <div class="card card-style">
+            <div class="content">
+                <h3>Contact</h3>
+                
+                <div data-splide='{"autoplay":false}' class="splide single-slider slider-no-arrows slider-no-dots" id="user-slider-1">
+                    <div class="splide__track">
+                        <div class="splide__list">
+                            <div class="splide__slide mx-3">
+                                <div class="d-flex">
+                                    <div><img src="images/avatars/steinhaug.png" class="me-3 rounded-circle shadow-l" width="50"></div>
+                                    <div>
+                                        <h5 class="mt-1 mb-0">Kim Steinhaug</h5>
+                                        <p class="font-10 mt-n1 color-red-dark">Chief Propellorhead</p>
+                                    </div>
+                                    <div class="ms-auto"><span class="slider-next badge bg-red-dark mt-2 p-2 font-8">TAP FOR MERE</span></div>
+                                </div>
+                            </div>
+                            <div class="splide__slide mx-3">
+                                <div class="d-flex">
+                                    <div>
+                                        <h5 class="mt-1 mb-0">Kim Steinhaug</h5>
+                                        <p class="font-10 mt-n1 color-red-dark">Chief Propellorhead</p>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <a href="tel:41323236" class="icon icon-xs rounded-circle shadow-l bg-phone"><i class="fa fa-phone"></i></a>
+                                        <a href="https://facebook.com/steinhaug" class="icon icon-xs rounded-circle shadow-l bg-facebook me-2 ms-2"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="https://twitter.com/steinhaug" class="icon icon-xs rounded-circle shadow-l bg-twitter"><i class="fab fa-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>      
+                    </div>
                 </div>
+                
             </div>
+        </div>
+
+
+
+        <div class="card card-style">
+            <div class="content mb-0">
+                <p class="text-center pt-3">
+                    <i class="fa fa-quote-left fa-4x color-green-dark"></i>
+                </p>
+                <h1 class="text-center font-700 pb-3">My shit is quotable</h1>
+                <p class="text-center pb-4 color-highlight">- Kim Steinhaug 🤣</p>
+            </div>
+        </div>
+
+
+
+        <div class="card card-style">
+            <div class="content mb-0">        
+                <h3>Kontakt skjema</h3>
+                <p>
+                    Noe du lurer på eller noe du vil spørre meg om, bruk skjemaet under.
+                </p>
+                
+                <form action="contact.php" method="post">
+
+                <div class="input-style has-borders has-icon validate-field mb-4">
+                    <i class="fa fa-user"></i>
+                    <input type="name" class="form-control validate-name" id="form1" placeholder="Name">
+                    <label for="form1" class="color-highlight">Name</label>
+                    <i class="fa fa-times disabled invalid color-red-dark"></i>
+                    <i class="fa fa-check disabled valid color-green-dark"></i>
+                    <em>(required)</em>
+                </div>
+                
+                <div class="input-style has-borders no-icon validate-field mb-4">
+                    <input type="email" class="form-control validate-text" id="form2" placeholder="Email">
+                    <label for="form2" class="color-highlight">Email</label>
+                    <i class="fa fa-times disabled invalid color-red-dark"></i>
+                    <i class="fa fa-check disabled valid color-green-dark"></i>
+                    <em>(required)</em>
+                </div>
+
+                <div class="input-style has-borders no-icon validate-field mb-4">
+                    <input type="tel" class="form-control validate-text" id="form4" placeholder="Phone">
+                    <label for="form4" class="color-highlight">Phone</label>
+                    <i class="fa fa-times disabled invalid color-red-dark"></i>
+                    <i class="fa fa-check disabled valid color-green-dark"></i>
+                    <em>(required)</em>
+                </div>
+                
+                <div class="input-style has-borders no-icon mb-4">
+                    <textarea id="form7" placeholder="Enter your message" name="message"></textarea>
+                    <label for="form7" class="color-highlight">Enter your Message</label>
+                    <em class="mt-n3">(required)</em>
+                </div>
+
+
+                <div class="row mb-0">
+                    <div class="col-4 pe-1">
+                    </div>
+                    <div class="col-4 ps-1 pe-1">
+                        <a href="#" class="btn btn-3d btn-m btn-full mb-3 rounded-0 text-uppercase font-700 shadow-s border-blue-dark bg-blue-light" style="display:block;">Send skjema</a>
+                    </div>
+                    <div class="col-4 ps-1">
+                    </div>
+                </div>
+
+                </form>
+
+            </div>
+        </div>
+     
+
+
+
 
 
         <div data-menu-load="<?=$appConf['menuFooter']?>"></div>

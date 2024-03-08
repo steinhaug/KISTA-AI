@@ -1,14 +1,14 @@
 {
-"version": "2.0",
+"version": "2.5",
 "comment": "---Above version must be the same as data-pwa-version",
 "comment": "---data-pwa-version can be found in index.html in the manifest tag",
 "comment": "---if versions are not the same it will cause an update loop",
 "lang" : "en",
-"name" : "AppKit",
+"name" : "KistaAI",
 "scope" : "/",
 "display" : "fullscreen",
-"start_url" : "index.html",
-"short_name" : "AppKit",
+"start_url" : "index.php",
+"short_name" : "KistaAI",
 "description" : "",
 "orientation" : "portrait",
 "background_color": "#000000",
@@ -54,12 +54,6 @@
 	{
 	  "src": "app/icons/icon-384x384.png",
 	  "sizes": "384x384",
-	  "type": "image/png",
-	  "purpose": "any maskable"
-	},
-	{
-	  "src": "app/icons/icon-512x512.png",
-	  "sizes": "512x512",
 	  "type": "image/png",
 	  "purpose": "any maskable"
 	}

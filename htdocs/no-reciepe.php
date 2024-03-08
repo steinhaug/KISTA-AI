@@ -68,7 +68,7 @@ if($item['reciepe']!='<no_fridge />'){
 <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
 <link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
 <?php
-$bgImgStyle = 'background-image:url("/uploaded_files/' . $item['reciepe_image'] . '");';
+$bgImgStyle = "background-image:url('/uploaded_files/" . $item['reciepe_image'] . "');";
 /*
 echo '<style>';
 echo '.no-fridge {';
