@@ -21,14 +21,21 @@ if( !isset($_SERVER['HTTP_ACCEPT_ENCODING']) )
 if( !isset($_SERVER['HTTP_USER_AGENT']) )
     $_SERVER['HTTP_USER_AGENT'] = '';
 
-if( str_contains($_SERVER['HTTP_ACCEPT_LANGUAGE'], 'nb-NO') ){
+if( empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
+    $HTTP_ACCEPT_LANGUAGE = '';
+    else
+    $HTTP_ACCEPT_LANGUAGE = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+
+if( str_contains($HTTP_ACCEPT_LANGUAGE, 'nb-NO') ){
     $lang = 'nb';
     $appConf = [
+        'headTitle' => 'Kjøleskapets hemmelige kokk! - KISTA AI',
         'menuFooter' => 'menu-footer-nb.html'
     ];
 } else {
     $lang = 'en';
     $appConf = [
+        'headTitle' => 'Your Refrigerator\'s Secret Chef! - KISTA AI',
         'menuFooter' => 'menu-footer-en.html'
     ];
 }

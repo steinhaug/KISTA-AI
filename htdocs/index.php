@@ -5,6 +5,8 @@ ob_start();
 session_cache_expire(720);
 session_start();
 
+//logfile($_SERVER);
+
 define('APPDATA_PATH', dirname(__FILE__) . '/inc_appdata');
 define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 
@@ -19,13 +21,20 @@ require_once 'func.login.php';
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
-<title>KISTA AI</title>
+<title><?=$appConf['headTitle']?></title>
 <link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="styles/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="fonts/css/fontawesome-all.min.css">
 <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
 <link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
+
+<meta property="og:site_name" content="Kjøleskapets hemmelige kokk! - KISTA AI">
+<meta property="og:title" content="Kjøleskapets hemmelige kokk! - KISTA AI">
+<meta property="og:url" content="https://kista-ai.steinhaug.no/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://kista-ai.steinhaug.no/images/app-screenshot.jpg">
+<meta property="og:description" content="Har du noen gang stirret inn i kjøleskapet ditt, lurer på hva du skal lage? Si farvel til kulinariske gåter med Magic Meal Maker! Vår innovative app forvandler innholdet i kjøleskapet ditt til deilige, enkle å følge oppskrifter med et knappetrykk. Med Magic Meal Maker, frigjør din indre kokk, reduser matsvinn, og oppdag nye måter å nyte ingrediensene du allerede har. Enten du er en matlagingsnovise eller en kulinarisk trollmann, er vår app designet for å inspirere kreativitet og bringe glede til måltidet ditt. La oss forvandle funnene fra kjøleskapet ditt til ditt neste gastronomiske eventyr!">
 
 <style>
 <?php
