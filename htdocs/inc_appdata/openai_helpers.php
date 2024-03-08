@@ -315,11 +315,10 @@ function promptChatGPT($prompt, $model='gpt-3.5-turbo'){
 
     return $completion;
 }
-function promptChatGPT3(){
+function promptChatGPT3($prompt){
     return promptChatGPT($prompt, 'gpt-3.5-turbo');
 }
-function promptChatGPT4(){
+function promptChatGPT4($prompt){
     return promptChatGPT($prompt, 'gpt-4-1106-preview');
 }
-
 

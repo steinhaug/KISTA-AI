@@ -28,11 +28,15 @@ require_once 'func.login.php';
 <link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
 
 <style>
-<?php if($lang=='en'){ ?>
-.bg-fpnb { background-image: url(/images/pictures/refrigerator-700-en.png); }
-<?php } else { ?>
-.bg-fpnb { background-image: url(/images/pictures/refrigerator-700-nb.png); }
-<?php } ?>
+<?php
+if($lang=='en'){
+    $bgImgStyle = 'background-image: url(/images/pictures/refrigerator-700-en.png);';
+    //.bg-fpnb { background-image: url(/images/pictures/refrigerator-700-en.png); }
+} else {
+    $bgImgStyle = 'background-image: url(/images/pictures/refrigerator-700-nb.png);';
+    // .bg-fpnb { background-image: url(/images/pictures/refrigerator-700-nb.png); }
+}
+?>
 .bg-gradient-2 {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.8) 80%, black 100%) !important;
 }
@@ -55,7 +59,7 @@ require_once 'func.login.php';
 
     <div class="page-content">
 
-        <div class="card rounded-0 bg-fpnb" data-card-height="450">
+        <div class="card rounded-0 bg-fpnb" data-card-height="450" style="<?=$bgImgStyle?>">
             <div class="card-bottom text-end pe-3 pb-4 mb-4">
                 <h1 class="color-white font-21 mb-n1">
                     KISTA AI <sup>v1.0</sup>

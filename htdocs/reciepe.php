@@ -16,6 +16,24 @@ if(empty($_GET['rid'])){
     exit;
 }
 
+
+// Failsafe
+$upload_id = (int) $_GET['rid'];
+$res = $mysqli->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `upload_id`=" . $upload_id . " AND `user_id`=" . $USER_ID . " AND `status`='complete'");
+if (!$res->num_rows) {
+    $_SESSION['error_msg'] = 'Resource does not exist.';
+    header('Location: gallery.php?rid=' . $upload_id);
+    exit;
+}
+
+
+// Send to no-reciepe if no_fridge
+$item = $res->fetch_assoc();
+if($item['reciepe']=='<no_fridge />'){
+    header('Location: no-reciepe.php?rid=' . $upload_id);
+    exit;
+}
+
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -65,18 +83,8 @@ if(empty($_GET['rid'])){
                                         <?php
                                         //$upload_id = (int) $_SESSION['task']['aiid'];
                                         $log = [];
-                                        $upload_id = (int) $_GET['rid'];
-                                        $res = $mysqli->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `upload_id`=" . $upload_id . " AND `user_id`=" . $USER_ID . " AND `status`='complete'");
-                                        if ($res->num_rows) {
-                                            $item = $res->fetch_assoc();
-                                            if($item['status']=='complete'){
-                                                openai__generateReciepe($item['reciepe'], $item['reciepe_image']);
-                                                $log = json_decode($item['log'], 1);
-                                            }
-                                        } else {
-                                            echo '<h1>Reciepe not found!</h1>';
-                                            echo '<p>Could not find the reciepe you were looking for.</p>';
-                                        }
+                                        openai__generateReciepe($item['reciepe'], $item['reciepe_image']);
+                                        $log = json_decode($item['log'], 1);
                                         ?>
                                 </div>
 

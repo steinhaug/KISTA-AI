@@ -95,6 +95,24 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
     }
 }
 
+if($lang == 'en'){
+    $txts = [
+        'pageTitle' => 'Upload image',
+        'supTitle' => 'Upload image',
+        'title' => 'Upload image',
+        'paragraph' => 'Snap a photo of your fridge and upload it here.',
+        'submit' => 'Upload image',
+    ];
+} else {
+    $txts = [
+        'pageTitle' => 'Last opp bilde',
+        'supTitle' => 'Last opp bilde',
+        'title' => 'Last opp bilde',
+        'paragraph' => 'Ta bilde av kjøleskapet ditt og last det opp her.',
+        'submit' => 'Last opp bilde',
+    ];
+}
+
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -119,14 +137,14 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
 <div id="page">
 
     <div class="header header-fixed header-logo-center header-auto-show">
-        <a href="upload.php" class="header-title">Last opp bilde</a>
+        <a href="upload.php" class="header-title"><?=$txts['pageTitle']?></a>
         <?=HTML_HEADER('header-fixed')?>
     </div>
 
     <?=HTML_FOOTER(3)?>
 
     <div class="page-title page-title-fixed">
-        <h1>Last opp bilde</h1>
+        <h1><?=$txts['pageTitle']?></h1>
         <?=HTML_HEADER('page-title-fixed')?>
         
     </div>
@@ -137,20 +155,19 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
 
         <div class="card card-style shadow-xl">
             <div class="content">
-                <p class="color-highlight font-600 mb-n1">Last opp bilde</p>
-                <h1 class="font-24 font-700 mb-2">Last opp bilde <i class="fa fa-star mt-n2 font-30 color-yellow-dark float-end me-2 scale-box"></i></h1>
+                <p class="color-highlight font-600 mb-n1"><?=$txts['supTitle']?></p>
+                <h1 class="font-24 font-700 mb-2"><?=$txts['title']?> <i class="fa fa-star mt-n2 font-30 color-yellow-dark float-end me-2 scale-box"></i></h1>
                 <p class="mb-1">
-                    Ta bilde av kjøleskapet ditt og last det opp her.
+                    <?=$txts['paragraph']?>
                 </p>
                 <form action="upload.php" method="post" enctype="multipart/form-data" style="text-align:center">
                     <input type="hidden" namer="action" value="start">
-                    <input name="file1" type="file" accept="image/*" class="">
+                    <input name="file1" type="file" accept="image/*" class="" id="file1_inp">
                     <br><br>
-                    <button type="submit" class="btn btn-m btn-full mb-3 rounded-0 text-uppercase font-900 shadow-s bg-red-light" style="margin:0 auto;">Last opp bilde</button>
+                    <button type="submit" class="btn btn-m btn-full mb-3 rounded-0 text-uppercase font-900 shadow-s bg-red-light" style="margin:0 auto; display: none;" id="file1_sub"><?=$txts['submit']?></button>
                 </form>
             </div>
         </div>
-
 
         <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
     </div>
@@ -170,6 +187,23 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var fileInput = document.getElementById('file1_inp');
+  var submitButton = document.getElementById('file1_sub');
+  fileInput.addEventListener('change', function() {
+    if (fileInput.files.length > 0) {
+      submitButton.style.display = 'block';
+    } else {
+      submitButton.style.display = 'none';
+    }
+  });
+  document.getElementById('uploadForm').addEventListener('submit', function() {
+    submitButton.disabled = true;
+  });
+});
+</script>
+
 
 <?php
 output_session_error();

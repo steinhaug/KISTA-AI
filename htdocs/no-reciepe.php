@@ -34,6 +34,24 @@ if($lang == 'en'){
         'btn' => 'Opplastningsside'
     ];
 }
+
+
+$upload_id = (int) $_GET['rid'];
+$res = $mysqli->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `upload_id`=" . $upload_id . " AND `user_id`=" . $USER_ID . " AND `status`='complete'");
+if (!$res->num_rows) {
+    $_SESSION['error_msg'] = 'Resource does not exist.';
+    header('Location: gallery.php?rid=' . $upload_id);
+    exit;
+}
+
+// Send to no-reciepe if no_fridge
+$item = $res->fetch_assoc();
+if($item['reciepe']!='<no_fridge />'){
+    header('Location: no-reciepe.php?rid=' . $upload_id);
+    exit;
+}
+
+
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
@@ -49,6 +67,16 @@ if($lang == 'en'){
 <link rel="stylesheet" type="text/css" href="fonts/css/fontawesome-all.min.css">
 <link rel="manifest" href="_manifest.json" data-pwa-version="set_in_manifest_and_pwa_js">
 <link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
+<?php
+$bgImgStyle = 'background-image:url("/uploaded_files/' . $item['reciepe_image'] . '");';
+/*
+echo '<style>';
+echo '.no-fridge {';
+echo 'background-image:url("/uploaded_files/' . $item['reciepe_image'] . '");';
+echo '}';
+echo '</style>';
+*/
+?>
 </head>
 
 <body class="theme-light">
@@ -64,23 +92,8 @@ if($lang == 'en'){
 
     <?=HTML_FOOTER(2)?>
 
-<?php
-$upload_id = (int) $_GET['rid'];
-$res = $mysqli->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `upload_id`=" . $upload_id . " AND `user_id`=" . $USER_ID . " AND `status`='complete'");
-if ($res->num_rows) {
-    $item = $res->fetch_assoc();
-    if($item['status']=='complete' and $item['reciepe']=='<no_fridge />'){
-        echo '<style>';
-        echo '.no-fridge {';
-        echo 'background-image:url("/uploaded_files/' . $item['reciepe_image'] . '");';
-        echo '}';
-        echo '</style>';
-    }
-}
-?>
-
     <div class="page-content pb-0">
-        <div data-card-height="cover" class="card card-style no-fridge m-0">
+        <div data-card-height="cover" class="card card-style no-fridge m-0" style="<?=$bgImgStyle?>">
             <div class="card-center text-center">
 				<div class="text-center pb-2">
 					<p class="font-600 color-highlight mb-2 font-16"><?=$txts['supHead']?></p>
