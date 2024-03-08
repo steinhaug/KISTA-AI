@@ -118,7 +118,7 @@ echo $Parsedown->text( $terms );
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="scripts/custom.js"></script>
+<script type="text/javascript" src="scripts/custom.js?<?=$html_NoCache_Version?>"></script>
 
 <?php
 output_session_error();

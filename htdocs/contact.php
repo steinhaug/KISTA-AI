@@ -50,6 +50,12 @@ require_once 'func.login.php';
                     <p class="mb-3">
                         <a href="mailto:steinhaug@gmail.com">steinhaug@gmail.com</a>
                     </p>
+
+
+                    <blockquote class="twitter-tweet"><p lang="no" dir="ltr">Damn, hvordan tegner man et sykehus altså... <a href="https://t.co/4dNIDgXZMS">https://t.co/4dNIDgXZMS</a></p>&mdash; Kim Steinhaug (@steinhaug) <a href="https://twitter.com/steinhaug/status/1511688808852602886?ref_src=twsrc%5Etfw">April 6, 2022</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+
                 </div>
             </div>
 
@@ -71,7 +77,7 @@ require_once 'func.login.php';
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="scripts/custom.js"></script>
+<script type="text/javascript" src="scripts/custom.js?<?=$html_NoCache_Version?>"></script>
 
 <?php
 output_session_error();

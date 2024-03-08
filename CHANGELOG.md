@@ -15,3 +15,4 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, languagea added on upload
 - added, language added on reciepe
 - fixed, top image frontpage set with inline style
+- added, nocache paramtere for custom.js script include

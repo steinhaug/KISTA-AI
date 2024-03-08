@@ -3,6 +3,10 @@ date_default_timezone_set("Europe/Oslo");
 mb_internal_encoding('UTF-8');
 setlocale(LC_TIME, "nb_NO.utf8");
 
+// Parameter added script tags to prevent caching
+$html_NoCache_Version = 'v1.0';
+
+
 if(!isset($PHP_SELF))
 $PHP_SELF = $_SERVER["SCRIPT_NAME"];
 
