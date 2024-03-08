@@ -115,7 +115,7 @@ if($lang == 'en'){
 
 ?>
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="<?=$lang?>">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <?php
-output_session_error();
+output_session_notification();
 ?>
 
 

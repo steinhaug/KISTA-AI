@@ -12,28 +12,24 @@ require_once 'func.inc.php';
 require_once 'func.login.php';
 
 
-if( isset($_POST['name']) and isset($_POST['email']) and isset($_POST['message']) ){
-
+if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['message']) ){
     // currate the fields
-    $email = $_POST['name'];
-    $email = $_POST['email'];
-    $email = $_POST['tel'];
-    $email = $_POST['message'];
-
     $sql = new sqlbuddy;
     $sql->que('created', 'now()', 'raw');
     $sql->que('name', $_POST['name'], 'str');
     $sql->que('email', $_POST['email'], 'str');
     $sql->que('tel', $_POST['tel'], 'str');
-    $sql->que('message', $_POST['message'], 'str');
+    $sql->que('message', $_POST['message'], 'text');
 
-    $mysqli->query( $sql->build('insert', 'table_name') );
-
+    $mysqli->query( $sql->build('insert', $kista_dp . 'contact_form') );
+    $sid = $mysqli->insert_id;
+    $_SESSION['info_msg'] = 'Din tilbakemelding har blitt registrert, takk for din interesse.';
+    header("Location: contact.php");
+    exit;
 }
-
 ?>
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="<?=$lang?>">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -196,7 +192,7 @@ if( isset($_POST['name']) and isset($_POST['email']) and isset($_POST['message']
 <script type="text/javascript" src="scripts/custom.js?<?=$html_NoCache_Version?>"></script>
 
 <?php
-output_session_error();
+output_session_notification();
 ?>
 
 </body><?php

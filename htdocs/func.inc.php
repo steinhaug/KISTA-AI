@@ -361,11 +361,11 @@ function cleanString($text) {
 }
 
 /**
- * Display error on page
+ * Display error and/or notification on page
  *
  * @return void
  */
-function output_session_error(){
+function output_session_notification(){
     if(isset($_SESSION['error_msg'])){
         echo '
     <div id="error-1" data-dismiss="error-1" data-bs-delay="10000" data-bs-autohide="true" class="notification notification-ios bg-pink2-light ms-2 me-2 mt-2 rounded-s">
@@ -388,12 +388,29 @@ function output_session_error(){
         </div>
     </div>
     <script>
-    var toastID = document.getElementById("error-1");
-    toastID = new bootstrap.Toast(toastID);
-    toastID.show();
+        var toastID = document.getElementById("error-1");
+        toastID = new bootstrap.Toast(toastID);
+        toastID.show();
     </script>
         ';
         unset($_SESSION['error_msg']);
+    }
+
+    if (isset($_SESSION['info_msg'])) {
+        echo '
+    <div id="info-1" data-dismiss="info-1" data-bs-delay="5000" data-bs-autohide="true" class="notification bg-green-dark shadow-xl opacity-95">
+        <div class="toast-body color-white p-3">
+            <h1 class="ms-0 ps-0 pb-2 mt-0 color-white">Til info</h1>
+            ' . $_SESSION['info_msg'] . '
+        </div>
+    </div>
+    <script>
+        var toastID = document.getElementById("info-1");
+        toastID = new bootstrap.Toast(toastID);
+        toastID.show();
+    </script>
+        ';
+        unset($_SESSION['info_msg']);
     }
 }
 

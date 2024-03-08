@@ -15,7 +15,7 @@ require_once 'func.login.php';
 
 ?>
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="<?=$lang?>">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -160,7 +160,7 @@ if($lang=='en'){
 <script type="text/javascript" src="scripts/custom.js?<?=$html_NoCache_Version?>"></script>
 
 <?php
-output_session_error();
+output_session_notification();
 ?>
 
 </body><?php
