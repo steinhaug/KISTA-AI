@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "154c54b138cefdcd2a06613561a54589",
+    "content-hash": "1f9830c6b962d6655de136401fe8a35d",
     "packages": [
         {
             "name": "elephox/mimey",
@@ -1952,6 +1952,55 @@
             "time": "2019-03-08T08:55:37+00:00"
         },
         {
+            "name": "steinhaug/libs",
+            "version": "v2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/steinhaug/libs.git",
+                "reference": "358ecb85c361cf7df534bb9902c879d34440bc9f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/steinhaug/libs/zipball/358ecb85c361cf7df534bb9902c879d34440bc9f",
+                "reference": "358ecb85c361cf7df534bb9902c879d34440bc9f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "matthiasmullie/minify": "^1.3",
+                "php": "^8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "steinhaug_libs": "src/",
+                    "steinhaug_libs_v1": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kim Steinhaug",
+                    "email": "kim@steinhaug.com",
+                    "homepage": "http://kim.steinhaug.com"
+                }
+            ],
+            "description": "Page handling",
+            "homepage": "https://kim.steinhaug.com",
+            "keywords": [
+                "Buffer",
+                "gzip"
+            ],
+            "support": {
+                "issues": "https://github.com/steinhaug/libs/issues",
+                "source": "https://github.com/steinhaug/libs/tree/v2.0.0"
+            },
+            "time": "2023-12-02T21:47:17+00:00"
+        },
+        {
             "name": "steinhaug/mysqli",
             "version": "v1.6.3",
             "source": {
@@ -2520,7 +2569,9 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^8.2"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.3.0"
 }

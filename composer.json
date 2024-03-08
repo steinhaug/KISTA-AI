@@ -15,6 +15,7 @@
         }
     ],
     "require": {
+        "php": "^8.2",
         "orhanerday/open-ai": "^5.1",
         "php-http/discovery": "1.19.2",
         "psr/http-client-implementation": "*",
@@ -30,7 +31,8 @@
         "elephox/mimey": "^4.0",
         "erusev/parsedown": "^1.7",
         "erusev/parsedown-extra": "^0.8.1",
-        "google/apiclient": "2.15.0"
+        "google/apiclient": "2.15.0",
+        "steinhaug/libs": "^2.0"
     },
     "config": {
         "allow-plugins": {
