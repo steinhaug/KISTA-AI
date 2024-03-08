@@ -46,10 +46,48 @@ require_once 'func.login.php';
             <div class="card card-style">
                 <div class="content">
                     <p class="mb-n1 color-highlight font-600">Legal</p>
-                    <h1>Privacy Policy</h1>
-                    <p class="mb-3">
-                        Lorem lipsumm...
-                    </p>
+<?php
+$privacy = '### Privacy Policy for KISTA AI
+
+This Privacy Policy governs the manner in which KISTA AI collects, uses, maintains, and discloses information collected from users ("Users") of the KISTA AI website ("Website"). This Privacy Policy applies solely to the information collected by KISTA AI.
+
+##### 1. Information Collection
+
+a. Uploaded Images: KISTA AI collects images uploaded by Users for the purpose of providing the service offered on the Website. These images are not stored after the analysis is complete and are used solely to improve the service.
+
+##### 2. Use of Information
+
+a. Improvement of Service: Images uploaded by Users may be used to improve the service provided by KISTA AI. However, no personally identifiable information is collected or stored.
+
+##### 3. Data Sharing
+
+a. Third Parties: KISTA AI does not share or disclose any information collected from Users, including uploaded images, with any third parties.
+
+##### 4. Data Security
+
+a. Protection Measures: KISTA AI employs appropriate data collection, storage, and processing practices and security measures to protect against unauthorized access, alteration, disclosure, or destruction of Users\' personal information.
+
+##### 5. Disclaimer
+
+a. Entertainment Purposes: The data provided by KISTA AI through the analysis of uploaded images is for entertainment purposes only and should not be considered as professional advice or factual information. KISTA AI does not guarantee the accuracy of the data.
+
+##### 6. Children\'s Privacy
+
+a. Age Requirement: KISTA AI does not knowingly collect any personally identifiable information from children under the age of 13. The service provided by KISTA AI is intended for individuals 13 years of age and older.
+
+##### 7. Changes to this Privacy Policy
+
+a. Modification: KISTA AI reserves the right to update or change this Privacy Policy at any time. Users are encouraged to review this Privacy Policy periodically for any changes.
+
+##### 8. Contact Information
+
+a. Questions: If Users have any questions about this Privacy Policy or the practices of KISTA AI, they may contact us at [Contact Email].
+
+By using the KISTA AI Website, Users acknowledge that they have read, understood, and agree to be bound by this Privacy Policy.';
+$Parsedown = new Parsedown();
+echo $Parsedown->text( $privacy );
+?>
+
                 </div>
             </div>
 
