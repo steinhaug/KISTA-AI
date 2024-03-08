@@ -56,11 +56,19 @@ require_once 'func.login.php';
 $items = $mysqli->result('assoc')->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != ''");
 foreach($items as $item){
     #var_dump($item);
-    echo '
+    if( $item['reciepe'] == '<no_fridge />' ){
+        echo '
+                        <a class="col p-2" href="no-reciepe.php?rid=' . $item['upload_id'] . '" _data-gallery="gallery-a">
+                            <img src="' . reciepe_thumb($item['reciepe_image']) . '" alt="img" class="img-fluid rounded-s shadow-xl">
+                        </a>
+        ';
+    } else {
+        echo '
                         <a class="col p-2" href="reciepe.php?rid=' . $item['upload_id'] . '" _data-gallery="gallery-a">
                             <img src="' . reciepe_thumb($item['reciepe_image']) . '" alt="img" class="img-fluid rounded-s shadow-xl">
                         </a>
-    ';
+        ';
+    }
 }
 
 ?>
