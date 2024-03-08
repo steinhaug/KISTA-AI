@@ -1,7 +1,24 @@
+<?php
+define('APPDATA_PATH', dirname(__FILE__) . '/inc_appdata');
+define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
+
+require_once 'func.inc.php';
+
+$uploadpath = './uploaded_files/';
+$uploadCACHE = '_cache/';
+
+$swlib = new steinhaug_libs;
+$swlib->set_type('text/javascript');
+$swlib->set_cachedir($uploadpath . $uploadCACHE);
+$swlib->optimize_output = false;
+$swlib->start_ob(false,false);
+
+    $js_snippet  = "var APP_NAME   = 'KistaAI';                     " . "\n";
+    $js_snippet .= "var APP_VER    = '" . $PWA_APP_VER . "';        " . "\n";
+    $js_snippet .= <<<'EOD'
+
 // To clear cache on devices, always increase APP_VER number after making changes.
 // The app will serve fresh content right away or after 2-3 refreshes (open / close)
-var APP_NAME = 'KistaAI';
-var APP_VER = '2.5';
 var CACHE_NAME = APP_NAME + '-' + APP_VER;
 
 // Files required to make this app work offline.
@@ -89,3 +106,8 @@ self.addEventListener('activate', function(event) {
 	);
 	if(APP_DIAG){console.log('Service Worker: Activated')}
 });
+
+EOD;
+    echo $swlib->minify_js($js_snippet);
+
+$swlib->end_ob();

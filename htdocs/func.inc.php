@@ -19,8 +19,8 @@ mb_internal_encoding('UTF-8');
 setlocale(LC_TIME, "nb_NO.utf8");
 
 // Parameter added script tags to prevent caching
-$html_NoCache_Version = 'v1.0';
-
+$html_NoCache_Version = 'v1.1';
+$PWA_APP_VER = '2.6';
 
 if(!isset($PHP_SELF))
 $PHP_SELF = $_SERVER["SCRIPT_NAME"];

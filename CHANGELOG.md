@@ -13,6 +13,8 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, info to _SESSION notifications
 - changed, composer bumbed to PHP 8.2
 - changed, made manifest.json a PHP file
+- changed, Syncronising PWA version
+- 
 
 ### v0.9.1
 - changed, nb app title corrected. Thanks to Espen Sunde

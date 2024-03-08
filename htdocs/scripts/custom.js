@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Setting Service Worker Locations scope = folder | location = service worker js location
     var pwaScope = "/";
-    var pwaLocation = "/_service-worker.js";
+    var pwaLocation = "/_service-worker.js.php";
 
     //Place all your custom Javascript functions and plugin calls below this line
     function init_template(){
@@ -25,8 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //Attaching Menu Hider
         var menuHider = document.getElementsByClassName('menu-hider');
-        if(!menuHider.length){var hider = document.createElement('div'); hider.setAttribute("class", "menu-hider");document.body.insertAdjacentElement('beforebegin', hider);}
-		setTimeout(function() {if(hider.classList.contains('menu-active')){hider.classList.remove('menu-active');}}, 50);
+        if(!menuHider.length){
+            var hider = document.createElement('div'); 
+            hider.setAttribute("class", "menu-hider");
+            document.body.insertAdjacentElement('beforebegin', hider);
+    		setTimeout(function() {
+                if(hider.classList.contains('menu-active')){hider.classList.remove('menu-active');}
+            }, 50);
+        }
 
         //Demo function for programtic creation of Menu
         //menu('menu-settings', 'show', 250);
@@ -579,7 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const latitude  = position.coords.latitude;
                     const longitude = position.coords.longitude;
                     locationCoordinates.innerHTML = '<strong>Longitude:</strong> ' + longitude + '<br><strong>Latitude:</strong> '+ latitude;
-                    var mapL1 = 'https://www.google.com/maps/embed/v1/view?key=AIzaSyAM3nxDVrkjyKwdIZp8QOplmBKLRVI5S_Y&center=';
+                    var mapL1 = 'https://www.google.com/maps/embed/v1/view?key=AIzaSyDrno-8HuLEOcU3dA6FElYdPzEHCaK9wM0&center=';
                     var mapL2 = latitude+',';
                     var mapL3 = longitude;
                     var mapL4 = '&zoom=16&maptype=satellite'
