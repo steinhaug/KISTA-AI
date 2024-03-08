@@ -70,3 +70,14 @@ CREATE TABLE `kistaai_users__google` (
  PRIMARY KEY (`id`),
  UNIQUE KEY `google_id` (`google_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=UTF8MB4_UNICODE_CI;
+
+
+CREATE TABLE `kistaai_contact_form` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`created` DATETIME NULL DEFAULT NULL,
+	`name` VARCHAR(255) NULL DEFAULT NULL COMMENT '' COLLATE 'utf8mb4_danish_ci',
+	`email` VARCHAR(255) NULL DEFAULT NULL COMMENT '' COLLATE 'utf8mb4_danish_ci',
+	`tel` VARCHAR(32) NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
+	`message` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
+	PRIMARY KEY (`id`) USING BTREE
+) COLLATE='utf8mb4_danish_ci' ENGINE=InnoDB AUTO_INCREMENT=1;

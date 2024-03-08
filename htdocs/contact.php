@@ -31,33 +31,6 @@ if( isset($_POST['name']) and isset($_POST['email']) and isset($_POST['message']
 
 }
 
-
-
-CREATE TABLE `kistaai_contact` (
-	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`user_id` INT(10) NULL DEFAULT NULL,
-	`created` DATETIME NOT NULL DEFAULT current_timestamp(),
-	`updated` DATETIME NULL DEFAULT NULL,
-	`realname` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Presentation' COLLATE 'utf8mb4_danish_ci',
-	`filename` VARCHAR(255) NULL DEFAULT NULL COMMENT 'On disk' COLLATE 'utf8mb4_danish_ci',
-	`extension` VARCHAR(32) NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
-	`filesize` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-	`thumbnail` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
-	`reciepe_image` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
-	`reciepe` TEXT NOT NULL COLLATE 'utf8mb4_danish_ci',
-	`status` VARCHAR(64) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
-	`log` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
-	`error` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
-	PRIMARY KEY (`upload_id`) USING BTREE
-)
-COLLATE='utf8mb4_danish_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=29
-;
-
-
-
-
 ?>
 <!DOCTYPE HTML>
 <html lang="en">
