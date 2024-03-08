@@ -46,7 +46,7 @@ EOF;
 
 $client = OpenAI::client($open_ai_key);
 $settings = [
-    'model' => 'gpt-3.5-turbo', // 'gpt-4-1106-preview', // 'gpt-3.5-turbo',
+    'model' => 'gpt-4-1106-preview', // 'gpt-4-1106-preview', // 'gpt-3.5-turbo',
     'messages' => [
         ['role' => 'user', 'content' => $prompt1],
     ],

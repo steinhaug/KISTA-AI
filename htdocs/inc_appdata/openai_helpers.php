@@ -293,7 +293,7 @@ function promptDalle($prompt, $imgInt=1){
  * @param string $prompt The prompt
  * @return string The completion
  */
-function promptChatGPT3($prompt){
+function promptChatGPT($prompt, $model='gpt-3.5-turbo'){
     global $mysqli, $open_ai_key, $upload_id, $USER_ID, $kista_dp;
     try {
         $client = OpenAI::client($open_ai_key);
@@ -315,6 +315,11 @@ function promptChatGPT3($prompt){
 
     return $completion;
 }
-
+function promptChatGPT3(){
+    return promptChatGPT($prompt, 'gpt-3.5-turbo');
+}
+function promptChatGPT4(){
+    return promptChatGPT($prompt, 'gpt-4-1106-preview');
+}
 
 
