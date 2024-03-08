@@ -121,7 +121,7 @@ if($lang == 'en'){
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
-<title>KISTA AI</title>
+<title><?=$appConf['headTitle']?></title>
 <link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="styles/style.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -164,7 +164,7 @@ if($lang == 'en'){
                     <input type="hidden" namer="action" value="start">
                     <input name="file1" type="file" accept="image/*" class="" id="file1_inp">
                     <br><br>
-                    <button type="submit" class="btn btn-m btn-full mb-3 rounded-0 text-uppercase font-900 shadow-s bg-red-light" style="margin:0 auto; display: none;" id="file1_sub"><?=$txts['submit']?></button>
+                    <button type="submit" class="btn btn-m btn-full mb-3 rounded-0 text-uppercase font-900 shadow-s bg-red-light" style="margin:0 auto;" id="file1_sub"><?=$txts['submit']?></button>
                 </form>
             </div>
         </div>
@@ -201,6 +201,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('uploadForm').addEventListener('submit', function() {
     submitButton.disabled = true;
   });
+  submitButton.style.display = 'none';
 });
 </script>
 
