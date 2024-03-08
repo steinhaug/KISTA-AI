@@ -8,4 +8,4 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, google login templates
 - added, upload image formats expanded with tif, bmp, webp, gif
 - added, when image is of something else than fridge we create dalle image for segway
-- 
+- added, reciepe page has swipe page for ingredients list.

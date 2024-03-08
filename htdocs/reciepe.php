@@ -48,27 +48,52 @@ if(empty($_GET['rid'])){
 
     <div class="page-content header-clear-medium">
 
+
+
+
+
+
             <div class="card card-style">
-                <div class="content">
-                    <p class="mb-n1 color-highlight font-600">Reciepe</p>
-<?php
-//$upload_id = (int) $_SESSION['task']['aiid'];
-$upload_id = (int) $_GET['rid'];
-$res = $mysqli->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `upload_id`=" . $upload_id . " AND `user_id`=" . $USER_ID . " AND `status`='complete'");
-if ($res->num_rows) {
-    $item = $res->fetch_assoc();
-    if($item['status']=='complete'){
-        openai__generateReciepe($item['reciepe'], $item['reciepe_image']);
-    }
-} else {
-    echo '<h1>Reciepe not found!</h1>';
-    echo '<p>Could not find the reciepe you were looking for.</p>';
-}
-?>
 
-               </div>
+                <div class="splide single-slider slider-no-arrows" id="single-slider-1">
+                    <div class="splide__track">
+                        <div class="splide__list">
+                            <div class="splide__slide">
+
+                                <div class="content">
+                                    <p class="mb-n1 color-highlight font-600">Reciepe</p>
+                                        <?php
+                                        //$upload_id = (int) $_SESSION['task']['aiid'];
+                                        $log = [];
+                                        $upload_id = (int) $_GET['rid'];
+                                        $res = $mysqli->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `upload_id`=" . $upload_id . " AND `user_id`=" . $USER_ID . " AND `status`='complete'");
+                                        if ($res->num_rows) {
+                                            $item = $res->fetch_assoc();
+                                            if($item['status']=='complete'){
+                                                openai__generateReciepe($item['reciepe'], $item['reciepe_image']);
+                                                $log = json_decode($item['log'], 1);
+                                            }
+                                        } else {
+                                            echo '<h1>Reciepe not found!</h1>';
+                                            echo '<p>Could not find the reciepe you were looking for.</p>';
+                                        }
+                                        ?>
+                                </div>
+
+                            </div><!-- /slide -->
+                            <div class="splide__slide"><div class="content">
+                                <?php
+                                    $Parsedown = new Parsedown();
+                                    echo $Parsedown->text( '## Items detected from image:' . "\n\n" . $log['list'] );
+                                    #foreach($log as $k=>$v)
+                                    #    echo $k . '<br>';
+                                ?>
+                            </div></div><!-- /slide -->
+                        </div>   
+                    </div>
+                </div><!-- /splide -->
+
             </div>
-
 
         <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
     </div>
