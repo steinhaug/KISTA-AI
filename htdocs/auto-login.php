@@ -55,6 +55,8 @@ if (!isset($_COOKIE[$login_cookie_name])) {
         $_SESSION['USER_ID'] = $USER_ID;
         $_SESSION['USER_SESSION'] = cleanString($_SESSION['sessid']);
         $_SESSION['setCookie'] = true;
+        setSessionKey('seed', ['power'=>50,'vol'=>0]);
+
     }
 }
 

@@ -14,7 +14,8 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - changed, composer bumbed to PHP 8.2
 - changed, made manifest.json a PHP file
 - changed, Syncronising PWA version
-- 
+- added, bonus config on upload page
+- added, sessionTools
 
 ### v0.9.1
 - changed, nb app title corrected. Thanks to Espen Sunde

@@ -22,6 +22,7 @@ setlocale(LC_TIME, "nb_NO.utf8");
 $html_NoCache_Version = 'v1.1';
 $PWA_APP_VER = '2.6';
 
+
 if(!isset($PHP_SELF))
 $PHP_SELF = $_SERVER["SCRIPT_NAME"];
 
@@ -72,6 +73,11 @@ require APPDATA_PATH . '/openai_helpers.php';
 if(!function_exists('sqlError__alertAndStop')){ function sqlError__alertAndStop($sql_error, $sql_query, $reference = '', $UserID = 0, $trace = null){
     return time();
 } }
+
+
+
+
+
 
 
 function setActiveIf($x,$y){

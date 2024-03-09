@@ -12,7 +12,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let isAJAX = true; // AJAX transitions. Requires local server or server
     var pwaName = "KistaAI"; //Local Storage Names for PWA
     var pwaRemind = 1; //Days to re-remind to add to home
-    var pwaNoCache = true; //Requires server and HTTPS/SSL. Will clear cache with each visit
+    var pwaNoCache = false; //Requires server and HTTPS/SSL. Will clear cache with each visit
+
+    var CACHE_NAME = pwaName + '-' + '2.5';
+
 
     //Setting Service Worker Locations scope = folder | location = service worker js location
     var pwaScope = "/";
@@ -1468,7 +1471,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //End of isPWA
         if(pwaNoCache === true){
-            caches.delete('workbox-runtime').then(function() {});
+            caches.delete(CACHE_NAME).then(function() {});
             sessionStorage.clear()
             caches.keys().then(cacheNames => {
               cacheNames.forEach(cacheName => {
