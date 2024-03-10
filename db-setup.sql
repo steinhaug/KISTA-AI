@@ -81,3 +81,15 @@ CREATE TABLE `kistaai_contact_form` (
 	`message` TEXT NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
 	PRIMARY KEY (`id`) USING BTREE
 ) COLLATE='utf8mb4_danish_ci' ENGINE=InnoDB AUTO_INCREMENT=1;
+
+CREATE TABLE `kistaai_uploaded_files__reciepes` (
+	`reciepe_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`upload_id` INT(10) NULL DEFAULT NULL,
+	`user_id` INT(10) NULL DEFAULT NULL,
+	`created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`updated` DATETIME NULL DEFAULT NULL,
+	`image` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
+	`thumbnail` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
+	`reciepe` TEXT NOT NULL COLLATE 'utf8mb4_danish_ci',
+	PRIMARY KEY (`reciepe_id`) USING BTREE
+) COLLATE='utf8mb4_danish_ci' ENGINE=InnoDB AUTO_INCREMENT=1;
