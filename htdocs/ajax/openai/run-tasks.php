@@ -1,6 +1,6 @@
 <?php
-class OpenAIException extends Exception {};
-class SegWayImage extends Exception {};
+class OpenAIException extends Exception { }
+class SegWayImage extends Exception { }
 
 function updateUploadFile($upload_id, $status, $log){
     global $mysqli, $kista_dp;
@@ -34,7 +34,7 @@ if ($res->num_rows) {
 
             require AJAX_FOLDER_PATH . '/openai/task02-OpenAIVision.php';
             updateUploadFile($upload_id, 'task2', $log);
-            setUploadStatus($upload_id, 'task2', ['chatgpt_result1'=>$chatgpt_result1,'chatgpt_result2'=>$chatgpt_result2]);
+            setUploadStatus($upload_id, 'task2', ['chatgpt_result1'=>$chatgpt_result1,'chatgpt_result2'=>$chatgpt_result2,'curated_list'=>$curated_list,'list_of_ingredients'=>$list_of_ingredients]);
 
             require AJAX_FOLDER_PATH . '/openai/task03-OpenAIChatYouAreChef.php';
             updateUploadFile($upload_id, 'task3', $log);
