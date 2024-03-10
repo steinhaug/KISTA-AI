@@ -15,7 +15,7 @@ function setUploadStatus($upload_id, $status, $comment = ''){
     $mysqli->query('UPDATE `' . $kista_dp . 'uploaded_files__openai` SET `valid_to`=NOW() WHERE `valid_to` IS NULL AND `upload_id`=' . (int) $upload_id);
 
     if( !is_string($comment) ){
-        $comment = json_encode($comment);
+        $comment = json_encode($comment, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     }
 
     $sql = [
@@ -38,6 +38,7 @@ function getUploadStatus($upload_id){
 
     if( $entry === null ){
         // TODO: Should report error
+        return 'ERROR:NOT FOUND';
     }
 
     return $entry['status'];
