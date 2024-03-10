@@ -82,7 +82,12 @@ if( str_contains($chatgpt_result2,'NO') ){
         $chatgpt_result4 = $result->message->content;
     }
     */
-    setUploadStatus($upload_id, 'task2', ['chatgpt_result1'=>$chatgpt_result1,'chatgpt_result2'=>$chatgpt_result2,'chatgpt_result3'=>$chatgpt_result3,'chatgpt_result4'=>$chatgpt_result4]);
+    setUploadStatus($upload_id, 'task2', [
+        'chatgpt_result1'=>$chatgpt_result1,
+        'chatgpt_result2'=>$chatgpt_result2,
+        'chatgpt_result3'=>$chatgpt_result3,
+        'chatgpt_result4'=>$chatgpt_result4
+    ]);
     $dalle_prompts = openai__extract_the_prompts($chatgpt_result4);
     logfile('Task2: Make no-fridge image');
     promptDalle(array_shift($dalle_prompts));
@@ -98,8 +103,8 @@ TEXT:
 {$chatgpt_result1}
 EOF;
 
-$curated_list = promptChatGPT3($get_curated_list);
-$list_of_ingredients = openai__parse_vision_completion($curated_list);
+$chatgpt_curated_list = promptChatGPT3($get_curated_list);
+$list_of_ingredients = openai__parse_vision_completion($chatgpt_curated_list);
 $log['list'] = $list_of_ingredients;
 
 if( empty($list_of_ingredients) ){

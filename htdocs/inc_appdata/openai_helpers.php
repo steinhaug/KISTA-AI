@@ -60,6 +60,10 @@ function openai__extract_prompts($string) {
 function openai__extract_the_prompts($str){
     $arr = [];
 
+    $match = '1. ';
+    $p1 = strpos($str, $match);
+    $str = substr($str, $p1);
+
     $match = '2. ';
     $p2 = strpos($str, $match);
     $arr[] = substr($str, 0, $p2);
@@ -72,7 +76,15 @@ function openai__extract_the_prompts($str){
     $p4 = strpos($str, $match);
     $arr[] = substr($str, $p3, ($p4-$p3));
 
-    $arr[] = substr($str, $p4);
+    $final_prompt = substr($str, $p4);
+
+    $match = "\r\n\r\n";
+    $p5 = strpos($final_prompt, $match);
+    if( $p5 !== false ){
+        $arr[] = substr($final_prompt, 0, $p5);
+    } else {
+        $arr[] = $final_prompt;
+    }
 
     return array_map(function($val) {
         return trim(substr($val, 3));
@@ -221,7 +233,7 @@ function reciepe_thumb($image_name){
 
 
 
-function promptDalle($prompt, $imgInt=1){
+function promptDalle($prompt, $imgInt=1, $update_db=true){
     global $mysqli, $open_ai_key, $upload_id, $USER_ID, $kista_dp;
 
     try {
@@ -252,6 +264,16 @@ function promptDalle($prompt, $imgInt=1){
             } else {
                 $filename = str_pad($upload_id, 5, '0', STR_PAD_LEFT) . '-' . str_pad($USER_ID, 5, '0', STR_PAD_LEFT) . '-' . $imgInt . '.png';
             }
+
+            // Make sure image doesnt already exists
+            if( file_exists(UPLOAD_PATH . '/' . $filename) ){
+                for ($x = 1; $x <= 10; $x++) {
+                    $filename = substr($filename, 0, -4) . '-' . $x . '.png';
+                    if( !file_exists(UPLOAD_PATH . '/' . $filename) )
+                        break;
+                }
+            }
+
             file_put_contents(UPLOAD_PATH . '/' . $filename, $data[1]);
             $log[] = 'func(Dall-E), downloaded.';
             createThumbnail(
@@ -261,18 +283,13 @@ function promptDalle($prompt, $imgInt=1){
             );
             $log[] = 'func(Dall-E) thumbnail, created.';
 
-            if( $upload_id ){
+            if( $update_db and $upload_id ){
                 $sql = new sqlbuddy;
                 $sql->que('reciepe_image', $filename, 'string');
                 $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
             }
 
-            $dalle_img1 = [
-                'path' => UPLOAD_PATH . '/' . $filename,
-                'thumb_path' => UPLOAD_PATH . '/_thumbs/' . $filename,
-                'src' => UPLOAD_URI . '/' . $filename,
-                'thumb_src' => UPLOAD_URI . '/_thumbs/' . $filename,
-            ];
+            return [$filename, '/_thumbs/' . $filename];
 
         } else {
             throw new Exception('func(Dall-E) download error, http_status: ' . $data[0] . ', ' . $e->getMessage());
@@ -280,11 +297,9 @@ function promptDalle($prompt, $imgInt=1){
 
     } catch (Exception $e) {
         //throw new OpenAIException($e->getMessage());
-        return false;
+        return ['',''];
     }
 
-    return true;
-    //return $filename;
 }
 
 /**
@@ -298,7 +313,7 @@ function promptChatGPT($prompt, $model='gpt-3.5-turbo'){
     try {
         $client = OpenAI::client($open_ai_key);
         $settings = [
-            'model' => 'gpt-3.5-turbo', // 'gpt-4-1106-preview', // 'gpt-3.5-turbo',
+            'model' => $model,
             'messages' => [
                 ['role' => 'user', 'content' => $prompt],
             ],

@@ -106,6 +106,14 @@ function getDelimitedStrings_flattened($string, $startDelimiter, $endDelimiter, 
     return [ implode($glue, $parsed['in']) , implode($glue, $parsed['out']) ];
 }
 
+function getDelimitedStrings_string($string, $startDelimiter, $endDelimiter, $removeDelimiters=true, $glue="\n"){
+    $parsed = getDelimitedStrings($string, $startDelimiter, $endDelimiter, $removeDelimiters);
+    foreach($parsed['items'] as $v){
+        if($v['type'] == 'inner')
+            return $v['string'];
+    }
+    return '';
+}
 
 /**
  * Padd all lines in a block of lines.

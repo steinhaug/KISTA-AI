@@ -34,7 +34,12 @@ if ($res->num_rows) {
 
             require AJAX_FOLDER_PATH . '/openai/task02-OpenAIVision.php';
             updateUploadFile($upload_id, 'task2', $log);
-            setUploadStatus($upload_id, 'task2', ['chatgpt_result1'=>$chatgpt_result1,'chatgpt_result2'=>$chatgpt_result2,'curated_list'=>$curated_list,'list_of_ingredients'=>$list_of_ingredients]);
+            setUploadStatus($upload_id, 'task2', [
+                'chatgpt_result1'=>$chatgpt_result1,
+                'chatgpt_result2'=>$chatgpt_result2,
+                'chatgpt_curated_list'=>$chatgpt_curated_list,
+                'list_of_ingredients'=>$list_of_ingredients]
+            );
 
             require AJAX_FOLDER_PATH . '/openai/task03-OpenAIChatYouAreChef.php';
             updateUploadFile($upload_id, 'task3', $log);
@@ -44,6 +49,20 @@ if ($res->num_rows) {
             updateUploadFile($upload_id, 'task4', $log);
             setUploadStatus($upload_id, 'task4', ['dalle_image_url'=>$dalle_image_url]);
 
+            // Create a reciepe
+            $reciepe_id = saveReciepe([
+                'reciepe'=>$completion1,
+                'dalle_prompts'=>$dalle_prompts
+            ],$dalle_img1['image'],$dalle_img1['thumbnail']);
+
+            // Create second reciepe
+            require AJAX_FOLDER_PATH . '/openai/task10-OpenAICreateReciepe.php';
+            setUploadStatus($upload_id, 'task10', [
+                'completion_reciepe'=>$completion_reciepe,
+                'completion_prompts'=>$completion_prompts,
+                'completion_short_prompts'=>$completion_short_prompts
+            ]);
+
             $sql = new sqlbuddy;
             $sql->que('status', 'complete', 'string');
             $sql->que('log', json_encode($log), 'text');
@@ -51,7 +70,6 @@ if ($res->num_rows) {
 
             #unset($_SESSION['task']);
             echo json_encode(['status'=>'complete','progress'=>100,'message'=>'All tasks completed.']); exit;
-
 
         } catch (SegWayImage $e) {
             $error = $e->getMessage();

@@ -43,3 +43,56 @@ function getUploadStatus($upload_id){
 
     return $entry['status'];
 }
+
+function saveReciepe($reciepe, $image=null, $thumbnail=null){
+    global $mysqli, $upload_id, $kista_dp, $USER_ID;
+
+    if( !is_string($reciepe) ){
+        $reciepe = json_encode($reciepe, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    if( is_null($image) and is_null($thumbnail) ){
+        $sql = [
+            "INSERT INTO `" . $kista_dp . "uploaded_files__reciepes` (`upload_id`,`user_id`,`created`,`updated`,`image`,`thumbnail`,`reciepe`) VALUES (?,?,NOW(),null,'','',?)",
+            "iisss",
+            [$upload_id, $USER_ID, $reciepe]
+        ];
+    } else {
+        $sql = [
+            "INSERT INTO `" . $kista_dp . "uploaded_files__reciepes` (`upload_id`,`user_id`,`created`,`updated`,`image`,`thumbnail`,`reciepe`) VALUES (?,?,NOW(),null,?,?,?)",
+            "iisss",
+            [$upload_id, $USER_ID, $image, $thumbnail, $reciepe]
+        ];
+    }
+    $id = $mysqli->prepared_insert($sql);
+    return $id;
+}
+
+function updateReciepe($reciepe_id, $data){
+
+    if( isset($data['image']) and isset($data['thumbnail']) and isset($data['reciepe']) ){
+        if( !is_string($data['reciepe']) ) $data['reciepe'] = json_encode($data['reciepe'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $sql = [
+            "UPDATE `" . $kista_dp . "uploaded_files__reciepes` SET `updated`=NOW(), `image`=?, `thumbnail`=?, `reciepe`=? WHERE `reciepe_id`=?",
+            "sssi",
+            [$data['image'], $data['thumbnail'], $data['reciepe'], $reciepe_id]
+        ];
+    } else if( isset($data['image']) and isset($data['thumbnail']) and !isset($data['reciepe']) ){
+        $sql = [
+            "UPDATE `" . $kista_dp . "uploaded_files__reciepes` SET `updated`=NOW(), `image`=?, `thumbnail`=? WHERE `reciepe_id`=?",
+            "ssi",
+            [$data['image'], $data['thumbnail'], $reciepe_id]
+        ];
+    } else if( !isset($data['image']) and !isset($data['thumbnail']) and isset($data['reciepe']) ){
+        if( !is_string($data['reciepe']) ) $data['reciepe'] = json_encode($data['reciepe'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $sql = [
+            "UPDATE `" . $kista_dp . "uploaded_files__reciepes` SET `updated`=NOW(), `reciepe`=? WHERE `reciepe_id`=?",
+            "si",
+            [$data['reciepe'], $reciepe_id]
+        ];
+    }
+
+    $success = $mysqli->prepared_insert($sql);
+    return $success;
+
+}

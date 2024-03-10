@@ -53,6 +53,8 @@ try {
         $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
 
         $dalle_img1 = [
+            'image' => $filename,
+            'thumbnail' => '/_thumbs/' . $filename,
             'path' => UPLOAD_PATH . '/' . $filename,
             'thumb_path' => UPLOAD_PATH . '/_thumbs/' . $filename,
             'src' => UPLOAD_URI . '/' . $filename,
