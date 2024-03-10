@@ -89,7 +89,17 @@ if( str_contains($chatgpt_result2,'NO') ){
     throw new SegWayImage('Aight!');
 }
 
-$list_of_ingredients = openai__parse_vision_completion($chatgpt_result1);
+
+$get_curated_list = <<<EOF
+QUESTION:
+Please create a numerated list of the ingredients mentioned in the following text, one ingredients pr line. The text provided has the amount of the ingredient mentioned at the end of the sentence, remember to keep this if found.
+
+TEXT:
+{$chatgpt_result1}
+EOF;
+
+$curated_list = promptChatGPT3($get_curated_list);
+$list_of_ingredients = openai__parse_vision_completion($curated_list);
 $log['list'] = $list_of_ingredients;
 
 if( empty($list_of_ingredients) ){
