@@ -38,8 +38,8 @@ if ($res->num_rows) {
                 'chatgpt_result1'=>$chatgpt_result1,
                 'chatgpt_result2'=>$chatgpt_result2,
                 'chatgpt_curated_list'=>$chatgpt_curated_list,
-                'list_of_ingredients'=>$list_of_ingredients]
-            );
+                'list_of_ingredients'=>$list_of_ingredients
+            ]);
 
             require AJAX_FOLDER_PATH . '/openai/task03-OpenAIChatYouAreChef.php';
             updateUploadFile($upload_id, 'task3', $log);

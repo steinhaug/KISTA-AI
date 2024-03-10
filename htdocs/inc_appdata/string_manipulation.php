@@ -100,13 +100,12 @@ function getDelimitedStrings($str, $startDelimiter, $endDelimiter, $removeDelimi
 /**
  * Helper function for getDelimitedStrings(). Returns two blocks.
  */
-function getDelimitedStrings_flattened($string, $startDelimiter, $endDelimiter, $removeDelimiters=true, $glue="\n"){
-    $parsed = getDelimitedStrings($string, $startDelimiter, $endDelimiter);
+function getDelimitedStrings_flattened($string, $startDelimiter, $endDelimiter, $removeDelimiters=true){
+    $parsed = getDelimitedStrings($string, $startDelimiter, $endDelimiter, $removeDelimiters);
     return $parsed['items'];
-    return [ implode($glue, $parsed['in']) , implode($glue, $parsed['out']) ];
 }
 
-function getDelimitedStrings_string($string, $startDelimiter, $endDelimiter, $removeDelimiters=true, $glue="\n"){
+function getDelimitedStrings_string($string, $startDelimiter, $endDelimiter, $removeDelimiters=true){
     $parsed = getDelimitedStrings($string, $startDelimiter, $endDelimiter, $removeDelimiters);
     foreach($parsed['items'] as $v){
         if($v['type'] == 'inner')
