@@ -92,14 +92,19 @@ function initiateImageProcessing(){
     xhr.open("GET", "/ajax.php?aiid=<?=$rid?>&t=init", true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            var json = JSON.parse(xhr.responseText);
-            if (json.status === "complete") {
-                window.location.href = "reciepe.php?rid=<?=$rid?>";
-            } else if(json.status === "error") {
-                window.location.href = "error.php?rid=<?=$rid?>";
-            } else if(json.status === "idle") {
+            try {
+                var json = JSON.parse(xhr.responseText);
+                if (json.status === "complete") {
+                    window.location.href = "reciepe.php?rid=<?=$rid?>";
+                } else if(json.status === "error") {
+                    window.location.href = "error.php?rid=<?=$rid?>";
+                } else if(json.status === "idle") {
+                    var progressElement = document.getElementById('page-content');
+                    progressElement.innerHTML = '<h1>Page idle</h1><p>Nothing to do...</p>';
+                }
+            } catch (error) {
                 var progressElement = document.getElementById('page-content');
-                progressElement.innerHTML = '<h1>Page idle</h1><p>Nothing to do...</p>';
+                progressElement.innerHTML = "<h1>Error parsing JSON</h1>" + error + xhr.responseText;
             }
         }
     };
@@ -111,20 +116,25 @@ function pollImageProcessing() {
     xhr.open("GET", "/ajax.php?aiid=<?=$rid?>" + "&t=" + timestamp, true);
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            var json = JSON.parse(xhr.responseText);
-            console.log(xhr.responseText);
-            if (json.status === "idle") {
-                var progressElement = document.getElementById('page-content');
-                progressElement.innerHTML = '<h1>Page idle</h1><p>Nothing to do...</p>';
-            } else if (json.status === "complete") {
-                window.location.href = "reciepe.php?rid=<?=$rid?>";
-            } else if (json.status === "error") {
-                window.location.href = "error.php?rid=<?=$rid?>";
-            } else {
-                if (json.hasOwnProperty('progress') && Number.isInteger(json.progress)) {
-                    updateProgress(json.progress);
+            try {
+                var json = JSON.parse(xhr.responseText);
+                console.log(xhr.responseText);
+                if (json.status === "idle") {
+                    var progressElement = document.getElementById('page-content');
+                    progressElement.innerHTML = '<h1>Page idle</h1><p>Nothing to do...</p>';
+                } else if (json.status === "complete") {
+                    window.location.href = "reciepe.php?rid=<?=$rid?>";
+                } else if (json.status === "error") {
+                    window.location.href = "error.php?rid=<?=$rid?>";
+                } else {
+                    if (json.hasOwnProperty('progress') && Number.isInteger(json.progress)) {
+                        updateProgress(json.progress);
+                    }
+                    setTimeout(pollImageProcessing, 7500);
                 }
-                setTimeout(pollImageProcessing, 7500);
+            } catch (error) {
+                var progressElement = document.getElementById('page-content');
+                progressElement.innerHTML = "<h1>Error parsing JSON</h1>" + error + xhr.responseText;
             }
         }
     };
