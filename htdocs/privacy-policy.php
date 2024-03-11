@@ -81,7 +81,7 @@ a. Modification: KISTA AI reserves the right to update or change this Privacy Po
 
 ##### 8. Contact Information
 
-a. Questions: If Users have any questions about this Privacy Policy or the practices of KISTA AI, they may contact us at [Contact Email].
+a. Questions: If Users have any questions about this Privacy Policy or the practices of KISTA AI, they may contact us at steinhaug@gmail.com.
 
 By using the KISTA AI Website, Users acknowledge that they have read, understood, and agree to be bound by this Privacy Policy.';
 $Parsedown = new Parsedown();
