@@ -26,22 +26,6 @@ $json = json_decode($string2,1);
 
 echo '<pre>' . $json['completion2'] . '</pre>';
 
-function openai__find_reciepe_in_completion($string)
-{
-    $lines = explode("\n", $string);
-    if (count($lines) < 10)
-        return false;
-
-    if (($pos=strripos($string, 'DALL-E')) !== false) {
-        $reciepe = substr($string, 0, $pos);
-        $lines = explode("\n", $reciepe);
-        array_shift($lines);
-        array_pop($lines);
-        return implode("\n", $lines);
-    } else {
-        return false;
-    }
-}
 
 $reciepe = openai__find_reciepe_in_completion($json['completion2']);
 echo '<hr><pre>' . $reciepe . '</pre>';
