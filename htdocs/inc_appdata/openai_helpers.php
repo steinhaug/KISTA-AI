@@ -114,6 +114,29 @@ function openai__find_prompts_in_completion($string){
 
 }
 
+/**
+ * Prepare the string for extraction
+ *
+ * @param string $string The ChatGPT completion containing the reciepe.
+ * 
+ * @return mixed On success a string, on failure boolean false.
+ */
+function openai__find_reciepe_in_completion($string)
+{
+    $lines = explode("\n", $string);
+    if (count($lines) < 10)
+        return false;
+
+    if (($pos=strripos($string, 'DALL-E')) !== false) {
+        $reciepe = substr($string, 0, $pos);
+        $lines = explode("\n", $reciepe);
+        array_shift($lines);
+        array_pop($lines);
+        return implode("\n", $lines);
+    } else {
+        return false;
+    }
+}
 
 /**
  * openai__guzzleDownloader: downloads file

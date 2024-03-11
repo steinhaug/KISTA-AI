@@ -102,7 +102,7 @@ if( count($dalle_prompts) != 4 ){
 $log['dalle_prompts'] = json_encode($dalle_prompts);
 
 
-if( ($reciepe2 = openai__find_reciepe_in_completion($json['completion2'])) !== false ){
+if( ($reciepe2 = openai__find_reciepe_in_completion($completion2)) !== false ){
     // Extra reciepe : $reciepe2
     $sql = new sqlbuddy;
     $sql->que('reciepe', $reciepe2, 'string');
