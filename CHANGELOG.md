@@ -10,6 +10,7 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, verbosing taks development
 - fixed, checking if vafriable exists in reciepe.php
 - fixed, missing globals in db_helpers
+- changed, chatgpt completions have changed, updating Dall-E prompt extraction and Reciepe extraction.
 
 ### v0.9.2
 - added, head meta lang title 
