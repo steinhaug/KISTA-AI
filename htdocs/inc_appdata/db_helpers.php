@@ -54,7 +54,7 @@ function saveReciepe($reciepe, $image=null, $thumbnail=null){
     if( is_null($image) and is_null($thumbnail) ){
         $sql = [
             "INSERT INTO `" . $kista_dp . "uploaded_files__reciepes` (`upload_id`,`user_id`,`created`,`updated`,`image`,`thumbnail`,`reciepe`) VALUES (?,?,NOW(),null,'','',?)",
-            "iisss",
+            "iis",
             [$upload_id, $USER_ID, $reciepe]
         ];
     } else {
