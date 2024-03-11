@@ -88,8 +88,9 @@ try {
 $sql = new sqlbuddy;
 $sql->que('reciepe', $completion1, 'string');
 $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
+$log['reciepe'] = $completion1;
 
-$dalle_prompts = openai__extract_the_prompts($completion2);
+$dalle_prompts = openai__find_prompts_in_completion($completion2);
 if( count($dalle_prompts) != 4 ){
     $log['completion1'] = $completion1;
     $log['completion2'] = $completion2;
@@ -100,6 +101,18 @@ if( count($dalle_prompts) != 4 ){
 }
 $log['dalle_prompts'] = json_encode($dalle_prompts);
 
+
+if( ($reciepe2 = openai__find_reciepe_in_completion($json['completion2'])) !== false ){
+    // Extra reciepe : $reciepe2
+    $sql = new sqlbuddy;
+    $sql->que('reciepe', $reciepe2, 'string');
+    $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
+    $log['reciepe2'] = $reciepe2;
+    logfile('Task3: new reciepe detected, updating DB.');
+}
+
+
+/*
 try {
     $json_all = $response1->toArray();
     $meta = $response1->meta();
@@ -117,4 +130,5 @@ try {
 } catch (Exception $e) {
     throw new OpenAIException('cp1-2 log, ' . $e->getMessage());
 }
+*/
 

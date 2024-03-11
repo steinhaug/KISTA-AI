@@ -91,6 +91,29 @@ function openai__extract_the_prompts($str){
     }, $arr);
 }
 
+/**
+ * Prepare the string for extraction
+ *
+ * @param string $string The ChatGPT completion containing the Dall-E prompts
+ * 
+ * @return array An array containing Dall-E prompts
+ */
+function openai__find_prompts_in_completion($string){
+
+    $lines = explode("\n", $string);
+    if( count($lines) < 10 )
+        return openai__extract_the_prompts($string);
+
+    if( ($pos=strripos($string, 'DALL-E')) !== false ){
+        $prompts = substr($string, $pos);
+        $prompts = str_replace('"','',$prompts);
+        return openai__extract_the_prompts($prompts);
+    } else {
+        return openai__extract_the_prompts($string);
+    }
+
+}
+
 
 /**
  * openai__guzzleDownloader: downloads file

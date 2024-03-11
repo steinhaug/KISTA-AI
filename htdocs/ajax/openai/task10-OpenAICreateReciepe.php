@@ -47,7 +47,7 @@ EOF;
 
 logfile('Task10: prompt__get_dalle_prompts');
 $completion_prompts = promptChatGPT3($prompt__get_dalle_prompts);
-$dalle_prompts = openai__extract_the_prompts($completion_prompts);
+$dalle_prompts = openai__find_prompts_in_completion($completion_prompts);
 
 $json_pretty_encoded_prompts = json_encode($dalle_prompts, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
@@ -64,7 +64,7 @@ EOF;
 logfile('Task10: prompt__get_dalle_short_prompts');
 try {
     $completion_short_prompts = promptChatGPT3($prompt__get_dalle_short_prompts);
-    $dalle_short_prompts = openai__extract_the_prompts($completion_short_prompts);
+    $dalle_short_prompts = openai__find_prompts_in_completion($completion_short_prompts);
 } catch (Exception $e) {
     $dalle_short_prompts = [];
 }
