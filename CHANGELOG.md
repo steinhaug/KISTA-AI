@@ -9,6 +9,9 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, contact form has basic validation
 - fixed, favicon.ico
 - fixed, no-reciepe links to upload
+- added, gallery page has lang
+- added, gallery page has carousel
+- fixed, stylesheet missing .a.img-fluid
 
 ### v0.9.3
 - added, processing.php, Added error handling with disformed JSON
