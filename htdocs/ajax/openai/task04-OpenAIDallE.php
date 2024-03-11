@@ -33,7 +33,7 @@ try {
     throw new OpenAIException('Dall-E extract, ' . $e->getMessage());
 }
 
-logfile('Task4: openai__guzzleDownloader');
+logfile('Task4: guzzleDownloader');
 try {
 
     $data = openai__guzzleDownloader($dalle_image_url);

@@ -1,13 +1,8 @@
 <?php
 if(!(in_array($_SERVER['SERVER_NAME'],['kista-ai.steinhaug.no','kista-ai.local']))) { http_response_code(404); exit; }
 
-ob_start();
-session_cache_expire(720);
-if (isset($_SERVER['HTTP_HOST']) and ('kista-ai.local' == $_SERVER['HTTP_HOST'])) {
-    session_start(['read_and_close' => true]);
-} else {
-    session_start();
-}
+#session_start(['read_and_close' => true]);
+session_start();
 
 define('AJAX_URI', '/admin/ajax.php');
 define('AJAX_FOLDER', 'ajax');

@@ -2,15 +2,13 @@
 logfile('Task10: init');
 
 $prompt__get_reciepe = <<<EOF
-TASK
+You are a chef, make a home cooking dish based on the following ingredients.
 
-Put together a dish based on the available ingredients below.
+CONSIDER THE FOLLOWING WHEN COMPLETING THIS TASK
 
-CONSIDERATIONS
-
-- You do not have to use all of the ingredients. Please provide a recipe for one great dish, preferably for lunch or dinner.
-- Please use the metric system, not the American measurement system.
 - The name of the dish must be in English, and you must provide an estimation of calories, the country/region of origin of the recipe, and the duration of preparation.
+- Please use the metric system, not the American measurement system.
+- You do not have to use all of the ingredients.
 - Optional ingredients are acceptable and can be suggested.
 
 LIST OF AVAILABLE INGREDIENTS
