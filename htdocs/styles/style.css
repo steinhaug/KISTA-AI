@@ -7315,3 +7315,7 @@ input[type=number] {
 .slider-cover-dots .splide__pagination {
   transform: translate(-50%, -40px) !important;
 }
+
+a.img-fluid img.img-fluid {
+    width: 100%;
+}

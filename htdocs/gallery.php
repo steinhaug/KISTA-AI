@@ -21,7 +21,7 @@ require_once 'func.login.php';
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
 <title><?=$appConf['headTitle']?></title>
 <link rel="stylesheet" type="text/css" href="styles/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="styles/style.css">
+<link rel="stylesheet" type="text/css" href="styles/style.css?<?=$html_NoCache_Version?>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="fonts/css/fontawesome-all.min.css">
 <link rel="manifest" href="_manifest.json.php" data-pwa-version="<?=$PWA_APP_VER?>">
@@ -42,6 +42,67 @@ require_once 'func.login.php';
     <?=HTML_FOOTER(4)?>
 
     <div class="page-content header-clear-medium">
+
+
+        <div class="splide single-slider slider-arrows slider-no-dots" id="single-slider-1">
+            <div class="splide__track">
+                <div class="splide__list">
+                    <div class="splide__slide">
+
+        <div class="row me-0 ms-0 mb-0">
+<?php
+$i = 0;
+$items = $mysqli->result('assoc')->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != '' AND `status`='complete'");
+foreach ($items as $item) {
+    if ($item['reciepe'] == '<no_fridge />') {
+        $src = reciepe_thumb($item['reciepe_image']);
+    } else {
+        $src = reciepe_thumb($item['reciepe_image']);
+    }
+    if($i and !($i % 4)){
+    echo '
+        </div>
+                    </div>
+                    <div class="splide__slide">
+        <div class="row me-0 ms-0 mb-0">
+   ';
+    }
+    $title = reciepe_title($item['reciepe']);
+    echo '
+            <div class="col-3 ps-0 pe-0">
+                <div class="card card-style">
+                    <img src="' . $src . '" class="img-fluid">
+                    <a href="#" class="img-fluid"><img src="' . $src . '" class="img-fluid"></a>
+                    <div class="content pb-0">
+                        <p class="mb-n1 color-highlight font-10 font-600">Reciepe</p>
+                        <h1 class="font-15">' . $title . '</h1>
+                        <p class="mb-0">This is a forth of a column.</p>
+                    </div>            
+                </div>        
+            </div>
+    ';
+
+
+    $i++;
+}
+
+?>
+        </div>
+        
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
 
             <div class="card card-style">
                 <div class="content">
