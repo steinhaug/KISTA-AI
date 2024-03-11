@@ -84,15 +84,20 @@ if($item['reciepe']=='<no_fridge />'){
                                         //$upload_id = (int) $_SESSION['task']['aiid'];
                                         $log = [];
                                         openai__generateReciepe($item['reciepe'], $item['reciepe_image']);
-                                        $log = json_decode($item['log'], 1);
+                                        if( isset($item['log']) )
+                                            $log = json_decode($item['log'], 1);
                                         ?>
                                 </div>
 
                             </div><!-- /slide -->
                             <div class="splide__slide"><div class="content">
                                 <?php
-                                    $Parsedown = new Parsedown();
-                                    echo $Parsedown->text( '## Items detected from image:' . "\n\n" . $log['list'] );
+                                    if( isset($log['list']) ){
+                                        $Parsedown = new Parsedown();
+                                        echo $Parsedown->text( '## Items detected from image:' . "\n\n" . $log['list'] );
+                                    } else {
+                                        echo 'No data available.';
+                                    }
                                     #foreach($log as $k=>$v)
                                     #    echo $k . '<br>';
                                 ?>
