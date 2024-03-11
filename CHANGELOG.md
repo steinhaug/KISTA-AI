@@ -7,6 +7,7 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 ### v0.9.3
 - added, processing.php, Added error handling with disformed JSON
 - added, second reciepe
+- added, verbosing taks development
 
 ### v0.9.2
 - added, head meta lang title 
