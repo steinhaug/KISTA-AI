@@ -52,12 +52,14 @@ $settings = [
     ],
 ];
 
+logfile('Task3: response1');
 try {
     $response1 = $client->chat()->create($settings);
 } catch (Exception $e) {
     throw new OpenAIException('cp1, ' . $e->getMessage());
 }
 
+logfile('Task3: response2');
 try {
     $additionalQuestion = [
         'role' => 'user',
@@ -69,6 +71,7 @@ try {
     throw new OpenAIException('cp2, ' . $e->getMessage());
 }
 
+logfile('Task3: cleanup');
 try {
     $completion1 = '';
     foreach ($response1->choices as $result) {

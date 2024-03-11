@@ -107,6 +107,7 @@ if ($res->num_rows) {
             case 'task2': $progress = 40; break;
             case 'task3': $progress = 60; break;
             case 'task4': $progress = 80; break;
+            case 'task10': $progress = 90; break;
             case 'complete': $progress = 100; unset($_SESSION['task']); break;
             case 'error': $progress = 100; unset($_SESSION['task']); break;
             case 'failed': $progress = 100; unset($_SESSION['task']); break;

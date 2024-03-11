@@ -1,4 +1,5 @@
 <?php
+logfile('Task10: init');
 
 $prompt__get_reciepe = <<<EOF
 TASK
@@ -46,6 +47,7 @@ Based on the reciepe, come up with 4 different prompt ideas that I can give DALL
 {$completion_reciepe}
 EOF;
 
+logfile('Task10: prompt__get_dalle_prompts');
 $completion_prompts = promptChatGPT3($prompt__get_dalle_prompts);
 $dalle_prompts = openai__extract_the_prompts($completion_prompts);
 
@@ -54,17 +56,17 @@ $json_pretty_encoded_prompts = json_encode($dalle_prompts, JSON_PRETTY_PRINT | J
 $prompt__get_dalle_short_prompts = <<<EOF
 QUESTION
 
-Rewrite the prompts in the JSON in as few words as possible.
+Rewrite the JSON prompts using fewer words. Make sure your answer is a numerated list.
 
 PROMPTS
 
-{$json_pretty_encoded_prompts}
+{ {$json_pretty_encoded_prompts} }
 EOF;
 
+logfile('Task10: prompt__get_dalle_short_prompts');
 try {
     $completion_short_prompts = promptChatGPT3($prompt__get_dalle_short_prompts);
-    $json_short_prompts = getDelimitedStrings_string($completion_short_prompts, '[', ']', false);
-    $dalle_short_prompts = json_decode($json_short_prompts, 1);
+    $dalle_short_prompts = openai__extract_the_prompts($completion_short_prompts);
 } catch (Exception $e) {
     $dalle_short_prompts = [];
 }
@@ -72,10 +74,12 @@ try {
 $reciepe_id = saveReciepe([
     'reciepe'=>$completion_reciepe,
     'dalle_prompts'=>$dalle_prompts,
-    'dalle_short_prompts'=>$dalle_short_prompts
+    'dalle_short_prompts'=>$dalle_short_prompts,
+    'completion_short_prompts' => $completion_short_prompts
 ]);
 
-if( count($dalle_short_prompts) ){
+logfile('Task10: promptDalle');
+if( !is_null($dalle_short_prompts) and count($dalle_short_prompts) ){
     [$image, $thumbnail] = promptDalle(array_shift($dalle_short_prompts), 1, false);
 } else {
     [$image, $thumbnail] = promptDalle(array_shift($dalle_prompts), 1, false);

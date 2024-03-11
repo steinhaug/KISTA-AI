@@ -22,12 +22,14 @@ $settings['model'] = 'gpt-4-vision-preview';
 $settings['messages'] = $messagesArray;
 $settings['max_tokens'] = 1200;
 try {
+    logfile('Task2: response');
     $response = $client->chat()->create($settings);
     $additionalQuestion = [
         'role' => 'user',
         'content' => [['type' => 'text', 'text' => 'If there is a refridgerator visible in the image answer answer one word only YES, if no refridgerator is visible answer one word only NO.']]
     ];
     $settings['messages'][] = $additionalQuestion;
+    logfile('Task2: response2');
     $response2 = $client->chat()->create($settings);
 } catch (Exception $e) {
     throw new OpenAIException($e->getMessage());
@@ -103,6 +105,7 @@ TEXT:
 {$chatgpt_result1}
 EOF;
 
+logfile('Task2: get_curated_list');
 $chatgpt_curated_list = promptChatGPT3($get_curated_list);
 $list_of_ingredients = openai__parse_vision_completion($chatgpt_curated_list);
 $log['list'] = $list_of_ingredients;
