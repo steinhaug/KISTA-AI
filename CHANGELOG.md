@@ -4,8 +4,11 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 
 ## changelog
 
-### v0.9.2
+### v0.9.3
+- added, processing.php, Added error handling with disformed JSON
+- added, second reciepe
 
+### v0.9.2
 - added, head meta lang title 
 - fixed, disabled auto sliding for reciepe page
 - fixed, reversing hide logic for submit button. Making sure it is always available even if script fails

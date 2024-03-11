@@ -20,7 +20,32 @@ $string2 = 'Sure, here are four DALL-E prompts based on the guidelines you\'ve p
 4. "A plate of traditional Smørbrød, prepared for a fine dining experience, with the camera angle set to capture the smooth, creamy spread of the TINE sour cream against the rye bread, accented by a serpentine drizzle of cheese spread, the composition includes silver cutlery gently resting beside the plate and a soft linen napkin, the background blurred to draw attention to the detailed textures and colors of the dish."';
 
 $json = json_decode($string, 1);
-var_dump($json);
+#var_dump($json);
 $dalle_prompts = openai__extract_the_prompts($json['completion2']);
 
-var_dump($dalle_prompts);
+#var_dump($dalle_prompts);
+
+$json_pretty_encoded_prompts = json_encode($dalle_prompts, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+$prompt__get_dalle_short_prompts = <<<EOF
+QUESTION
+
+Rewrite the JSON prompts using fewer words. Make sure your answer is a numerated list.
+
+PROMPTS
+
+{ {$json_pretty_encoded_prompts} }
+EOF;
+echo '<pre>' . htmlentities($prompt__get_dalle_short_prompts) . '</pre>';
+$completion_short_prompts = promptChatGPT3($prompt__get_dalle_short_prompts);
+echo '<pre>' . htmlentities($completion_short_prompts) . '</pre>';
+$dalle_short_prompts = openai__extract_the_prompts($completion_short_prompts);
+echo '<pre>'; var_dump($dalle_short_prompts); echo '</pre>';
+
+/*
+$json_short_prompts = getDelimitedStrings_string($completion_short_prompts, '[', ']', false);
+$dalle_short_prompts = json_decode($json_short_prompts, 1);
+echo '<pre>' . var_dump($dalle_short_prompts) . '</pre>';
+$dalle_short_prompts = json_decode($completion_short_prompts, 1);
+echo '<pre>' . var_dump($dalle_short_prompts) . '</pre>';
+*/

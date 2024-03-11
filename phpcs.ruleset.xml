@@ -41,6 +41,7 @@
         <exclude name="Generic.Formatting.SpaceBeforeCast.NoSpace"/>
         <exclude name="Generic.PHP.LowerCaseKeyword.Found"/>
         <exclude name="Generic.ControlStructures.DisallowYodaConditions.Found"/>
+        <exclude name="Generic.PHP.CharacterBeforePHPOpeningTag.Found"/>
 
         <exclude name="Generic.NamingConventions.CamelCapsFunctionName"/>
         <exclude name="Generic.Classes.OpeningBraceSameLine.BraceOnNewLine"/>

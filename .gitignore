@@ -8,3 +8,5 @@ _files/**/*
 htdocs/xhtml/**/*
 htdocs/uploaded_files/**/*
 credentials/**/*
+htdocs/test.php
+htdocs/test2.php
