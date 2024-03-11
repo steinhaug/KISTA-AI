@@ -11,6 +11,25 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 require_once 'func.inc.php';
 require_once 'func.login.php';
 
+if($lang == 'en'){
+    $txts = [
+        'pageTitle' => 'Gallery',
+        'supTitle' => 'Gallery',
+        'title' => 'Your reciepes',
+        'paragraph' => 'Click on the thumbnail to view the reciepe.',
+        'reciepe' => 'Reciepe'
+    ];
+} else {
+    $txts = [
+        'pageTitle' => 'Galleri',
+        'supTitle' => 'Galleri',
+        'title' => 'Mine oppskrifter',
+        'paragraph' => 'Klikk på bilde for å se oppskriften.',
+        'reciepe' => 'Oppskrift'
+    ];
+}
+
+
 ?>
 <!DOCTYPE HTML>
 <html lang="<?=$lang?>">
@@ -35,7 +54,7 @@ require_once 'func.login.php';
 <div id="page">
 
     <div class="header header-fixed header-logo-center">
-        <a href="gallery.php" class="header-title">Galleri</a>
+        <a href="gallery.php" class="header-title"><?=$txts['pageTitle']?></a>
         <?=HTML_HEADER('header-fixed')?>
     </div>
 
@@ -44,58 +63,59 @@ require_once 'func.login.php';
     <div class="page-content header-clear-medium">
 
 
+<?php
+$count = $mysqli->query1("SELECT count(*) as `count` FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != '' AND `status`='complete'",0);
+
+if($count>5){ ?>
         <div class="splide single-slider slider-arrows slider-no-dots" id="single-slider-1">
             <div class="splide__track">
                 <div class="splide__list">
                     <div class="splide__slide">
 
-        <div class="row me-0 ms-0 mb-0">
-<?php
-$i = 0;
-$items = $mysqli->result('assoc')->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != '' AND `status`='complete'");
-foreach ($items as $item) {
-    if ($item['reciepe'] == '<no_fridge />') {
-        $src = reciepe_thumb($item['reciepe_image']);
-    } else {
-        $src = reciepe_thumb($item['reciepe_image']);
-    }
-    if($i and !($i % 4)){
-    echo '
-        </div>
+                        <div class="row me-0 ms-0 mb-0">
+    <?php
+    $i = 0;
+    $items = $mysqli->result('assoc')->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != '' AND `status`='complete'");
+    foreach ($items as $item) {
+        if ($item['reciepe'] == '<no_fridge />') {
+            $src = reciepe_thumb($item['reciepe_image']);
+            $link = 'no-reciepe.php?rid=' . $item['upload_id'];
+        } else {
+            $src = reciepe_thumb($item['reciepe_image']);
+            $link = 'reciepe.php?rid=' . $item['upload_id'];
+        }
+        if ($i and !($i % 4)) {
+            echo '
+                        </div>
                     </div>
                     <div class="splide__slide">
-        <div class="row me-0 ms-0 mb-0">
+                        <div class="row me-0 ms-0 mb-0">
    ';
-    }
-    $title = reciepe_title($item['reciepe']);
-    echo '
+        }
+        $title = reciepe_title($item['reciepe']);
+        echo '
             <div class="col-3 ps-0 pe-0">
                 <div class="card card-style">
-                    <img src="' . $src . '" class="img-fluid">
-                    <a href="#" class="img-fluid"><img src="' . $src . '" class="img-fluid"></a>
+                    <a href="' . $link . '" class="img-fluid"><img src="' . $src . '" class="img-fluid"></a>
                     <div class="content pb-0">
-                        <p class="mb-n1 color-highlight font-10 font-600">Reciepe</p>
+                        <p class="mb-n1 color-highlight font-10 font-600">' . $txts['reciepe'] . '</p>
                         <h1 class="font-15">' . $title . '</h1>
-                        <p class="mb-0">This is a forth of a column.</p>
-                    </div>            
-                </div>        
+                        <!-- <p class="mb-0">This is a forth of a column.</p> -->
+                    </div>
+                </div>
             </div>
     ';
-
-
-    $i++;
-}
-
-?>
-        </div>
+        $i++;
+    }
+    ?>
+                        </div>
         
                     </div>
                 </div>
             </div>
         </div>
 
-
-
+<?php } ?>
 
 
 
@@ -106,15 +126,15 @@ foreach ($items as $item) {
 
             <div class="card card-style">
                 <div class="content">
-                    <p class="mb-n1 color-highlight font-600">Gallery</p>
-                    <h1>Your reciepes</h1>
+                    <p class="mb-n1 color-highlight font-600"><?=$txts['supTitle']?></p>
+                    <h1><?=$txts['title']?></h1>
                     <p class="mb-3">
-                        Click on the thumbnail to view the reciepe.
+                        <?=$txts['paragraph']?>
                     </p>
                     <div class="row row-cols-3 px-1 mb-0">
 <?php
 
-$items = $mysqli->result('assoc')->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != ''");
+$items = $mysqli->result('assoc')->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != '' AND `status`='complete'");
 foreach($items as $item){
     #var_dump($item);
     if( $item['reciepe'] == '<no_fridge />' ){
@@ -131,9 +151,7 @@ foreach($items as $item){
         ';
     }
 }
-
 ?>
-
                     </div>
                 </div>
             </div>
@@ -141,18 +159,11 @@ foreach($items as $item){
 
         <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
     </div>
-    <!-- Page content ends here-->
     
-    <!-- Main Menu--> 
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>
-    
-    <!-- Share Menu-->
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
-    
-    <!-- Colors Menu-->
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
-     
-    
+
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
