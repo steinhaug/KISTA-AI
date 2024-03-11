@@ -102,7 +102,7 @@ echo '</style>';
                 <p class="boxed-text-xl opacity-70 color-white">
                     <?=$txts['subHead']?>
                 </p>
-                <a href="#" data-back-button class="btn btn-m bg-highlight btn-center-m rounded-s gradient-highlight font-600"><?=$txts['btn']?></a>
+                <a href="upload.php" data-back-button class="btn btn-m bg-highlight btn-center-m rounded-s gradient-highlight font-600"><?=$txts['btn']?></a>
             </div>
             <div class="card-overlay bg-black opacity-40"></div>
         </div>

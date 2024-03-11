@@ -4,6 +4,12 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 
 ## changelog
 
+### v0.9.4
+- fixed, contact form now submits
+- added, contact form has basic validation
+- fixed, favicon.ico
+- fixed, no-reciepe links to upload
+
 ### v0.9.3
 - added, processing.php, Added error handling with disformed JSON
 - added, second reciepe
@@ -11,6 +17,7 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - fixed, checking if vafriable exists in reciepe.php
 - fixed, missing globals in db_helpers
 - changed, chatgpt completions have changed, updating Dall-E prompt extraction and Reciepe extraction.
+- changed, reciepe parsing
 
 ### v0.9.2
 - added, head meta lang title 

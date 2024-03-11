@@ -117,12 +117,12 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
                 <p>
                     Noe du lurer på eller noe du vil spørre meg om, bruk skjemaet under.
                 </p>
-                
-                <form action="contact.php" method="post">
+
+                <form action="contact.php" method="post" id="contactForm">
 
                 <div class="input-style has-borders has-icon validate-field mb-4">
                     <i class="fa fa-user"></i>
-                    <input type="name" class="form-control validate-name" id="form1" placeholder="Name">
+                    <input name="name" type="text" class="form-control validate-name" id="fname" placeholder="Name">
                     <label for="form1" class="color-highlight">Name</label>
                     <i class="fa fa-times disabled invalid color-red-dark"></i>
                     <i class="fa fa-check disabled valid color-green-dark"></i>
@@ -130,7 +130,7 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
                 </div>
                 
                 <div class="input-style has-borders no-icon validate-field mb-4">
-                    <input type="email" class="form-control validate-text" id="form2" placeholder="Email">
+                    <input name="email" type="email" class="form-control validate-text" id="femail" placeholder="Email">
                     <label for="form2" class="color-highlight">Email</label>
                     <i class="fa fa-times disabled invalid color-red-dark"></i>
                     <i class="fa fa-check disabled valid color-green-dark"></i>
@@ -138,7 +138,7 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
                 </div>
 
                 <div class="input-style has-borders no-icon validate-field mb-4">
-                    <input type="tel" class="form-control validate-text" id="form4" placeholder="Phone">
+                    <input name="tel" type="text" class="form-control validate-text" id="ftel" placeholder="Phone">
                     <label for="form4" class="color-highlight">Phone</label>
                     <i class="fa fa-times disabled invalid color-red-dark"></i>
                     <i class="fa fa-check disabled valid color-green-dark"></i>
@@ -146,7 +146,7 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
                 </div>
                 
                 <div class="input-style has-borders no-icon mb-4">
-                    <textarea id="form7" placeholder="Enter your message" name="message"></textarea>
+                    <textarea id="fmessage" placeholder="Enter your message" name="message"></textarea>
                     <label for="form7" class="color-highlight">Enter your Message</label>
                     <em class="mt-n3">(required)</em>
                 </div>
@@ -156,7 +156,7 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
                     <div class="col-4 pe-1">
                     </div>
                     <div class="col-4 ps-1 pe-1">
-                        <a href="#" class="btn btn-3d btn-m btn-full mb-3 rounded-0 text-uppercase font-700 shadow-s border-blue-dark bg-blue-light" style="display:block;">Send skjema</a>
+                        <a href="#" id="submitButton" class="btn btn-3d btn-m btn-full mb-3 rounded-0 text-uppercase font-700 shadow-s border-blue-dark bg-blue-light" style="display:block;">Send skjema</a>
                     </div>
                     <div class="col-4 ps-1">
                     </div>
@@ -167,7 +167,6 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
             </div>
         </div>
      
-
 
 
 
@@ -194,6 +193,53 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
 <?php
 output_session_notification();
 ?>
+
+
+
+<div id="error-2" data-dismiss="notification-4" data-bs-delay="1000" data-bs-autohide="true" class="notification bg-red-dark shadow-xl opacity-95 fade hide">
+    <div class="toast-body color-white p-3">
+        <h1 class="ms-0 ps-0 pb-2 mt-0 color-white">Form error</h1>
+        <p id="errorMessage"></p>
+    </div>
+</div>
+<script>
+// JavaScript
+document.getElementById("submitButton").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent form submission
+    
+    // Get form fields
+    var name = document.getElementById("fname").value.trim();
+    var email = document.getElementById("femail").value.trim();
+    var message = document.getElementById("fmessage").value.trim();
+    
+    // Validate form fields
+    if (name.length < 5 || message.length < 5) {
+        document.getElementById("errorMessage").textContent = "Please fill in all fields correctly.";
+        var toastID = document.getElementById('error-2');
+        toastID = new bootstrap.Toast(toastID);
+        toastID.show();    
+        return;
+    }
+
+    // Validate form fields
+    if (email === "" || !validateEmail(email)) {
+        document.getElementById("errorMessage").textContent = "Please check your email adress.";
+        var toastID = document.getElementById('error-2');
+        toastID = new bootstrap.Toast(toastID);
+        toastID.show();    
+        return;
+    }
+    
+    // Submit the form if validation passes
+    document.getElementById("contactForm").submit();
+});
+
+// Function to validate email format
+function validateEmail(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
+</script>
 
 </body><?php
 ob_end_flush();
