@@ -309,6 +309,15 @@ function reciepe_thumb($image_name){
     return '/uploaded_files/_thumbs/' . $image_name;
 }
 
+function reciepe_title($string){
+
+    $lines = explode("\n", trim($string));
+    $title = array_shift($lines);
+    $title = str_replace(['*','Recipe Name:','Recipe:','Dish:'], ['','','',''], $title);
+    $title = trim($title);
+
+    return $title;
+}
 
 
 function promptDalle($prompt, $imgInt=1, $update_db=true){
