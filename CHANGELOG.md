@@ -8,6 +8,8 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, processing.php, Added error handling with disformed JSON
 - added, second reciepe
 - added, verbosing taks development
+- fixed, checking if vafriable exists in reciepe.php
+- fixed, missing globals in db_helpers
 
 ### v0.9.2
 - added, head meta lang title 

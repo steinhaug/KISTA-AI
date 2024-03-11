@@ -69,6 +69,7 @@ function saveReciepe($reciepe, $image=null, $thumbnail=null){
 }
 
 function updateReciepe($reciepe_id, $data){
+    global $mysqli, $upload_id, $kista_dp, $USER_ID;
 
     if( isset($data['image']) and isset($data['thumbnail']) and isset($data['reciepe']) ){
         if( !is_string($data['reciepe']) ) $data['reciepe'] = json_encode($data['reciepe'], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
