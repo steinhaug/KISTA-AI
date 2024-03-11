@@ -49,6 +49,7 @@ if ($res->num_rows) {
             updateUploadFile($upload_id, 'task4', $log);
             setUploadStatus($upload_id, 'task4', ['dalle_image_url'=>$dalle_image_url]);
 
+            /*
             // Create a reciepe
             $reciepe_id = saveReciepe([
                 'reciepe'=>$completion1,
@@ -62,6 +63,7 @@ if ($res->num_rows) {
                 'completion_prompts'=>$completion_prompts,
                 'completion_short_prompts'=>$completion_short_prompts
             ]);
+            */
 
             $sql = new sqlbuddy;
             $sql->que('status', 'complete', 'string');
