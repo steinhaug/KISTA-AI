@@ -57,14 +57,14 @@ class Pdf
         $this->imagick = new Imagick();
 
         if (null !== $resolution) {
-            logfile('Class PDF: Initializing with resolution set to ' . $resolution);
+            //logfile('Class PDF: Initializing with resolution set to ' . $resolution);
             $this->setResolution($resolution);
             $this->imagick->setResolution($resolution, $resolution);
-            logfile('Class PDF: Internal resolution now reads ' . $this->resolution);
+            //logfile('Class PDF: Internal resolution now reads ' . $this->resolution);
         }
 
         $this->imagick->pingImage($pdfFile);
-        logfile('Class PDF: pingImage complete');
+        //logfile('Class PDF: pingImage complete');
 
         $this->numberOfPages = $this->imagick->getNumberImages();
 
@@ -74,7 +74,7 @@ class Pdf
     public function setResolution(int $resolution)
     {
         $this->resolution = $resolution;
-        logfile('Class PDF: resolution set to ' . $resolution . ' internally. (check: ' . $this->resolution . ')');
+        //logfile('Class PDF: resolution set to ' . $resolution . ' internally. (check: ' . $this->resolution . ')');
 
         return $this;
     }
@@ -139,13 +139,13 @@ class Pdf
 
     public function saveImage(string $pathToImage): bool
     {
-        logfile('Class PDF: saveImage init...');
+        //logfile('Class PDF: saveImage init...');
         if (is_dir($pathToImage)) {
             $pathToImage = rtrim($pathToImage, '\/') . DIRECTORY_SEPARATOR . $this->page . '.' . $this->outputFormat;
         }
 
         $imageData = $this->getImageData($pathToImage);
-        logfile('Class PDF: saveImage complete saving image and exiting.');
+        //logfile('Class PDF: saveImage complete saving image and exiting.');
 
         return false !== file_put_contents($pathToImage, $imageData);
     }
@@ -176,17 +176,17 @@ class Pdf
          * before reading the actual image.
          */
         $this->imagick = new Imagick();
-        logfile('Class PDF: .. getImageData setting resolution to ' . $this->resolution);
+        //logfile('Class PDF: .. getImageData setting resolution to ' . $this->resolution);
 
         $this->imagick->setResolution($this->resolution, $this->resolution);
 
         if (null !== $this->colorspace) {
-            logfile('Class PDF: .. getImageData setting Colorspace to ' . $this->colorspace);
+            //logfile('Class PDF: .. getImageData setting Colorspace to ' . $this->colorspace);
             $this->imagick->setColorspace($this->colorspace);
         }
 
         if (null !== $this->compressionQuality) {
-            logfile('Class PDF: .. getImageData setting CompressionQuality to ' . $this->compressionQuality);
+            //logfile('Class PDF: .. getImageData setting CompressionQuality to ' . $this->compressionQuality);
             $this->imagick->setCompressionQuality($this->compressionQuality);
         }
 
@@ -270,7 +270,7 @@ function createThumbnail($imgIn, $imgOut, $conf = [])
 {
     global $home_path;
 
-    logfile('CT-101 init create thumbnail');
+    //logfile('CT-101 init create thumbnail');
     if (!file_exists($imgIn)) {
         throw new ThumbnailProcessFileNotFound('The source file `' . $imgIn . '` cannot be found.');
     }
@@ -327,23 +327,23 @@ function createThumbnail($imgIn, $imgOut, $conf = [])
 
     // Caching the identify part of the image
     if ($collect_identify_data && file_exists($imgIn . '.identify-result')) {
-        logfile('CT-102a1 cached identify data');
+        //logfile('CT-102a1 cached identify data');
         $image_meta = json_decode(file_get_contents($imgIn . '.identify-result'), true);
     } elseif ($collect_identify_data) {
-        logfile('CT-102b1 exec identify from image magick, loading');
+        //logfile('CT-102b1 exec identify from image magick, loading');
         $imagick = new Imagick($imgIn);
         $image_meta = $imagick->identifyImage();
-        logfile('CT-102b2 exec identify from image magick, saving');
+        //logfile('CT-102b2 exec identify from image magick, saving');
         file_put_contents($imgIn . '.identify-result', json_encode($image_meta));
     } else {
-        logfile('CT-102c1 skipping identify, fuzzylogic');
+        //logfile('CT-102c1 skipping identify, fuzzylogic');
     }
 
     //var_dump($image_meta);
 
-    logfile('CT-103 treating file depending on mimetype');
+    //logfile('CT-103 treating file depending on mimetype');
     if (('application/postscript' == $image_meta['mimetype']) or ('image/x-eps' == $image_meta['mimetype'])) {
-        logfile('CT-104 EPS process');
+        //logfile('CT-104 EPS process');
         $im = new Imagick($imgIn);
         if ('CMYK' == $image_meta['colorSpace']) {
             $im->transformImageColorspace(Imagick::COLORSPACE_SRGB);
@@ -365,19 +365,19 @@ function createThumbnail($imgIn, $imgOut, $conf = [])
             $imgy = $image->height();
         }
     } elseif ('application/pdf' == $image_meta['mimetype']) {
-        logfile('CT-105 PDF process');
+        //logfile('CT-105 PDF process');
 
         if (!$abort_thumbnail) {
-            logfile('CT-105 PDF process: 1/2 using Imagick to create JPG');
+            //logfile('CT-105 PDF process: 1/2 using Imagick to create JPG');
             if (!isset($pdf_meta)) {
-                logfile('PDF Thumbnail aborted, missing pdf meta, copying error thumb');
+                //logfile('PDF Thumbnail aborted, missing pdf meta, copying error thumb');
                 copy($home_path . 'www/dist/assets/pdf-na.jpg', $imgOut);
                 $imgx = $resize[0];
                 $imgy = $resize[1];
             } else {
                 $pdf = new Pdf($imgIn, $pdf_meta['resolution']);
                 $pdf->saveImage($imgOut);
-                logfile('CT-105 PDF process: 2/2 using Image class to resize final thumb');
+                //logfile('CT-105 PDF process: 2/2 using Image class to resize final thumb');
                 $image = Image::make($imgOut)->resize($resize[0], $resize[1], function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
@@ -387,7 +387,7 @@ function createThumbnail($imgIn, $imgOut, $conf = [])
                 $imgy = $image->height();
             }
         } else {
-            logfile('PDF Thumbnail aborted, copying error thumb');
+            //logfile('PDF Thumbnail aborted, copying error thumb');
             copy($home_path . 'www/dist/assets/pdf-na.jpg', $imgOut);
             $imgx = $resize[0];
             $imgy = $resize[1];
@@ -398,7 +398,7 @@ function createThumbnail($imgIn, $imgOut, $conf = [])
             or ('image/tiff' == $image_meta['mimetype'])
             ) {
             // or ('image/x-psd' == $image_meta['mimetype']) <- why ? 
-        logfile('CT-106 Default process');
+        //logfile('CT-106 Default process');
         $image = Image::make($imgIn)->resize($resize[0], $resize[1], function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
