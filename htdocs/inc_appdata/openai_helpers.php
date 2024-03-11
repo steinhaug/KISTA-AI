@@ -227,6 +227,33 @@ function getArray__splitAtNeedle($string, $needle){
 }
 
 /**
+ * Split a string by line match
+ *
+ * @param string $string The text
+ * @param string $needle The needle to look for
+ * @param mixed $needleLine Optional, prefix needle line with
+ * 
+ * @return array Array of before and after needle
+ */
+function getArray__splitAtNeedleLine($string, $needle, $needleLine=null) {
+
+    $lines = explode("\n", $string);
+    
+    foreach ($lines as $line) {
+        if (strpos($line, $needle) !== false) {
+            $parts = explode($line, $string);
+            if ($needleLine!==null) {
+                $line = $needleLine . trim(str_replace('*', '', $line));
+            }
+            return [$parts[0], $line . $parts[1]];
+        }
+    }
+    
+    // If $needle is not found, return null
+    return [$string, ''];
+}
+
+/**
  * Prepare the reciepe for Markdown
  *
  * @param [type] $string
@@ -239,14 +266,19 @@ function openai__parse_reciepe($string){
     $ingredients = '';
     $instructions = '';
 
-    [$string, $instructions] = getArray__splitAtNeedle($string, 'Instructions:');
-    [$string, $ingredients] = getArray__splitAtNeedle($string, 'Ingredients:');
+    $lines = explode("\n", trim($string));
+    $title = str_replace(['Recipe:','*'], ['',''], array_shift($lines));
+    $header = implode("\n", $lines);
+
+    [$header, $instructions] = getArray__splitAtNeedleLine($header, 'Instructions:', '### ');
+    [$header, $ingredients] = getArray__splitAtNeedleLine($header, 'Ingredients:', '### ');
 
     $ingredients = str_replace('Optional Ingredients:', '### Optional Ingredients:', $ingredients);
 
-    $lines = explode("\n", $string);
-    $title = str_replace('Recipe:', '', array_shift($lines));
-    $header = implode("\n", $lines);
+    $header = str_replace(['Preparation Duration:','Estimated Calories:','Origin:'],["  \n" . '**Preparation Duration:**',"  \n" . '**Estimated Calories:**',"  \n" . '**Origin:**'],$header);
+    $header = str_replace("\n  \n","  \n",$header);
+
+    $instructions = str_replace("\n\n","\n",$instructions);
 
     $arr = [$title, $header, $ingredients, $instructions];
 
@@ -266,9 +298,9 @@ function openai__generateReciepe($string, $img){
     echo $Parsedown->text( '# ' . $parts[0] );
     if(!empty($img))
         echo '<a href="' . $img_src . '" data-gallery="gallery-1"><img src="' . $thumb_src . '" alt="" style="float:right"></a>';
-    echo $Parsedown->text( '' . $parts[1] );
-    echo $Parsedown->text( '## ' . $parts[2] );
-    echo $Parsedown->text( '## ' . $parts[3] );
+    echo $Parsedown->text( $parts[1] );
+    echo $Parsedown->text( $parts[2] );
+    echo $Parsedown->text( $parts[3] );
 
 }
 
