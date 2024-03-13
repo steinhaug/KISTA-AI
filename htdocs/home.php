@@ -6,14 +6,14 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 require_once 'func.inc.php';
 require_once 'func.login.php';
 
-if(!isset($_SESSION['google_account_id'])){
+if(empty($_SESSION['USER_GOOGLE_LOGIN'])){
     header('Location: login.php');
     exit;
 }
 
-$google_account_id = $_SESSION['google_account_id'];
-if (($user = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "users__google` WHERE `google_account_id`=?", 's', [$google_account_id], true)) === null) {
-    header('Location: logout.php');
+[$user_google_id, $account_id] = $_SESSION['USER_GOOGLE_LOGIN'];
+if (($user = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "users__google` WHERE `user_google_id`=? AND `account_id`=?", 'is', [$user_google_id, $account_id], true)) === null) {
+    header('Location: logout.php?error=unknown_user');
     exit;
 }
 

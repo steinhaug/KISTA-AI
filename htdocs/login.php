@@ -6,7 +6,7 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 require_once 'func.inc.php'; //require 'google-api/vendor/autoload.php';
 require_once 'func.login.php';
 
-if(isset($_SESSION['google_account_id'])){
+if(isset($_SESSION['USER_GOOGLE_LOGIN'])){
     header('Location: home.php');
     exit;
 }
@@ -33,19 +33,21 @@ if(isset($_GET['code'])):
         $google_account_info = $google_oauth->userinfo->get();
     
         // checking user already exists or not
-        if( ($google_id = $mysqli->prepared_query1("SELECT `google_id` FROM `" . $kista_dp . "users__google` WHERE `google_account_id`=?", 's', [$google_account_info->id], 0)) !== null ){
-            $_SESSION['google_account_id'] = $google_account_info->id; 
+        if( ($user_google_id = $mysqli->prepared_query1("SELECT `user_google_id` FROM `" . $kista_dp . "users__google` WHERE `account_id`=?", 's', [$google_account_info->id], 0)) !== null ){
+            $_SESSION['USER_GOOGLE_LOGIN'] = [$user_google_id, $google_account_info->id];
+            setGoogleID4Session($user_google_id);
             header('Location: home.php');
             exit;
         } else {
             $sql = [
-                "INSERT INTO `" . $kista_dp . "users__google` (`google_account_id`,`account_name`,`account_email`,`account_picture`) VALUES (?,?,?,?)",
+                "INSERT INTO `" . $kista_dp . "users__google` (`account_id`,`account_name`,`account_email`,`account_picture`) VALUES (?,?,?,?)",
                 "ssss",
                 [$google_account_info->id, trim($google_account_info->name), $google_account_info->email, $google_account_info->picture]
             ];
-            $google_id = $mysqli->prepared_insert($sql);
-            if($google_id){
-                $_SESSION['google_account_id'] = $google_account_info->id; 
+            $user_google_id = $mysqli->prepared_insert($sql);
+            if($user_google_id){
+                $_SESSION['USER_GOOGLE_LOGIN'] = [$user_google_id, $google_account_info->id];
+                setGoogleID4Session($user_google_id);
                 header('Location: home.php');
                 exit;
             }

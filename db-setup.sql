@@ -119,3 +119,16 @@ ALTER TABLE `kistaai_users__google`
 	CHANGE COLUMN `account_id` `google_account_id` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `google_id`,
 	DROP INDEX `google_id`,
 	ADD UNIQUE INDEX `google_id` (`google_account_id`) USING BTREE;
+
+ALTER TABLE `kistaai_users__google`
+	CHANGE COLUMN `google_id` `user_google_id` INT(11) NOT NULL AUTO_INCREMENT FIRST,
+	CHANGE COLUMN `google_account_id` `google_id` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `user_google_id`,
+	DROP PRIMARY KEY,
+	ADD PRIMARY KEY (`user_google_id`) USING BTREE,
+	DROP INDEX `google_id`,
+	ADD UNIQUE INDEX `google_id` (`google_id`) USING BTREE;
+ALTER TABLE `kistaai_users__google`
+	CHANGE COLUMN `google_id` `account_id` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `user_google_id`,
+	DROP INDEX `google_id`,
+	ADD UNIQUE INDEX `google_id` (`account_id`) USING BTREE;
+

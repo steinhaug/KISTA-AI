@@ -23,6 +23,17 @@ if( !empty($_GET['return']) ){
 
 #echo htmlentities($uri); exit;
 
+/*
+$_SESSION['app']
+$_SESSION['sessid']
+$_SESSION['USER_ID']
+$_SESSION['USER_SESSION']
+$_SESSION['USER_GOOGLE_LOGIN']
+$_SESSION['createCookie']
+*/
+
+
+
 if (!isset($_COOKIE[$login_cookie_name])) {
     $_SESSION['app'] = $APP_NAME;
     $_SESSION['sessid'] = $APP_NAME . rand(0, 100000).md5(1 . $USER_NAME.rand(0, 100000).time());

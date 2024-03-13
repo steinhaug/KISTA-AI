@@ -1,5 +1,30 @@
 <?php
 
+
+
+/**
+ * Associate the Google login with current session
+ *
+ * @param int $user_google_id The user_google-id
+ * 
+ * @return mixed Null if ignored and update result as boolean.
+ */
+function setGoogleID4Session($user_google_id){
+    global $mysqli;
+
+    if(!empty($_SESSION['USER_ID']))
+        return null;
+
+    $sql = [
+        "UPDATE `" . $kista_dp . "users__sessions` SET `google_id`=? WHERE `user_id`=?",
+        "ii",
+        [$user_google_id, $_SESSION['USER_ID']]
+    ];
+    $success = $mysqli->prepared_insert($sql);
+    return $success;
+}
+
+
 /**
  * Load the saved session data from your saved session
  *
