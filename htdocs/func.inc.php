@@ -1,4 +1,37 @@
 <?php
+/* colors
+
+highlight
+green
+grass
+red
+orange
+yellow
+sunny
+blue
+teal
+mint
+pink
+pink2
+magenta
+brown
+gray
+aqua
+night
+dark
+facebook
+linkedin
+twitter
+google
+whatsapp
+pinterest
+mail
+phone
+instagram
+color-highlight
+white
+black
+*/
 
 if(!function_exists('ob_flush')){ function ob_flush() { return true; }} // Patch for DG 80.64.202.13 server
 if(!function_exists('same_length')){ function same_length($a,$b,$s=' '){ if(strlen((string) $a) == strlen((string) $b)) return array($a,$b); if(strlen((string) $a) > strlen((string) $b)){ while(strlen((string) $a) > strlen((string) $b)){ $b .= $s; } return array($a,$b); } else { while(strlen((string) $a) < strlen((string) $b)){ $a .= $s; } return array($a,$b);} return array($a,$b);}}
@@ -63,12 +96,15 @@ define('LF', "\n");
 
 require dirname(dirname(APPDATA_PATH)) . '/vendor/autoload.php';
 require dirname(dirname(APPDATA_PATH)) . '/credentials.php';
+require APPDATA_PATH . '/notifications.php';
 require APPDATA_PATH . '/error_handling.php';
 require APPDATA_PATH . '/image_helpers.php';
 require APPDATA_PATH . '/db_helpers.php';
 require APPDATA_PATH . '/session_helpers.php';
 require APPDATA_PATH . '/string_manipulation.php';
 require APPDATA_PATH . '/openai_helpers.php';
+
+require APPDATA_PATH . '/html_modal_templates.php';
 
 if(!function_exists('sqlError__alertAndStop')){ function sqlError__alertAndStop($sql_error, $sql_query, $reference = '', $UserID = 0, $trace = null){
     return time();
@@ -104,12 +140,24 @@ function HTML_FOOTER($i){
     ';
 }
 function HTML_HEADER($part){
+
+    if(empty($_SESSION['USER_GOOGLE_LOGIN'])){
+        $btn = '<a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="modalMenu-login"><i class="fa fa-user"></i></a>';
+    } else {
+        $btn = '<a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="modalMenu-login"><i class="fa fa-right-from-bracket"></i></a>';
+    }
+
     if (strtolower($part) == 'header-fixed') {
         return '
             <a href="#" data-back-button class="header-icon header-icon-1"><i class="fa fa-chevron-left"></i></a>
             <a href="#" class="header-icon header-icon-3" data-menu="menu-share"><i class="fa fa-share-alt"></i></a>
             <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-dark"><i class="fas fa-sun"></i></a>
             <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-light"><i class="fas fa-moon"></i></a>
+
+            <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-dark"><i class="fa fa-right-to-bracket"></i></a>
+            <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-light"><i class="fa fa-right-to-bracket"></i></a>
+
+
             <!-- <a href="#" data-menu="menu-main" class="header-icon header-icon-4"><i class="fas fa-bars"></i></a> -->
         ';
     } else if (strtolower($part) == 'page-title-fixed') {
@@ -117,6 +165,7 @@ function HTML_HEADER($part){
         <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-share"><i class="fa fa-share-alt"></i></a>
         <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-light" data-toggle-theme><i class="fa fa-moon"></i></a>
         <a href="#" class="page-title-icon shadow-xl bg-theme color-theme show-on-theme-dark" data-toggle-theme><i class="fa fa-lightbulb color-yellow-dark"></i></a>
+        ' . $btn . '
         <!-- <a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="menu-main"><i class="fa fa-bars"></i></a> -->
         ';
     }
@@ -434,5 +483,7 @@ function output_session_notification(){
         unset($_SESSION['info_msg']);
     }
 }
+
+
 
 
