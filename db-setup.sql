@@ -93,3 +93,29 @@ CREATE TABLE `kistaai_uploaded_files__reciepes` (
 	`reciepe` TEXT NOT NULL COLLATE 'utf8mb4_danish_ci',
 	PRIMARY KEY (`reciepe_id`) USING BTREE
 ) COLLATE='utf8mb4_danish_ci' ENGINE=InnoDB AUTO_INCREMENT=1;
+
+ALTER TABLE `kistaai_users__sessions`
+	CHANGE COLUMN `id` `user_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT FIRST,
+	CHANGE COLUMN `sessionid` `session_id` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb3_swedish_ci' AFTER `user_id`,
+	CHANGE COLUMN `userid` `google_id` INT(11) UNSIGNED NOT NULL AFTER `session_id`,
+	CHANGE COLUMN `validto` `valid_to` DATETIME NULL DEFAULT NULL AFTER `google_id`,
+	DROP PRIMARY KEY,
+	ADD PRIMARY KEY (`user_id`) USING BTREE,
+	DROP INDEX `sessionid`,
+	ADD INDEX `sessionid` (`session_id`) USING BTREE;
+
+ALTER TABLE `kistaai_users__google`
+	CHANGE COLUMN `id` `google_id` INT(11) NOT NULL AUTO_INCREMENT FIRST,
+	CHANGE COLUMN `google_id` `account_id` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `google_id`,
+	CHANGE COLUMN `name` `account_name` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `account_id`,
+	CHANGE COLUMN `email` `account_email` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `account_name`,
+	CHANGE COLUMN `profile_image` `account_picture` TEXT NOT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `account_email`,
+	DROP PRIMARY KEY,
+	ADD PRIMARY KEY (`google_id`) USING BTREE,
+	DROP INDEX `google_id`,
+	ADD UNIQUE INDEX `google_id` (`account_id`) USING BTREE;
+
+ALTER TABLE `kistaai_users__google`
+	CHANGE COLUMN `account_id` `google_account_id` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_unicode_ci' AFTER `google_id`,
+	DROP INDEX `google_id`,
+	ADD UNIQUE INDEX `google_id` (`google_account_id`) USING BTREE;

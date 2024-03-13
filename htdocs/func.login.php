@@ -12,7 +12,7 @@ if( !isset($_COOKIE['PHPSESSID']) ){
 if( isset($_SESSION['USER_ID']) and isset($_SESSION['USER_SESSION']) ){
     $sql = "SELECT * 
             FROM `" . $kista_dp . "users__sessions` `us` 
-            WHERE `us`.`id`=? AND `us`.`sessionid`=?
+            WHERE `us`.`user_id`=? AND `us`.`session_id`=?
             ";
     $res = $mysqli->prepared_query($sql, 'is', [$_SESSION['USER_ID'],$_SESSION['USER_SESSION']]);
     if (count($res)) {

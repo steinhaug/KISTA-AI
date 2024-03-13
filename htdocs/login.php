@@ -3,68 +3,68 @@ session_start();
 session_regenerate_id(true);
 define('APPDATA_PATH', dirname(__FILE__) . '/inc_appdata');
 define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
-require_once 'func.inc.php';
+require_once 'func.inc.php'; //require 'google-api/vendor/autoload.php';
 require_once 'func.login.php';
 
-
-if(isset($_SESSION['login_id'])){
+if(isset($_SESSION['google_account_id'])){
     header('Location: home.php');
     exit;
 }
 
-//require 'google-api/vendor/autoload.php';
-
 // Creating new google client instance
 $client = new Google_Client();
-// Enter your Client ID
-$client->setClientId($google_client_id);
-// Enter your Client Secrect
-$client->setClientSecret($google_client_secret);
-// Enter the Redirect URL
-$client->setRedirectUri('http://kista-ai.local/login.php');
+$client->setClientId($google_client_id);                            // Enter your Client ID
+$client->setClientSecret($google_client_secret);                    // Enter your Client Secrect
+$client->setRedirectUri('https://kista-ai.steinhaug.no/login.php'); // Enter the Redirect URL
+
 // Adding those scopes which we want to get (email & profile Information)
 $client->addScope("email");
 $client->addScope("profile");
+
 if(isset($_GET['code'])):
+
     $token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
     if(!isset($token["error"])){
+
         $client->setAccessToken($token['access_token']);
+
         // getting profile information
         $google_oauth = new Google_Service_Oauth2($client);
         $google_account_info = $google_oauth->userinfo->get();
     
-        // Storing data into database
-        $id = mysqli_real_escape_string($db_connection, $google_account_info->id);
-        $full_name = mysqli_real_escape_string($db_connection, trim($google_account_info->name));
-        $email = mysqli_real_escape_string($db_connection, $google_account_info->email);
-        $profile_pic = mysqli_real_escape_string($db_connection, $google_account_info->picture);
         // checking user already exists or not
-        $get_user = mysqli_query($db_connection, "SELECT `google_id` FROM `" . $kista_dp . "users__google` WHERE `google_id`='$id'");
-        if(mysqli_num_rows($get_user) > 0){
-            $_SESSION['login_id'] = $id; 
+        if( ($google_id = $mysqli->prepared_query1("SELECT `google_id` FROM `" . $kista_dp . "users__google` WHERE `google_account_id`=?", 's', [$google_account_info->id], 0)) !== null ){
+            $_SESSION['google_account_id'] = $google_account_info->id; 
             header('Location: home.php');
             exit;
-        }
-        else{
-            // if user not exists we will insert the user
-            $insert = mysqli_query($db_connection, "INSERT INTO `" . $kista_dp . "users__google`(`google_id`,`name`,`email`,`profile_image`) VALUES('$id','$full_name','$email','$profile_pic')");
-            if($insert){
-                $_SESSION['login_id'] = $id; 
+        } else {
+            $sql = [
+                "INSERT INTO `" . $kista_dp . "users__google` (`google_account_id`,`account_name`,`account_email`,`account_picture`) VALUES (?,?,?,?)",
+                "ssss",
+                [$google_account_info->id, trim($google_account_info->name), $google_account_info->email, $google_account_info->picture]
+            ];
+            $google_id = $mysqli->prepared_insert($sql);
+            if($google_id){
+                $_SESSION['google_account_id'] = $google_account_info->id; 
                 header('Location: home.php');
                 exit;
             }
-            else{
-                echo "Sign up failed!(Something went wrong).";
-            }
+
+            header("Content-type: application/json; charset=utf-8");
+            echo json_encode(['error'=>'Could not insert into database.']);
+            exit;
+
         }
-    }
-    else{
-        header('Location: login.php');
+
+    } else {
+
+        $_SESSION['error_msg'] = json_encode($token["error"]);
+        header('Location: login.php?error');
         exit;
+
     }
     
 else: 
-    // Google Login Url = $client->createAuthUrl(); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,7 +72,7 @@ else:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login - LaravelTuts</title>
+    <title>Login</title>
     <style>
         *,
         *::before,
@@ -146,6 +146,17 @@ else:
             Sign in with Google
         </a>
     </div>
+
+<?php
+if( !empty($_SESSION['error_msg']) ){
+
+    echo '<div style="border:2px solid red; padding: 10px; margin: 10px;">' . htmlentities($_SESSION['error_msg']) . '</div>';
+
+}
+
+?>
+
+
 </body>
 </html>
 <?php endif; ?>

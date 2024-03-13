@@ -6,20 +6,17 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 require_once 'func.inc.php';
 require_once 'func.login.php';
 
-
-if(!isset($_SESSION['login_id'])){
+if(!isset($_SESSION['google_account_id'])){
     header('Location: login.php');
     exit;
 }
-$id = $_SESSION['login_id'];
-$get_user = mysqli_query($db_connection, "SELECT * FROM `" . $kista_dp . "users__google` WHERE `google_id`='$id'");
-if(mysqli_num_rows($get_user) > 0){
-    $user = mysqli_fetch_assoc($get_user);
-}
-else{
+
+$google_account_id = $_SESSION['google_account_id'];
+if (($user = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "users__google` WHERE `google_account_id`=?", 's', [$google_account_id], true)) === null) {
     header('Location: logout.php');
     exit;
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +24,7 @@ else{
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?php echo $user['name']; ?> - LaravelTuts</title>
+    <title><?php echo $user['account_name']; ?></title>
     <style>
         *,
         *::before,
@@ -93,11 +90,11 @@ else{
     </div>
     <div class="_container">
         <div class="_img">
-            <img src="<?php echo $user['profile_image']; ?>" alt="<?php echo $user['name']; ?>">
+            <img src="<?php echo $user['account_picture']; ?>" alt="<?php echo $user['account_name']; ?>">
         </div>
         <div class="_info">
-            <h1><?php echo $user['name']; ?></h1>
-            <p><?php echo $user['email']; ?></p>
+            <h1><?php echo $user['account_name']; ?></h1>
+            <p><?php echo $user['account_email']; ?></p>
             <a href="logout.php">Logout</a>
         </div>
     </div>

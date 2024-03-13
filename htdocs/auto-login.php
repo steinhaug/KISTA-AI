@@ -26,8 +26,8 @@ if( !empty($_GET['return']) ){
 if (!isset($_COOKIE[$login_cookie_name])) {
     $_SESSION['app'] = $APP_NAME;
     $_SESSION['sessid'] = $APP_NAME . rand(0, 100000).md5(1 . $USER_NAME.rand(0, 100000).time());
-    $validto =  date("Y-m-d H:i:s", time() +2592000);
-    $mysqli->query("INSERT INTO `" . $kista_dp . "users__sessions` VALUES (NULL, '". cleanString($_SESSION['sessid']) ."','". 1 ."','". $validto ."')");
+    $valid_to =  date("Y-m-d H:i:s", time() +2592000);
+    $mysqli->query("INSERT INTO `" . $kista_dp . "users__sessions` VALUES (NULL, '". cleanString($_SESSION['sessid']) ."','". 1 ."','". $valid_to ."')");
     setcookie($login_cookie_name, $_SESSION['sessid'], time() + (86400 * 30), "/");
     $USER_ID = $mysqli->insert_id;
     define('USER_ID', $USER_ID);
@@ -35,20 +35,20 @@ if (!isset($_COOKIE[$login_cookie_name])) {
     $_SESSION['USER_SESSION'] = cleanString($_SESSION['sessid']);
     $_SESSION['createCookie'] = true;
 } else {
-    $res = $mysqli->query("SELECT * FROM `" . $kista_dp . "users__sessions` WHERE `sessionid`='" . cleanString($_COOKIE[$login_cookie_name]) . "'");
+    $res = $mysqli->query("SELECT * FROM `" . $kista_dp . "users__sessions` WHERE `session_id`='" . cleanString($_COOKIE[$login_cookie_name]) . "'");
     if ($res->num_rows) {
         $item = $res->fetch_assoc();
-        $USER_ID = $item['id'];
-        $_SESSION['USER_ID'] = $item['id'];
-        $_SESSION['USER_SESSION'] = $item['sessionid'];
+        $USER_ID = $item['user_id'];
+        $_SESSION['USER_ID'] = $item['user_id'];
+        $_SESSION['USER_SESSION'] = $item['session_id'];
         $_SESSION['getCookie'] = true;
         define('USER_ID', $USER_ID);
-        loadSessionData($item['id']);
+        loadSessionData($item['user_id']);
     } else {
         $_SESSION['app'] = $APP_NAME;
         $_SESSION['sessid'] = $APP_NAME . rand(0, 100000).md5(1 . $USER_NAME.rand(0, 100000).time());
-        $validto =  date("Y-m-d H:i:s", time() +2592000);
-        $mysqli->query("INSERT INTO `" . $kista_dp . "users__sessions` VALUES (NULL, '". cleanString($_SESSION['sessid']) ."','". 1 ."','". $validto ."')");
+        $valid_to =  date("Y-m-d H:i:s", time() +2592000);
+        $mysqli->query("INSERT INTO `" . $kista_dp . "users__sessions` VALUES (NULL, '". cleanString($_SESSION['sessid']) ."','". 1 ."','". $valid_to ."')");
         setcookie($login_cookie_name, $_SESSION['sessid'], time() + (86400 * 30), "/");
         $USER_ID = $mysqli->insert_id;
         define('USER_ID', $USER_ID);
