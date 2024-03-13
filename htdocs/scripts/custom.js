@@ -1605,9 +1605,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        if (document.getElementById('modalMenu-login')) {
-            menu('modalMenu-login', 'show', 250);
+
+        // KISTA-AI extended
+        var pageElement = document.getElementById('page');
+        if (pageElement && pageElement.hasAttribute('data-show-menus')) {
+            var dataExecuteMenus = pageElement.getAttribute('data-show-menus');
+            var items = dataExecuteMenus.split(',');
+            items.forEach(function(item) {
+                if (document.getElementById(item.trim())) {
+                    menu(item.trim(), 'show', 250);
+                }
+            });
         }
+
+
 
     }
 

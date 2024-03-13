@@ -40,3 +40,31 @@ $_html_modal_templates['login'] = '
         </div>
     </div>
 ';
+
+$src = 'https://lh3.googleusercontent.com/a/ACg8ocJNC3s8hzeoUVz8J20KfBQCd3lUJ3373b51AvuVau6KJ18U=s96-c';
+$name = 'Kim Steinhaug';
+$email = 'steinhaug@gmail.com';
+
+$_html_modal_templates['logout'] = '
+    <div id="modalMenu-logout" 
+         class="menu menu-box-modal rounded-m" 
+         data-menu-height="250" 
+         data-menu-width="350">
+        <div class="menu-title">
+            <h1 class="font-24">Sign Out</h1>
+            <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
+        </div>
+        <div class="content mb-0 mt-2">
+            <div class="d-flex">
+                <div><img src="' . $src . '" class="me-3 rounded-circle shadow-l" width="50"></div>
+                <div>
+                    <h5 class="mt-1 mb-0">' . $name . '</h5>
+                    <p class="font-10 mt-n1 color-gray-dark">' . $email . '</p>
+                </div>
+            </div>
+            <br>
+            <p><a href="index.php?action=logout" class="close-menu btn btn-full btn-m shadow-l rounded-s text-uppercase font-600 gradient-blue mt-n2">Logout from site</a></p>
+        </div>
+    </div>
+';
+

@@ -7,6 +7,8 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 ### v0.9.4
 - fixed, google auth login fixed
 - changed, DB column names refactored
+- added, login form
+- added, custom modal menus
 
 ### v0.9.4
 - fixed, contact form now submits

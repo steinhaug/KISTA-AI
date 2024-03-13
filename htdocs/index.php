@@ -1,6 +1,10 @@
 <?php
 if(!(in_array($_SERVER['SERVER_NAME'],['kista-ai.steinhaug.no','kista-ai.local']))) { http_response_code(404); exit; }
 
+if( isset($_GET['action']) and ($_GET['action']=='logout') ){ require 'auto-logout-from-site.php'; }
+
+
+
 ob_start();
 session_cache_expire(720);
 session_start();
@@ -118,7 +122,7 @@ if($lang=='en'){
                 <h1>
                     Kjøleskapets hemmelige kokk!
                 </h1>
-<a href="#" data-menu="menu-signin">Link</a>
+
 
                 <p>
                     Har du noen gang stirret inn i kjøleskapet ditt, lurer på hva du skal lage? Si farvel til kulinariske gåter med Magic Meal Maker! Vår innovative app forvandler innholdet i kjøleskapet ditt til deilige, enkle å følge oppskrifter med et knappetrykk.
@@ -168,7 +172,7 @@ output_session_notification();
 ?>
 
 <?php
-    que_modal_tpl('login');
+    que_modal_tpl('login','logout');
     echo write_modal_tpls();
 ?>
 </body><?php

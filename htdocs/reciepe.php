@@ -132,7 +132,7 @@ output_session_notification();
 ?>
 
 <?php
-    que_modal_tpl('login');
+    que_modal_tpl('login','logout');
     echo write_modal_tpls();
 ?>
 

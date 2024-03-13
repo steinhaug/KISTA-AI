@@ -53,7 +53,7 @@ setlocale(LC_TIME, "nb_NO.utf8");
 
 // Parameter added script tags to prevent caching
 $PWA_APP_VER = '2.7';
-$html_NoCache_Version = 'v1.3';
+$html_NoCache_Version = 'v1.4';
 
 
 if(!isset($PHP_SELF))
@@ -144,7 +144,7 @@ function HTML_HEADER($part){
     if(empty($_SESSION['USER_GOOGLE_LOGIN'])){
         $btn = '<a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="modalMenu-login"><i class="fa fa-user"></i></a>';
     } else {
-        $btn = '<a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="modalMenu-login"><i class="fa fa-right-from-bracket"></i></a>';
+        $btn = '<a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="modalMenu-logout"><i class="fa fa-right-from-bracket"></i></a>';
     }
 
     if (strtolower($part) == 'header-fixed') {

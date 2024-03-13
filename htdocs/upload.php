@@ -147,7 +147,12 @@ if($lang == 'en'){
 
 <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>
 
-<div id="page">
+
+
+
+
+
+<div id="page" data-show-menus="modalMenu-logout">
 
     <div class="header header-fixed header-logo-center header-auto-show">
         <a href="upload.php" class="header-title"><?=$txts['pageTitle']?></a>
@@ -175,6 +180,8 @@ if($lang == 'en'){
                 <p class="mb-1">
                     <?=$txts['paragraph']?>
                 </p>
+
+
                 <form action="upload.php" method="post" enctype="multipart/form-data" style="text-align:center" id="uploadForm">
 
                     <input type="hidden" name="bonus_conf" id="bonus_conf" value="">
@@ -275,7 +282,7 @@ output_session_notification();
 ?>
 
 <?php
-    que_modal_tpl('login');
+    que_modal_tpl('login','logout');
     echo write_modal_tpls();
 ?>
 
