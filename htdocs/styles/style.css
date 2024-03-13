@@ -7319,3 +7319,37 @@ input[type=number] {
 a.img-fluid img.img-fluid {
     width: 100%;
 }
+
+.login-btn-icon {
+    margin-right: 0.5em;
+}
+
+.divider-spanp {
+    margin: 24px 0px;
+    flex-shrink: 0;
+    display: flex;
+    white-space: nowrap;
+    text-align: center;
+    border: 0px;
+}
+.divider-spanp span {
+    display: inline-block;
+    padding-left: 9.6px;
+    padding-right: 9.6px;
+}
+.divider-spanp span p {
+    margin: 0px;
+    font-family: Nunito, Helvetica, Verdana, sans-serif;
+    font-weight: 300;
+    font-size: 0.875rem;
+    line-height: 1.57143;
+    color: rgb(99, 115, 129);
+}
+.divider-spanp::before, .divider-spanp::after {
+    position: relative;
+    width: 100%;
+    border-top: thin solid rgba(145, 158, 171, 0.24);
+    top: 50%;
+    content: "";
+    transform: translateY(50%);
+}
