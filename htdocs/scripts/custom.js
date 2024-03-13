@@ -1604,6 +1604,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+
+        if (document.getElementById('modalMenu-login')) {
+            menu('modalMenu-login', 'show', 250);
+        }
+
     }
 
 
@@ -1628,5 +1633,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     init_template();
+
+    
+
 });
 

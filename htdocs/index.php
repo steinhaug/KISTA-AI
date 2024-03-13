@@ -68,6 +68,8 @@ if($lang=='en'){
 
     <div class="page-content">
 
+
+
         <div class="card rounded-0 bg-fpnb" data-card-height="450" style="<?=$bgImgStyle?>">
             <div class="card-bottom text-end pe-3 pb-4 mb-4">
                 <h1 class="color-white font-21 mb-n1">
@@ -116,6 +118,8 @@ if($lang=='en'){
                 <h1>
                     Kjøleskapets hemmelige kokk!
                 </h1>
+<a href="#" data-menu="menu-signin">Link</a>
+
                 <p>
                     Har du noen gang stirret inn i kjøleskapet ditt, lurer på hva du skal lage? Si farvel til kulinariske gåter med Magic Meal Maker! Vår innovative app forvandler innholdet i kjøleskapet ditt til deilige, enkle å følge oppskrifter med et knappetrykk.
                 </p>
@@ -163,6 +167,10 @@ if($lang=='en'){
 output_session_notification();
 ?>
 
+<?php
+    que_modal_tpl('login');
+    echo write_modal_tpls();
+?>
 </body><?php
 ob_end_flush();
 ?>

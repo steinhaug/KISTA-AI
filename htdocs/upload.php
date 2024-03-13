@@ -274,6 +274,11 @@ if(!empty($display_empty_toast_alert)){
 output_session_notification();
 ?>
 
+<?php
+    que_modal_tpl('login');
+    echo write_modal_tpls();
+?>
+
 </body><?php
 ob_end_flush();
 ?>

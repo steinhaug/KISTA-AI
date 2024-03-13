@@ -5,6 +5,10 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 ## changelog
 
 ### v0.9.4
+- fixed, google auth login fixed
+- changed, DB column names refactored
+
+### v0.9.4
 - fixed, contact form now submits
 - added, contact form has basic validation
 - fixed, favicon.ico
