@@ -45,6 +45,7 @@ if (!isset($_COOKIE[$login_cookie_name])) {
     $_SESSION['USER_ID'] = $USER_ID;
     $_SESSION['USER_SESSION'] = cleanString($_SESSION['sessid']);
     $_SESSION['createCookie'] = true;
+    logfile('auto-login: create new session + cookie');
 } else {
     $res = $mysqli->query("SELECT * FROM `" . $kista_dp . "users__sessions` WHERE `session_id`='" . cleanString($_COOKIE[$login_cookie_name]) . "'");
     if ($res->num_rows) {
@@ -55,6 +56,7 @@ if (!isset($_COOKIE[$login_cookie_name])) {
         $_SESSION['getCookie'] = true;
         define('USER_ID', $USER_ID);
         loadSessionData($item['user_id']);
+        logfile('auto-login: found cookie + load session');
     } else {
         $_SESSION['app'] = $APP_NAME;
         $_SESSION['sessid'] = $APP_NAME . rand(0, 100000).md5(1 . $USER_NAME.rand(0, 100000).time());
@@ -67,7 +69,7 @@ if (!isset($_COOKIE[$login_cookie_name])) {
         $_SESSION['USER_SESSION'] = cleanString($_SESSION['sessid']);
         $_SESSION['setCookie'] = true;
         setSessionKey('seed', ['power'=>50,'vol'=>0]);
-
+        logfile('auto-login: cookie not found. Created new session + cookie');
     }
 }
 
