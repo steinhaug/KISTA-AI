@@ -18,6 +18,16 @@ function write_modal_tpls(){
     return '<!-- write_modal_tpls -->' . LF . minify_html($html, 'modals') . LF;
 }
 
+
+$client = new Google_Client();
+$client->setClientId($google_client_id);
+$client->setClientSecret($google_client_secret);
+$client->setRedirectUri('https://kista-ai.steinhaug.no/login.php');
+$client->addScope("email");
+$client->addScope("profile");
+$google_url = $client->createAuthUrl();
+logfile($google_url);
+
 $_html_modal_templates = [];
 $_html_modal_templates['login'] = '
     <div id="modalMenu-login" 
@@ -29,7 +39,7 @@ $_html_modal_templates['login'] = '
             <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
         </div>
         <div class="content mb-0 mt-2">
-            <a href="#" class="btn btn-border btn-m btn-full mb-3 rounded-s text-uppercase font-700 border-gray-dark color-night-dark bg-theme">
+            <a href="' . $google_url . '" class="btn btn-border btn-m btn-full mb-3 rounded-s text-uppercase font-700 border-gray-dark color-night-dark bg-theme">
                 <img class="login-btn-icon" src="/app/icons/google-logo.svg" alt="Google Logo">
                 <span>Sign In with Google</span>
             </a>

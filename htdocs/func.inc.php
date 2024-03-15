@@ -47,6 +47,27 @@ if(!function_exists('getallheaders')){
     }
 }
 
+/**
+ * Logging for debugging when working local
+ */
+if( !function_exists('logfile') ){
+    function logfile(...$strings ){
+        $lf = "\n";
+        $logfile = dirname(dirname(__FILE__)) . '/logs/snaketail.log';
+        if( $fh = @fopen( $logfile, "a+" ) ){
+            foreach($strings as $the_string){
+                if(!is_string($the_string))
+                    $the_string = json_encode($the_string);
+                fputs( $fh, $the_string . $lf, strlen($the_string . $lf) );
+            }
+            fclose( $fh );
+            return( true );
+        } else {
+            return( false );
+        }
+    }
+}
+
 date_default_timezone_set("Europe/Oslo");
 mb_internal_encoding('UTF-8');
 setlocale(LC_TIME, "nb_NO.utf8");
@@ -171,27 +192,6 @@ function HTML_HEADER($part){
     }
 }
 
-
-/**
- * Logging for debugging when working local
- */
-if( !function_exists('logfile') ){
-    function logfile(...$strings ){
-        $lf = "\n";
-        $logfile = dirname(dirname(__FILE__)) . '/logs/snaketail.log';
-        if( $fh = @fopen( $logfile, "a+" ) ){
-            foreach($strings as $the_string){
-                if(!is_string($the_string))
-                    $the_string = json_encode($the_string);
-                fputs( $fh, $the_string . $lf, strlen($the_string . $lf) );
-            }
-            fclose( $fh );
-            return( true );
-        } else {
-            return( false );
-        }
-    }
-}
 
 /**
  * Prepare URL for use in header.location
