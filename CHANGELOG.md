@@ -4,6 +4,10 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 
 ## changelog
 
+### v0.9.6
+- fixed, Moving action sheets, snackbars and sidebars outside page-content
+- added, PWA installer button for the frontpage
+
 ### v0.9.5
 - changed, added extra icon on top for css
 - added, google login
