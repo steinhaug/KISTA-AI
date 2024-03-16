@@ -4,11 +4,7 @@ highlight, green, grass, red, orange, yellow, sunny, blue, teal, mint, pink, pin
 facebook, linkedin, twitter, google, whatsapp, pinterest, instagram, mail, phone, color-highlight, white, black
 */
 
-// Parameter added script tags to prevent caching
-$PWA_APP_VER = '2.7';
-$html_NoCache_Version = 'v1.5';
-
-$include_login_button = false;
+require dirname(APPDATA_PATH) . '/_vars.php';
 
 if(!function_exists('ob_flush')){ function ob_flush() { return true; }} // Patch for DG 80.64.202.13 server
 if(!function_exists('same_length')){ function same_length($a,$b,$s=' '){ if(strlen((string) $a) == strlen((string) $b)) return array($a,$b); if(strlen((string) $a) > strlen((string) $b)){ while(strlen((string) $a) > strlen((string) $b)){ $b .= $s; } return array($a,$b); } else { while(strlen((string) $a) < strlen((string) $b)){ $a .= $s; } return array($a,$b);} return array($a,$b);}}

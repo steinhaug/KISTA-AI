@@ -1,5 +1,6 @@
 <?php
 header("Content-type: application/json;charset=utf-8");
+require '_vars.php';
 ?>{
 "version": "<?=$PWA_APP_VER?>",
 "comment": "---Above version must be the same as data-pwa-version",
