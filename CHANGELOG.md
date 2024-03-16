@@ -7,6 +7,8 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 ### v0.9.5
 - changed, added extra icon on top for css
 - added, google login
+- fixed, added "external-link" for logout and login links
+- added, option to include the google login button
 
 ### v0.9.4
 - fixed, google auth login fixed

@@ -132,3 +132,5 @@ ALTER TABLE `kistaai_users__google`
 	DROP INDEX `google_id`,
 	ADD UNIQUE INDEX `google_id` (`account_id`) USING BTREE;
 
+ALTER TABLE `kistaai_users__sessions`
+	ADD COLUMN `user_agent` VARCHAR(255) NOT NULL DEFAULT '' AFTER `valid_to`;

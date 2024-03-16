@@ -38,7 +38,15 @@ if (!isset($_COOKIE[$login_cookie_name])) {
     $_SESSION['app'] = $APP_NAME;
     $_SESSION['sessid'] = $APP_NAME . rand(0, 100000).md5(1 . $USER_NAME.rand(0, 100000).time());
     $valid_to =  date("Y-m-d H:i:s", time() +2592000);
-    $mysqli->query("INSERT INTO `" . $kista_dp . "users__sessions` VALUES (NULL, '". cleanString($_SESSION['sessid']) ."','". 1 ."','". $valid_to ."')");
+
+    $sql = new sqlbuddy;
+    $sql->que('session_id', $_SESSION['sessid'], 'str');
+    $sql->que('google_id', 1, 'int');
+    $sql->que('valid_to', $valid_to, 'str');
+    $sql->que('user_agent', $_SERVER['HTTP_USER_AGENT'], 'str:255');
+    $mysqli->query( $sql->build('insert', $kista_dp . "users__sessions") );
+    //$mysqli->query("INSERT INTO `" . $kista_dp . "users__sessions` VALUES (NULL, '". cleanString($_SESSION['sessid']) ."','". 1 ."','". $valid_to ."')");
+
     setcookie($login_cookie_name, $_SESSION['sessid'], time() + (86400 * 30), "/");
     $USER_ID = $mysqli->insert_id;
     define('USER_ID', $USER_ID);
@@ -61,7 +69,15 @@ if (!isset($_COOKIE[$login_cookie_name])) {
         $_SESSION['app'] = $APP_NAME;
         $_SESSION['sessid'] = $APP_NAME . rand(0, 100000).md5(1 . $USER_NAME.rand(0, 100000).time());
         $valid_to =  date("Y-m-d H:i:s", time() +2592000);
-        $mysqli->query("INSERT INTO `" . $kista_dp . "users__sessions` VALUES (NULL, '". cleanString($_SESSION['sessid']) ."','". 1 ."','". $valid_to ."')");
+
+        $sql = new sqlbuddy;
+        $sql->que('session_id', $_SESSION['sessid'], 'str');
+        $sql->que('google_id', 1, 'int');
+        $sql->que('valid_to', $valid_to, 'str');
+        $sql->que('user_agent', $_SERVER['HTTP_USER_AGENT'], 'str:255');
+        $mysqli->query( $sql->build('insert', $kista_dp . "users__sessions") );
+        //$mysqli->query("INSERT INTO `" . $kista_dp . "users__sessions` VALUES (NULL, '". cleanString($_SESSION['sessid']) ."','". 1 ."','". $valid_to ."')");
+
         setcookie($login_cookie_name, $_SESSION['sessid'], time() + (86400 * 30), "/");
         $USER_ID = $mysqli->insert_id;
         define('USER_ID', $USER_ID);
