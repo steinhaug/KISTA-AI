@@ -11,6 +11,7 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, option to include the google login button
 - fixed, moved modal parts to correct place in framework
 - changed, adding cache prevention for manifest
+- fixed, footer title was styled wrong
 
 ### v0.9.4
 - fixed, google auth login fixed
