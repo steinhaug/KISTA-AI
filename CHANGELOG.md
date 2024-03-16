@@ -4,6 +4,10 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 
 ## changelog
 
+### v0.9.5
+- changed, added extra icon on top for css
+- added, google login
+
 ### v0.9.4
 - fixed, google auth login fixed
 - changed, DB column names refactored
