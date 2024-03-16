@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var pwaRemind = 1; //Days to re-remind to add to home
     var pwaNoCache = false; //Requires server and HTTPS/SSL. Will clear cache with each visit
 
-    var CACHE_NAME = pwaName + '-' + '2.6';
+    var CACHE_NAME = pwaName + '-' + '2.7';
 
     //Setting Service Worker Locations scope = folder | location = service worker js location
     var pwaScope = "https://kista-ai.steinhaug.no/";
