@@ -137,6 +137,8 @@ if(!function_exists('sqlError__alertAndStop')){ function sqlError__alertAndStop(
 
 
 
+
+
 function setActiveIf($x,$y){
     if($x == $y)
         return 'active-nav';
@@ -160,12 +162,19 @@ function HTML_FOOTER($i){
     </div>
     ';
 }
-function HTML_HEADER($part){
+function HTML_HEADER($part, $user_image=null){
 
     if(empty($_SESSION['USER_GOOGLE_LOGIN'])){
         $btn = '<a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="modalMenu-login"><i class="fa fa-user"></i></a>';
+
     } else {
-        $btn = '<a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="modalMenu-logout"><i class="fa fa-right-from-bracket"></i></a>';
+        if( $user_image !== null ){
+            $btn = '<a href="#" class="page-title-icon shadow-xl bg-theme color-theme avatar-icon" data-menu="modalMenu-logout">
+                <img src="' . $user_image . '" alt="Kim Steinhaug" class="me-3 rounded-circle shadow-l">
+            </a>';
+        } else {
+            $btn = '<a href="#" class="page-title-icon shadow-xl bg-theme color-theme" data-menu="modalMenu-logout"><i class="fa fa-right-from-bracket"></i></a>';
+        }
     }
 
     if (strtolower($part) == 'header-fixed') {
@@ -175,8 +184,8 @@ function HTML_HEADER($part){
             <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-dark"><i class="fas fa-sun"></i></a>
             <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-light"><i class="fas fa-moon"></i></a>
 
-            <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-dark"><i class="fa fa-right-to-bracket"></i></a>
-            <a href="#" data-toggle-theme class="header-icon header-icon-4 show-on-theme-light"><i class="fa fa-right-to-bracket"></i></a>
+            <a href="#" data-toggle-theme class="header-icon header-icon-5 show-on-theme-dark"><i class="fa fa-right-to-bracket"></i></a>
+            <a href="#" data-toggle-theme class="header-icon header-icon-5 show-on-theme-light"><i class="fa fa-right-to-bracket"></i></a>
 
 
             <!-- <a href="#" data-menu="menu-main" class="header-icon header-icon-4"><i class="fas fa-bars"></i></a> -->
