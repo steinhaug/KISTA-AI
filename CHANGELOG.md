@@ -10,6 +10,7 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - fixed, added "external-link" for logout and login links
 - added, option to include the google login button
 - fixed, moved modal parts to correct place in framework
+- changed, adding cache prevention for manifest
 
 ### v0.9.4
 - fixed, google auth login fixed
