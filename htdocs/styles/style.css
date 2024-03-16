@@ -7353,3 +7353,29 @@ a.img-fluid img.img-fluid {
     content: "";
     transform: translateY(50%);
 }
+
+.avatar-icon img {
+    width: 38px;
+    vertical-align: unset;
+    border: 1px solid white;
+}
+
+/* fix for extra button */
+.header-logo-center .header-icon-1 {  left: 0px; }
+.header-logo-center .header-icon-2 {  left: 45px; }
+.header-logo-center .header-icon-3 {  right: 80px; }
+.header-logo-center .header-icon-4 {  right: 40px; }
+.header-logo-center .header-icon-5 {  right: 0px; }
+
+.header-logo-left .header-icon-1 {  right: 0px; }
+.header-logo-left .header-icon-2 {  right: 45px; }
+.header-logo-left .header-icon-3 {  right: 90px; }
+.header-logo-left .header-icon-4 {  right: 135px; }
+.header-logo-right .header-icon-1 {  left: 0px; }
+.header-logo-right .header-icon-2 {  left: 45px; }
+.header-logo-right .header-icon-3 {  left: 90px; }
+.header-logo-right .header-icon-4 {  left: 135px; }
+.header-logo-app .header-icon-1 {  left: 0px; }
+.header-logo-app .header-icon-2 {  right: 2px; }
+.header-logo-app .header-icon-3 {  right: 45px; }
+.header-logo-app .header-icon-4 {  right: 90px; }
