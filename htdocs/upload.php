@@ -217,7 +217,6 @@ if($lang == 'en'){
     </div>
     <!-- Page content ends here-->
 
-    <div id="toast-1" class="toast toast-tiny toast-top bg-blue-dark" data-bs-delay="1000" data-bs-autohide="true"><i class="fa fa-info me-3"></i>No image</div>
 
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-components"></div>
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>
@@ -272,6 +271,11 @@ function check_bonus(){
 if(!empty($display_empty_toast_alert)){
     echo "var toastID = document.getElementById('toast-1'); toastID = new bootstrap.Toast(toastID); toastID.show();" . "\n";
 }
+
+if(!empty($_SESSION['logged_in_alert'])){
+    echo "var toastID2 = document.getElementById('toast-2'); toastID2 = new bootstrap.Toast(toastID2); toastID2.show();" . "\n";
+    unset($_SESSION['logged_in_alert']);
+}
 ?>
 </script>
 
@@ -280,7 +284,7 @@ output_session_notification();
 ?>
 
 <?php
-    que_modal_tpl('login','logout');
+    que_modal_tpl('login','logout','toast');
     echo write_modal_tpls();
 ?>
 

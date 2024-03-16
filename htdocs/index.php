@@ -172,8 +172,9 @@ if($lang=='en'){
 output_session_notification();
 ?>
 
+
 <?php
-    que_modal_tpl('login','logout');
+    que_modal_tpl('login','logout','toast');
     echo write_modal_tpls();
 ?>
 </body><?php

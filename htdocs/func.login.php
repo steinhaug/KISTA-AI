@@ -39,5 +39,5 @@ if( empty($_SESSION['url_google_login']) ){
     $client->addScope("profile");
     //$google_url = $client->createAuthUrl();
     $_SESSION['url_google_login'] = $client->createAuthUrl();
-    logfile('Generating google url: ' . $google_url);
+    logfile('Generating google url: ' . $_SESSION['url_google_login']);
 }

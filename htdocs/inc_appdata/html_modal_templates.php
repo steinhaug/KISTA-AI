@@ -108,3 +108,7 @@ $_html_modal_templates['logout'] = '
     </div>
 ';
 
+$_html_modal_templates['toast'] = '
+    <div id="toast-1" class="toast toast-tiny toast-top bg-blue-dark" data-bs-delay="1000" data-bs-autohide="true"><i class="fa fa-info me-3"></i>No image</div>
+    <div id="toast-2" class="toast toast-tiny toast-top bg-green-dark" data-bs-delay="2000" data-bs-autohide="true"><i class="fa fa-info me-3"></i>You are logged in</div>
+';

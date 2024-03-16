@@ -37,6 +37,7 @@ if(isset($_GET['code'])):
             $_SESSION['USER_GOOGLE_LOGIN'] = [$user_google_id, $google_account_info->id, ['image'=>$google_account_info->picture, 'name'=>trim($google_account_info->name), 'email'=>$google_account_info->email]];
             setGoogleID4Session($user_google_id);
             if(!empty($_SESSION['logged_in_location'])){
+                $_SESSION['logged_in_alert'] = true;
                 header('Location: ' . $_SESSION['logged_in_location']);
                 unset($_SESSION['logged_in_location']);
             } else {
@@ -54,6 +55,7 @@ if(isset($_GET['code'])):
                 $_SESSION['USER_GOOGLE_LOGIN'] = [$user_google_id, $google_account_info->id, ['image'=>$google_account_info->picture, 'name'=>trim($google_account_info->name), 'email'=>$google_account_info->email]];
                 setGoogleID4Session($user_google_id);
                 if(!empty($_SESSION['logged_in_location'])){
+                    $_SESSION['logged_in_alert'] = true;
                     header('Location: ' . $_SESSION['logged_in_location']);
                     unset($_SESSION['logged_in_location']);
                 } else {

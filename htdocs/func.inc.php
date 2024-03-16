@@ -74,7 +74,7 @@ setlocale(LC_TIME, "nb_NO.utf8");
 
 // Parameter added script tags to prevent caching
 $PWA_APP_VER = '2.7';
-$html_NoCache_Version = 'v1.4';
+$html_NoCache_Version = 'v1.5';
 
 
 if(!isset($PHP_SELF))
