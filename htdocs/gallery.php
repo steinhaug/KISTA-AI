@@ -114,8 +114,58 @@ if($count>5){ ?>
                 </div>
             </div>
         </div>
-
+<br>
 <?php } ?>
+
+
+
+
+
+<?php
+$count = $mysqli->query1("SELECT count(*) as `count` FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != '' AND `status`='complete'",0);
+if($count>5){
+    echo '
+        <div class="splide double-slider slider-arrows slider-no-dots" id="double-slider-1">
+            <div class="splide__track">
+                <div class="splide__list">';
+    $i = 0;
+    $items = $mysqli->result('assoc')->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != '' AND `status`='complete'");
+    foreach ($items as $item) {
+        if ($item['reciepe'] == '<no_fridge />') {
+            $src = reciepe_thumb($item['reciepe_image']);
+            $link = 'no-reciepe.php?rid=' . $item['upload_id'];
+        } else {
+            $src = reciepe_thumb($item['reciepe_image']);
+            $link = 'reciepe.php?rid=' . $item['upload_id'];
+        }
+        $title = reciepe_title($item['reciepe']);
+        echo '      <div class="splide__slide">
+                        <div class="card mx-3 mb-0 card-style" data-card-height="350" style="background-image:url(' . $src . ')">
+                            <div class="card-top">
+                                <a href="' . $link . '" class="icon icon-xxs bg-white color-black rounded-xl mt-3 me-2 float-end"><i class="fa fa-list-alt"></i></a>
+                            </div>
+                            <div class="card-bottom">
+                                <h3 class="color-white font-800 mb-3 pb-1 ps-3">' . $title . '</h3>
+                            </div>
+                            <div class="card-overlay bg-gradient"></div>
+                        </div>
+                        <!-- <p class="mx-3 mb-0 mt-2 color-highlight font-600">Oppskrift</p>
+                        <h4 class="mx-3 mb-4">' . $title . '</h4> -->
+                    </div>
+        ';
+    }
+    echo '
+                </div>
+            </div>
+        </div>';
+}
+?>
+
+
+
+
+
+
 
 
 
@@ -156,18 +206,12 @@ foreach($items as $item){
                 </div>
             </div>
 
-
         <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
     </div>
     
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
-
-    <?php
-        que_modal_tpl('login','logout');
-        echo write_modal_tpls();
-    ?>
 
 </div>
 
@@ -176,6 +220,8 @@ foreach($items as $item){
 
 <?php
 output_session_notification();
+que_modal_tpl('login','logout');
+echo write_modal_tpls();
 ?>
 
 </body><?php
