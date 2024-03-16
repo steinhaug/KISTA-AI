@@ -11,7 +11,7 @@ if(empty($_SESSION['USER_GOOGLE_LOGIN'])){
     exit;
 }
 
-[$user_google_id, $account_id] = $_SESSION['USER_GOOGLE_LOGIN'];
+[$user_google_id, $account_id, $accound_data] = $_SESSION['USER_GOOGLE_LOGIN'];
 if (($user = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "users__google` WHERE `user_google_id`=? AND `account_id`=?", 'is', [$user_google_id, $account_id], true)) === null) {
     header('Location: logout.php?error=unknown_user');
     exit;

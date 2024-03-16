@@ -34,9 +34,14 @@ if(isset($_GET['code'])):
     
         // checking user already exists or not
         if( ($user_google_id = $mysqli->prepared_query1("SELECT `user_google_id` FROM `" . $kista_dp . "users__google` WHERE `account_id`=?", 's', [$google_account_info->id], 0)) !== null ){
-            $_SESSION['USER_GOOGLE_LOGIN'] = [$user_google_id, $google_account_info->id];
+            $_SESSION['USER_GOOGLE_LOGIN'] = [$user_google_id, $google_account_info->id, ['image'=>$google_account_info->picture, 'name'=>trim($google_account_info->name), 'email'=>$google_account_info->email]];
             setGoogleID4Session($user_google_id);
-            header('Location: home.php');
+            if(!empty($_SESSION['logged_in_location'])){
+                header('Location: ' . $_SESSION['logged_in_location']);
+                unset($_SESSION['logged_in_location']);
+            } else {
+                header('Location: home.php');
+            }
             exit;
         } else {
             $sql = [
@@ -46,9 +51,14 @@ if(isset($_GET['code'])):
             ];
             $user_google_id = $mysqli->prepared_insert($sql);
             if($user_google_id){
-                $_SESSION['USER_GOOGLE_LOGIN'] = [$user_google_id, $google_account_info->id];
+                $_SESSION['USER_GOOGLE_LOGIN'] = [$user_google_id, $google_account_info->id, ['image'=>$google_account_info->picture, 'name'=>trim($google_account_info->name), 'email'=>$google_account_info->email]];
                 setGoogleID4Session($user_google_id);
-                header('Location: home.php');
+                if(!empty($_SESSION['logged_in_location'])){
+                    header('Location: ' . $_SESSION['logged_in_location']);
+                    unset($_SESSION['logged_in_location']);
+                } else {
+                    header('Location: home.php');
+                }
                 exit;
             }
 
@@ -61,7 +71,14 @@ if(isset($_GET['code'])):
     } else {
 
         $_SESSION['error_msg'] = json_encode($token["error"]);
-        header('Location: login.php?error');
+
+        if(!empty($_SESSION['logged_in_location'])){
+            //header('Location: ' . $_SESSION['logged_in_location']);
+            header('Location: error.php?error');
+            unset($_SESSION['logged_in_location']);
+        } else {
+            header('Location: login.php?error');
+        }
         exit;
 
     }

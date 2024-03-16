@@ -27,3 +27,17 @@ if( isset($_SESSION['USER_ID']) and isset($_SESSION['USER_SESSION']) ){
     header("Location: /auto-login.php?action=login&return=" . rawurlencode(prepareLocation()));
     exit;
 }
+
+
+if( empty($_SESSION['url_google_login']) ){
+
+    $client = new Google_Client();
+    $client->setClientId($google_client_id);
+    $client->setClientSecret($google_client_secret);
+    $client->setRedirectUri('https://kista-ai.steinhaug.no/login.php');
+    $client->addScope("email");
+    $client->addScope("profile");
+    //$google_url = $client->createAuthUrl();
+    $_SESSION['url_google_login'] = $client->createAuthUrl();
+    logfile('Generating google url: ' . $google_url);
+}
