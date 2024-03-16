@@ -96,6 +96,18 @@ if($lang=='en'){
         <!-- margin top  negative value repesent how much you want the article to go over the above image-->
         <div class="card card-style card-full-left" style="margin-top:-100px; z-index:1">
             <div class="content">
+
+                <div class="card card-style mx-0 mt-3" style="background-image: url(/images/pictures/groceries-bar.jpg);" data-card-height="100" id="install" hidden>
+                    <div class="card-center px-3 no-click">
+                        <h1 class="color-white mb-n2 font-24">KISTA-AI</h1>
+                        <h5 class="color-white mt-n1 opacity-80 font-14">Installer appen på telefonen</h5>
+                    </div>
+                    <div class="card-center">
+                        <a href="#" class="float-end mx-3 gradient-highlight btn-s rounded-sm shadow-xl text-uppercase font-800" id="install-button">Install App</a>
+                    </div>
+                    <div class="card-overlay bg-black opacity-60"></div>
+                </div>
+
                 <p class="mb-n1 color-highlight font-600">Magic Meal Maker</p>
                 <h1>
                     Your Refrigerator's Secret Chef!
@@ -119,11 +131,23 @@ if($lang=='en'){
         <!-- margin top  negative value repesent how much you want the article to go over the above image-->
         <div class="card card-style card-full-left" style="margin-top:-100px; z-index:1">
             <div class="content">
+
+                <div class="card card-style mx-0 mt-3" style="background-image: url(/images/pictures/groceries-bar.jpg);" data-card-height="100" id="install" hidden>
+                    <div class="card-center px-3 no-click">
+                        <h1 class="color-white mb-n2 font-24">KISTA-AI</h1>
+                        <h5 class="color-white mt-n1 opacity-80 font-14">Installer appen på telefonen</h5>
+                    </div>
+                    <div class="card-center">
+                        <a href="#" class="float-end mx-3 gradient-highlight btn-s rounded-sm shadow-xl text-uppercase font-800" id="install-button">Install App</a>
+                    </div>
+                    <div class="card-overlay bg-black opacity-60"></div>
+                </div>
+
+
                 <p class="mb-n1 color-highlight font-600">Magic Meal Maker</p>
                 <h1>
                     Kjøleskapets hemmelige kokk!
                 </h1>
-
 
                 <p>
                     Har du noen gang stirret inn i kjøleskapet ditt, lurer på hva du skal lage? Si farvel til kulinariske gåter med Magic Meal Maker! Vår innovative app forvandler innholdet i kjøleskapet ditt til deilige, enkle å følge oppskrifter med et knappetrykk.
@@ -164,6 +188,38 @@ if($lang=='en'){
 <?php
 output_session_notification();
 ?>
+
+<script>
+let installPrompt = null;
+const installAlert = document.querySelector("#install");
+const installButton = document.querySelector("#install-button");
+
+window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    installPrompt = event;
+    installAlert.removeAttribute("hidden");
+});
+
+installButton.addEventListener("click", async () => {
+    if (!installPrompt) {
+        return;
+    }
+    const result = await installPrompt.prompt();
+    console.log(`Install prompt was: ${result.outcome}`);
+    disableInAppInstallPrompt();
+});
+
+window.addEventListener("appinstalled", () => {
+    disableInAppInstallPrompt();
+});
+
+function disableInAppInstallPrompt() {
+    console.log('disableInAppInstallPrompt() triggered');
+    installPrompt = null;
+    installAlert.setAttribute("hidden", "");
+}
+
+</script>
 
 </body><?php
 ob_end_flush();
