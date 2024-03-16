@@ -111,3 +111,17 @@ $_html_modal_templates['toast'] = '
     <div id="toast-1" class="toast toast-tiny toast-top bg-blue-dark" data-bs-delay="1000" data-bs-autohide="true"><i class="fa fa-info me-3"></i>No image</div>
     <div id="toast-2" class="toast toast-tiny toast-top bg-green-dark" data-bs-delay="2000" data-bs-autohide="true"><i class="fa fa-info me-3"></i>You are logged in</div>
 ';
+
+$_html_modal_templates['bookmark'] = '
+    <div id="menu-heart" 
+         class="menu menu-box-modal rounded-m" 
+         data-menu-hide="800"
+         data-menu-width="250"
+         data-menu-height="170">
+        
+        <h1 class="text-center mt-3 pt-2">
+            <i class="fa fa-check-circle color-green-dark fa-3x"></i>
+        </h1>
+        <h3 class="text-center pt-2">Added to Bookmarks</h3>
+    </div>
+';

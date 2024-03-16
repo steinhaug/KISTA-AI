@@ -217,11 +217,13 @@ if($lang == 'en'){
     </div>
     <!-- Page content ends here-->
 
-
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-components"></div>
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div>
-
+    <?php
+        que_modal_tpl('login','logout','toast');
+        echo write_modal_tpls();
+    ?>
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
@@ -281,11 +283,6 @@ if(!empty($_SESSION['logged_in_alert'])){
 
 <?php
 output_session_notification();
-?>
-
-<?php
-    que_modal_tpl('login','logout','toast');
-    echo write_modal_tpls();
 ?>
 
 </body><?php

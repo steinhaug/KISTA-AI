@@ -96,16 +96,15 @@ echo $Parsedown->text( $privacy );
     </div>
     <!-- Page content ends here-->
     
-    <!-- Main Menu--> 
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>
-    
-    <!-- Share Menu-->
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
-    
-    <!-- Colors Menu-->
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
-     
-    
+
+    <?php
+        que_modal_tpl('login','logout');
+        echo write_modal_tpls();
+    ?>
+
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
@@ -113,11 +112,6 @@ echo $Parsedown->text( $privacy );
 
 <?php
 output_session_notification();
-?>
-
-<?php
-    que_modal_tpl('login','logout');
-    echo write_modal_tpls();
 ?>
 
 </body><?php

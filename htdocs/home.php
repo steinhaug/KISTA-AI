@@ -95,7 +95,8 @@ if (($user = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "users__go
         <div class="_info">
             <h1><?php echo $user['account_name']; ?></h1>
             <p><?php echo $user['account_email']; ?></p>
-            <a href="logout.php">Logout</a>
+            <p><a href="index.php">App Frontpage</a></p>
+            <p><a href="logout.php">Logout</a></p>
         </div>
     </div>
 </body>
