@@ -152,7 +152,7 @@ if($lang == 'en'){
 
 
 
-<div id="page" data-show-menus="modalMenu-logout">
+<div id="page" data-show-menus=""><!-- modalMenu-logout -->
 
     <div class="header header-fixed header-logo-center header-auto-show">
         <a href="upload.php" class="header-title"><?=$txts['pageTitle']?></a>
@@ -169,8 +169,6 @@ if($lang == 'en'){
     <div class="page-title-clear"></div>
 
     <div class="page-content">
-
-
 
         <div class="card card-style shadow-xl">
             <div class="content">
