@@ -71,18 +71,17 @@ $_html_modal_templates['login'] = '
             <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
         </div>
         <div class="content mb-0 mt-2">
-            <a href="{{URL_GOOGLE_LOGIN}}" class="btn btn-border btn-m btn-full mb-3 rounded-s text-uppercase font-700 border-gray-dark color-night-dark bg-theme">
+            <a href="{{URL_GOOGLE_LOGIN}}" class="btn btn-border btn-m btn-full mb-3 rounded-s text-uppercase font-700 border-gray-dark color-night-dark bg-theme external-link">
                 <img class="login-btn-icon" src="/app/icons/google-logo.svg" alt="Google Logo">
                 <span>' . $_l['login_google'] . '</span>
             </a>
             <div class="divider-spanp" role="separator"><span><p>' . strtoupper($_l['or']) . '</p></span></div>
-            <a href="#" class="btn close-menu btn-full btn-m color-blue-dark border-blue-light font-600 rounded-s">
+            <a href="#" class="btn close-menu btn-full btn-m color-blue-dark border-blue-light font-600 rounded-s external-link">
                 ' . $_l['login_skip'] . '
             </a>
         </div>
     </div>
 ';
-
 
 
 $_html_modal_templates['logout'] = '
@@ -103,7 +102,7 @@ $_html_modal_templates['logout'] = '
                 </div>
             </div>
             <br>
-            <p><a href="index.php?action=logout" class="close-menu btn btn-full btn-m shadow-l rounded-s text-uppercase font-600 gradient-blue mt-n2">' . $_l['logout'] . '</a></p>
+            <p><a href="index.php?action=logout" class="close-menu btn btn-full btn-m shadow-l rounded-s text-uppercase font-600 gradient-blue mt-n2 external-link">' . $_l['logout'] . '</a></p>
         </div>
     </div>
 ';
