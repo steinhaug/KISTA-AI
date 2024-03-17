@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13a7177b07aac1661f1326adbcdd438c",
+    "content-hash": "035f247ebc755fc9f80da56ac795cb46",
     "packages": [
         {
             "name": "benbjurstrom/replicate-php",

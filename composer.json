@@ -50,8 +50,7 @@
     "extra": {
         "google/apiclient-services": [
             "Drive",
-            "YouTube",
-            "Maps"
+            "YouTube"
         ]
     }
 }
