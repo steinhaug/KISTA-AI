@@ -45,7 +45,6 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
         ];
         if(in_array($file_extension, $deniedExtensions)){
             $msg = $filename['type'] . ' er ikke en gyldig filtype, av sikkerhetsmessige årsaker får du ikke adgang å laste opp denne filen.<br>';
-            $msg .= 'Om du ønsker å legge opp filen i Easy CMS kan du pakke den ned som ZIP å laste den opp.';
             $_SESSION['error_msg'] = $msg;
             header('Location: ' . $callbackURL . '?error');
             exit;
@@ -84,7 +83,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                 $sql->que('error', 'NULL', 'raw');
                 $mysqli->query( $sql->build('insert', $kista_dp . "uploaded_files") );
                 $aiid = $mysqli->insert_id;
-                $_SESSION['task'] = ['aiid'=>$aiid, 'status'=>'start', 'progress'=>0];
+                addSessionTask( ['aiid'=>$aiid, 'status'=>'start', 'progress'=>0] );
                 header('Location: ' . $continueURL . '?aiid=' . $aiid);
                 exit;
 

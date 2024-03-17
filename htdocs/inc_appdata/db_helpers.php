@@ -97,3 +97,40 @@ function updateReciepe($reciepe_id, $data){
     return $success;
 
 }
+
+
+
+
+
+/**
+ * Removes completed and failed tasks from session
+ *
+ * @param array $item The DB row from uploads table
+ * 
+ * @return mixed Successfull removal of task will return integer, namely the removed key. All other return null.
+ */
+function task_validation__open_ai_tasks($item){
+ 
+    // 100% states are complete and error, both ultimately means nothing more will happen so we remove the task.
+    if(!($item['status']=='complete' or $item['status']=='error'))
+        return false;
+
+    return removeSessionTask(['aiid'=>$item['upload_id']]);
+}
+
+
+/**
+ * Removes completed and failed tasks from session
+ *
+ * @param array $item The DB row from uploads table
+ * 
+ * @return mixed Successfull removal of task will return integer, namely the removed key. All other return null.
+ */
+function task_validation__replicate_tasks($item){
+ 
+    // 100% states are complete and error, both ultimately means nothing more will happen so we remove the task.
+    if(!($item['status']=='complete' or $item['status']=='error'))
+        return false;
+
+    return removeSessionTask(['reid'=>$item['reid']]);
+}

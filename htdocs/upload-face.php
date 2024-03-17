@@ -1,6 +1,13 @@
 <?php
 if(!(in_array($_SERVER['SERVER_NAME'],['kista-ai.steinhaug.no','kista-ai.local']))) { http_response_code(404); exit; }
 
+$transferable_style_presets = [
+    '-9c3a6E911o.png','advance-sketch-3.png','advance-sketch-5.png','angrybird.png','anime-1.png','antheia4.png','art-1.png',
+    'art-2.png','art-from-renaissance.png','blyant.png','graffiti-art.png','great-wave-off-kanagawa-crop.png','karrikatur-1.png',
+    'kim-jong-1.png','kim-jung-2.png','lennon-blue.png','maleri.png','mona-lisa.png','pastel.png','putin-1.png','sketch.png','starry-night.png',
+    'stefano_phen.png','tattoo-1.png','tattoo-2-3.png','van-gogh.png','van-gogh-2.png','vladimir-putin.png','VrQAuHMYfxA.png'
+];
+
 ob_start();
 session_cache_expire(720);
 session_start();
@@ -10,6 +17,103 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 
 require_once 'func.inc.php';
 require_once 'func.login.php';
+
+$callbackURL = 'upload-face.php';
+$continueURL = 'processing-face.php';
+
+if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
+
+    $bonusConf = [];
+    $_bonusConf = json_decode($_POST['bonus_conf'], 1);
+    if(isset($_bonusConf[2])) $bonusConf[$_bonusConf[2]['name']] = $_bonusConf[2]['value']; else $bonusConf['vol'] = 0;
+    if(isset($_bonusConf[3])) $bonusConf[$_bonusConf[3]['name']] = $_bonusConf[3]['value']; else $bonusConf['power'] = 50;
+
+    $file1 = $_FILES['file1']['tmp_name'];
+    $file1_name = $_FILES['file1']['name'];
+    $file1_size = $_FILES['file1']['size'];
+
+    if(!empty($_FILES['file1']['size']) and !empty($_POST['selected_style_transfer']) and in_array($_POST['selected_style_transfer'], $transferable_style_presets)){
+
+        $upload_path = UPLOAD_PATH . '/r';
+
+        require APPDATA_PATH . '/XUploadFile.inc.php';
+        $myU1 = new Xupload("file1",1);
+        $myU1->ignore_cls_arr_ext_accepted = true; // Allow all!
+
+        $myU1->setDir($upload_path);
+        clearstatcache();
+        $_real_filename_from_upload = $myU1->get_filename();
+        $filename = prepare_available_filename($_real_filename_from_upload, $upload_path);
+        $file_extension = get_extension($_real_filename_from_upload);
+
+        $allowedExtensions = ['jpg','png','gif','tif','bmp','webp','jpeg'];
+
+        $deniedExtensions = [
+            'php','php1','php2','php3','php4','shtml','pl','cgi','asp'
+        ];
+        if(in_array($file_extension, $deniedExtensions)){
+            $msg = $filename['type'] . ' er ikke en gyldig filtype, av sikkerhetsmessige årsaker får du ikke adgang å laste opp denne filen.<br>';
+            $_SESSION['error_msg'] = $msg;
+            header('Location: ' . $callbackURL . '?error');
+            exit;
+        } else if(in_array($file_extension, $allowedExtensions)){
+
+            // Make sure we don't have jpeg files
+            $file_extension = str_replace('jpeg','jpg',strtolower($file_extension));
+
+            $myU1->changeFilename($filename['file']);
+            $myU1->xCopy($filename['file']);
+            if (!$myU1->show_progressStatus()){
+
+                // Make sure we only have png or jpg files in the database, convert anything else into jpg
+                $convertExtensions = ['gif','tif','bmp','webp'];
+                if(in_array($file_extension, $convertExtensions)){
+                    convertImage($upload_path . '/' . $filename['file'], $upload_path . '/' . pathinfo($filename['file'], PATHINFO_FILENAME) . '.jpg');
+                    unlink($upload_path . '/' . $filename['file']);
+                    logfile('Unlink: ' . $upload_path . '/' . $filename['file']);
+                    $filename['file'] = pathinfo($filename['file'], PATHINFO_FILENAME) . '.jpg';
+                    $file_extension = 'jpg';
+                }
+
+                $sql = new sqlbuddy;
+
+                $sql->que('uuid', generateUuid4(),'string');
+                $sql->que('replicate_id', '','int');
+                $sql->que('user_id', $USER_ID,'int');
+                $sql->que('created', 'NOW()','raw');
+                $sql->que('updated', 'NULL','raw');
+                $sql->que('stylename', $_POST['selected_style_transfer'], 'string');
+                $sql->que('realname', $_real_filename_from_upload, 'string');
+                $sql->que('filename', $filename['file'], 'string');
+                $sql->que('extension', $file_extension, 'string');
+                $sql->que('filesize', $file1_size, 'int');
+                $sql->que('thumbnail', '', 'string');
+                $sql->que('status', 'start', 'string');
+                $mysqli->query( $sql->build('insert', $kista_dp . "replicate__uploads") );
+                $reid = $mysqli->insert_id;
+                addSessionTask( ['reid'=>$reid, 'status'=>'start', 'progress'=>0] );
+                header('Location: ' . $continueURL . '?reid=' . $reid);
+                exit;
+
+            } else {
+                $msg = 'Noe gikk galt med opplastning av filen, kode:' . $myU1->show_progressStatus() . '! Opplastning avbrutt, prøv igjen.';
+                $_SESSION['error_msg'] = $msg;
+                header('Location: ' . $callbackURL . '?error');
+                exit;
+            }
+        } else {
+            $msg = 'Filtypen (' . $file_extension . ') du har forsøkt laste opp er ikke støttet, forsøk igjen med å leaste opp et JPG eller PNG bilde.';
+            $_SESSION['error_msg'] = $msg;
+            header('Location: upload.php?error');
+            exit;
+        }
+
+    } else {
+        // an empty submit
+        $display_empty_toast_alert = true;
+    }
+
+}
 
 ?>
 <!DOCTYPE HTML>
@@ -53,14 +157,6 @@ require_once 'func.login.php';
                 </div>
             </div>      
 
-<?php
-$styles = [
-    '-9c3a6E911o.png','advance-sketch-3.png','advance-sketch-5.png','angrybird.png','anime-1.png','antheia4.png','art-1.png',
-    'art-2.png','art-from-renaissance.png','blyant.png','graffiti-art.png','great-wave-off-kanagawa-crop.png','karrikatur-1.png',
-    'kim-jong-1.png','kim-jung-2.png','lennon-blue.png','maleri.png','mona-lisa.png','pastel.png','putin-1.png','sketch.png','starry-night.png',
-    'stefano_phen.png','tattoo-1.png','tattoo-2-3.png','van-gogh.png','van-gogh-2.png','vladimir-putin.png','VrQAuHMYfxA.png'
-];
-?>
             <style>
             .transfStylesGrid .row a img {
                 border: 10px solid #fff;
@@ -80,7 +176,7 @@ $styles = [
                     <div data-splide='{"autoplay":false}' class="transfStylesGrid splide single-slider slider-arrows slider-no-dots" id="single-slider-1"><div class="splide__track"><div class="splide__list">
 <?php
 $i = 0;
-foreach( $styles as $style ){
+foreach( $transferable_style_presets as $style ){
 
         $modulus = ($i % 4) + 1;
         switch($modulus){
@@ -143,7 +239,7 @@ switch($modulus) {
 
 
 
-        <form action="contact.php" method="post" id="contactForm">
+        <form action="upload-face.php" method="post" id="faceForm">
             <input type="hidden" name="bonus_conf" id="bonus_conf" value="">
             <input name="selected_style_transfer" type="hidden" class="form-control" id="sel_style" placeholder="">
 

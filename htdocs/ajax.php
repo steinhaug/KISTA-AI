@@ -16,22 +16,45 @@ require_once 'func.login.php';
 ignore_user_abort(true);
 set_time_limit(0);
 
-if( !empty($_SESSION['task']['aiid']) ){
+
+if (($curentTaskID = getSessionTaskKey(['aiid'=> _GET('aiid', 0, 'int')])) !== null) {
     require_once AJAX_FOLDER_PATH . '/openai/run-tasks.php';
+} else if( ($curentTaskID = getSessionTaskKey(['reid'=> _GET('reid', 0, 'int')])) !== null ){
+    require_once AJAX_FOLDER_PATH . '/replicate/run-tasks.php';
 } else {
+
+
     if( !empty($_GET['aiid'])){
         $upload_id = (int) $_GET['aiid'];
         $res = $mysqli->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `upload_id`=" . $upload_id . " AND `user_id`=" . $USER_ID);
         if ($res->num_rows) {
             $item = $res->fetch_assoc();
+            task_validation__open_ai_tasks($item);
+
             if($item['status']=='error')
                 $_SESSION['error_msg'] = $item['error'];
-            echo json_encode(['status'=>$item['status'], 'progress'=>100]);
+            echo json_encode(['status'=>$item['status'], 'progress'=>200]);
             exit;
         }
     }
-    //http_response_code(102);
-    header('HTTP/1.0 200 OK');
-    echo json_encode(['status'=>'idle','progress'=>0,'message'=>'Nothing to do.']);
-    exit;
+
+    if( !empty($_GET['reid'])){
+        $reid = (int) $_GET['reid'];
+        $res = $mysqli->query("SELECT * FROM `" . $kista_dp . "replicate__uploads` WHERE `reid`=" . $reid . " AND `user_id`=" . $USER_ID);
+        if ($res->num_rows) {
+            $item = $res->fetch_assoc();
+            task_validation__replicate_tasks($item);
+            if($item['status']=='error')
+                $_SESSION['error_msg'] = $item['error'];
+            echo json_encode(['status'=>$item['status'], 'progress'=>200]);
+            exit;
+        }
+    }
+
+
 }
+
+//http_response_code(102);
+header('HTTP/1.0 200 OK');
+echo json_encode(['status'=>'idle','progress'=>0,'message'=>'Nothing to do.']);
+exit;

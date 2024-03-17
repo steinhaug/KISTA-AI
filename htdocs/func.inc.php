@@ -477,3 +477,47 @@ function output_session_notification(){
 
 
 
+function generateUuid4() {
+    $randomBytes = bin2hex(random_bytes(16));
+    return sprintf("%s-%s-%s-%s-%s",
+        substr($randomBytes, 0, 8),
+        substr($randomBytes, 8, 4),
+        substr($randomBytes, 12, 4),
+        substr($randomBytes, 16, 4),
+        substr($randomBytes, 20)
+    );
+}
+
+/**
+ * Simplified syntax for _GET values
+ * 
+ * Returns the _GET value if it is set, optionally alternate values can be defined with filter for _GET
+ * 
+ */
+function _GET($val, $else_val=null, $filter=null){
+
+    if( ($else_val === null) AND ($filter === null) ){
+        if(isset($_GET[$val]))
+            return $_GET[$val];
+            else
+            return '';
+    }
+
+    $return_var = $else_val;
+    if(isset($_GET[$val])){
+        $valid = true;
+        if($filter == 'int'){
+            if( !isInteger($_GET[$val]) )
+                $valid = false;
+        }
+        if($filter == 'numeric'){
+            if( !is_numeric($_GET[$val]) )
+                $valid = false;
+        }
+        if($valid)
+            $return_var = $_GET[$val];
+    }
+
+    return $return_var;
+
+}

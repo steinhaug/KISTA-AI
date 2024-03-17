@@ -11,7 +11,7 @@ function updateUploadFile($upload_id, $status, $log){
 }
 
 $error = null;
-$upload_id = (int) $_SESSION['task']['aiid'];
+$upload_id = (int) $_SESSION['task'][$curentTaskID]['aiid'];
 $res = $mysqli->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `upload_id`=" . $upload_id . " AND `user_id`=" . $USER_ID);
 if ($res->num_rows) {
  
@@ -70,7 +70,7 @@ if ($res->num_rows) {
             $sql->que('log', json_encode($log), 'text');
             $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
 
-            #unset($_SESSION['task']);
+            #unset($_SESSION['task'][$curentTaskID]);
             echo json_encode(['status'=>'complete','progress'=>100,'message'=>'All tasks completed.']); exit;
 
         } catch (SegWayImage $e) {
@@ -87,7 +87,7 @@ if ($res->num_rows) {
             $sql->que('status', 'error', 'string');
             $sql->que('error', 'OpenAI error: ' . $error, 'text');
             $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
-            #unset($_SESSION['task']);
+            #unset($_SESSION['task'][$curentTaskID]);
             echo json_encode(['status'=>'failed','progress'=>100,'error'=>'Task returned an error and was aborted.']); exit;
             var_dump($success);
         } catch (Exception $e) {
@@ -96,7 +96,7 @@ if ($res->num_rows) {
             $sql->que('status', 'error', 'string');
             $sql->que('error', $error, 'text');
             $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'upload_id=' . $upload_id));
-            #unset($_SESSION['task']);
+            #unset($_SESSION['task'][$curentTaskID]);
             echo json_encode(['status'=>'failed','progress'=>100,'error'=>'Task returned an error and was aborted.']); exit;
             var_dump($success);
         }
@@ -110,9 +110,9 @@ if ($res->num_rows) {
             case 'task3': $progress = 60; break;
             case 'task4': $progress = 80; break;
             case 'task10': $progress = 90; break;
-            case 'complete': $progress = 100; unset($_SESSION['task']); break;
-            case 'error': $progress = 100; unset($_SESSION['task']); break;
-            case 'failed': $progress = 100; unset($_SESSION['task']); break;
+            case 'complete': $progress = 100; unset($_SESSION['task'][$curentTaskID]); break;
+            case 'error': $progress = 100; unset($_SESSION['task'][$curentTaskID]); break;
+            case 'failed': $progress = 100; unset($_SESSION['task'][$curentTaskID]); break;
         }
         echo json_encode(['status'=>$item['status'], 'progress'=>$progress]);
         exit;
@@ -121,7 +121,7 @@ if ($res->num_rows) {
 } else {
     $error = 'An APP error has occured. Task ' . (int) $upload_id . ' does not exist.';
     $_SESSION['error_msg'] = $error;
-    unset($_SESSION['task']);
+    unset($_SESSION['task'][$curentTaskID]);
     http_response_code(200);
     echo json_encode(['error'=>$error]);
     exit;

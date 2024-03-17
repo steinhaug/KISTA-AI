@@ -181,3 +181,86 @@ function saveSessionKeys($session_id = null){
         $id = $mysqli->prepared_insert($sql);
     }
 }
+
+
+/**
+ * Push task into the session tasks
+ *
+ * @param array $task The task, []
+ * 
+ * @return boolean On successfull add true, else false
+ */
+function addSessionTask($task){
+
+    if( !isset($_SESSION['task']) )
+        $_SESSION['task'] = [];
+
+    $mode = null;
+    if( is_array($task) ){
+        if( isset($task['aiid']) )
+            $mode = 'openai';
+        if( isset($task['reid']) )
+            $mode = 'replicate';
+    }
+
+    if( getSessionTaskKey($task) === null ){
+        $_SESSION['task'][] = $task;
+        return true;
+    }
+
+    return false;
+}
+
+
+/**
+ * Undocumented function
+ *
+ * @param array $x 'what_id'=>int, define what task to look for
+ * 
+ * @return mixed A positive integer upon success, null on fail
+ */
+function getSessionTaskKey($x){
+
+    $mode = null;
+    if( is_array($x) ){
+        if( isset($x['aiid']) )
+            $mode = 'openai';
+        if( isset($x['reid']) )
+            $mode = 'replicate';
+    }
+
+    foreach($_SESSION['task'] as $k=>$task){
+        if($mode == 'openai'){
+            if(isset($task['aiid']) and ($task['aiid'] == $x['aiid'])){
+                logfile('Task found (' . $k . '): openai');
+                return $k;
+            }
+        } else if($mode == 'replicate'){
+            if(isset($task['reid']) and ($task['reid'] == $x['reid'])){
+                logfile('Task found (' . $k . '): replicate');
+                return $k;
+            }
+        }
+    }
+
+    return null; // fail
+
+}
+
+
+/**
+ * Undocumented function
+ *
+ * @param array $x 'what_id'=>int, define what task to look for
+ * 
+ * @return mixed A positive integer upon success, null on fail
+ */
+function removeSessionTask($x){
+
+    if( ($currentTask = getSessionTaskKey($x)) !== null ){
+        unset($_SESSION['task'][$currentTask]);
+        return $currentTask;
+    }
+
+    return null;
+}
