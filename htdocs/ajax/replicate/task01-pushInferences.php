@@ -20,15 +20,30 @@ try {
     throw new RepliImage('Image copy error, ' . $item['filename']);
 }
 
-$user_image          = $user_WWW_path . $item['filename'];
-$styleTransfer_image = $st_WWW_path . substr($item['stylename'], 0, -3) . 'jpg';
+$prompt = 'a person';
+$styleTransfer_image = substr($item['stylename'], 0, -3) . 'jpg';
+switch($styleTransfer_image){
+    case 'anime-1.jpg':
+        $prompt = 'a person, B/W, Lineart Image, duotone, teal and sky blue';
+        break;
+    case 'sketch.jpg':
+        $prompt = 'a person, sketch, duotone, mocca brown and beaver grey';
+        break;
+    case 'sketch.jpg':
+        $prompt = 'a person, sketch, duotone, mocca brown and beaver grey';
+        break;
+    case 'graffiti-art.jpg':
+        $prompt = 'graffiti art of a person with a crown on his head, frida, highly detailed cover art, paid art assets, vivid color, lv, exploited, cash, key art, various artists, despacito, vincent, with neon signs, lowres, panini, wtf';
+        break;
+}
 
+// Register the inference 
 $version = '42cf9559131f57f018bf8cdc239a74f4871c5852045ce8f23b346e4ef8f56aa8';
 $input = [
     "seed"=> 6969696969,
-    "image"=> $user_image,
-    "prompt"=> "a person",
-    "image_to_become"=> $styleTransfer_image,
+    "image"=> $user_WWW_path . $item['filename'],
+    "prompt"=> $prompt,
+    "image_to_become"=> $st_WWW_path . $styleTransfer_image,
     "negative_prompt"=> "",
     "prompt_strength"=> 2,
     "number_of_images"=> 2,
@@ -47,7 +62,7 @@ try {
 
     $sql = new sqlbuddy;
     $sql->que('replicate_id', $data->id, 'string');
-    $sql->que('status', $data->id, 'string');
+    $sql->que('status', 'task1', 'string');
     $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . $reid));
 
 } catch (Exception $e) {

@@ -28,7 +28,7 @@ if ($res->num_rows) {
             }
 
             require AJAX_FOLDER_PATH . '/replicate/task01-pushInferences.php';
-            updateUploadFile($reid, 'task1', $log);
+            //updateUploadFile($reid, 'task1', $log);
 
             $sql = new sqlbuddy;
             $sql->que('status', 'waiting', 'string');
