@@ -24,6 +24,9 @@ $passwordOpt = ['cost' => 11];
 $passwordAlgo  = PASSWORD_BCRYPT;
 $salt = '';
 
+$replicate_api_token = '';
+$google_client_id = '';
+$google_client_secret = '';
 
 // Localmode
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
