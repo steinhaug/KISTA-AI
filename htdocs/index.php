@@ -166,6 +166,21 @@ if($lang=='en'){
         </div>
 <?php } ?>
 
+
+
+            <div class="card card-style">
+                <div class="content mb-0">
+                    <div class="row"><div class="col">
+                        <p class="mb-n1 color-highlight font-600">Magic Avatar Maker</p>
+                        <h1>Create stunning AI art photos of yourself</h1>
+                        <p class="mb-3">
+                            Check out new <a href="upload-face.php" class="external-link">Ai Avatar Maker</a>
+                        </p>
+                    </div></div>
+                </div>
+            </div>
+
+
         <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
     </div>
     <!-- Page content ends here-->

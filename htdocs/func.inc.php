@@ -124,7 +124,7 @@ function HTML_FOOTER($i){
     <div id="footer-bar" class="footer-bar-6">
         <!-- <a href="index-components.html" class="' . setActiveIf($i,1) . '"><i class="fa fa-layer-group"></i><span>Features</span></a> -->
         <a href="index.php" class="' . setActiveIf($i,2) . '"><i class="fa fa-file"></i><span>' . $titles[0] . '</span></a>
-        <a href="upload.php" class="circle-nav ' . setActiveIf($i,3) . '"><i class="fa fa-home"></i><span>' . $titles[1] . '</span></a>
+        <a href="upload.php" class="circle-nav ' . setActiveIf($i,3) . ' external-link"><i class="fa fa-home"></i><span>' . $titles[1] . '</span></a>
         <a href="gallery.php" class="' . setActiveIf($i,4) . '"><i class="fa fa-camera"></i><span>' . $titles[2] . '</span></a>
         <!-- <a href="#" data-menu="menu-main" class="' . setActiveIf($i,5) . '"><i class="fa fa-bars"></i><span>Menu</span></a> -->
     </div>
