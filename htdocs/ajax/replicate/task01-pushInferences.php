@@ -7,17 +7,29 @@ $api = new Replicate(
 );
 
 
+$imgName = $item['filename'];
+
 $st_WWW_path    = 'https://fish-touching-suddenly.ngrok-free.app/images/style-transfers/';
 $user_WWW_path  = 'https://fish-touching-suddenly.ngrok-free.app/uploaded_files/r/';
 $hook_WWW_path  = 'https://fish-touching-suddenly.ngrok-free.app/';
 
+// Load and check image size
+$img = Image::make(UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r' . DIRECTORY_SEPARATOR . $imgName);
+$width = $img->width();
+$height = $img->height();
+if(anyHigher(1200, $width, $height)){
+    $imgName = get_name_only($item['filename']) . '_l.jpg';
+    [$new_x, $new_y] = calc__fit_constraints_lspt($width, $height, 1024, 768, 768, 1024);
+    $img->resize($new_x, $new_y)->save(UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r' . DIRECTORY_SEPARATOR . $imgName, 90);
+}
+
 try {
     copy(
-        UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r' . DIRECTORY_SEPARATOR . $item['filename'],
-        'I:/python-htdocs/KISTA-AI/htdocs-ngrok-tunnel/uploaded_files/r/' . $item['filename']
+        UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r' . DIRECTORY_SEPARATOR . $imgName,
+        'I:/python-htdocs/KISTA-AI/htdocs-ngrok-tunnel/uploaded_files/r/' . $imgName
     );
 } catch (Exception $e) {
-    throw new RepliImage('Image copy error, ' . $item['filename']);
+    throw new RepliImage('Image copy error, ' . $imgName);
 }
 
 $prompt = 'a person';
@@ -41,7 +53,7 @@ switch($styleTransfer_image){
 $version = '42cf9559131f57f018bf8cdc239a74f4871c5852045ce8f23b346e4ef8f56aa8';
 $input = [
     "seed"=> 6969696969,
-    "image"=> $user_WWW_path . $item['filename'],
+    "image"=> $user_WWW_path . $imgName,
     "prompt"=> $prompt,
     "image_to_become"=> $st_WWW_path . $styleTransfer_image,
     "negative_prompt"=> "",
@@ -63,6 +75,7 @@ try {
     $sql = new sqlbuddy;
     $sql->que('replicate_id', $data->id, 'string');
     $sql->que('status', 'task1', 'string');
+    #$sql->que('data', json_encode($img_arrays, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'string');
     $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . $reid));
 
 } catch (Exception $e) {

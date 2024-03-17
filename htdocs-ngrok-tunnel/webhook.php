@@ -115,13 +115,17 @@ if ($jsonData) {
                             createThumbnail(
                                 $download_savePath,
                                 REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
-                                ['resize' => [384, 512]]
+                                ['resize' => [512, 768]]
                             );
+
                             createThumbnail(
                                 REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
                                 REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_s.jpg',
                                 ['resize' => [150, 224]]
                             );
+
+                            convertImage(REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
+                                         REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.jpg');
 
                             $sql = new sqlbuddy;
                             $sql->que('thumbnail', 'm, s','string');
@@ -132,6 +136,7 @@ if ($jsonData) {
                     // Release processing
                     $sql = new sqlbuddy;
                     $sql->que('status', 'complete','string');
+                    //$sql->que('data', json_encode($img_arrays, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'string');
                     $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . (int) $item['reid']));
                 }
 

@@ -104,6 +104,21 @@ if(!function_exists('sqlError__alertAndStop')){ function sqlError__alertAndStop(
 
 
 
+/**
+ * Undocumented function
+ *
+ * @param int $max The number to compare against
+ * @param int ...$numbers Numbers to compare against the max
+ * 
+ * @return boolean If any number exceeds the max, true. Else false
+ */
+function anyHigher($max, ...$numbers){
+    foreach($numbers as $number){
+        if((int) $number > (int) $max)
+            return true;
+    }
+    return false;
+}
 
 
 

@@ -182,3 +182,5 @@ ENGINE=InnoDB
 AUTO_INCREMENT=1
 ;
 
+ALTER TABLE `kistaai_replicate__uploads`
+	ADD COLUMN `data` TEXT NOT NULL AFTER `status`;

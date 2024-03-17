@@ -742,3 +742,56 @@ function imageToBase64($image_path, $add_pre_markup=true) {
     // Return the Base64 encoded image
     return $base64_image;
 }
+
+/**
+ * Calculate new image width and height within a constraint
+ * 
+ * Example: ...(1200,600, 600,600)
+ *  returns:         600,300
+ * 
+ * @return array Array of new X and Y dimension  
+ * 
+ */
+function calc__fit_constraints($x, $y, $max_x, $max_y){
+
+    $ratio_x = $x / $max_x;
+    $ratio_y = $y / $max_y;
+
+    if( $ratio_x > $ratio_y ){
+
+        $new_x = $max_x;
+        $new_y = (int) ($y / $ratio_x);
+
+    } else {
+
+        $new_x = (int) ($x / $ratio_y);
+        $new_y = $max_y;
+
+    }
+
+    return [ $new_x, $new_y ];
+}
+
+
+/**
+ * Calculates new X & Y within constraint, landscape and portrait
+ *
+ * @param int $x Width to be resized
+ * @param int $y Height to be resized
+ * @param int $lx Landscape, max width
+ * @param int $ly Landscape, max height
+ * @param int $px Portrait, max width
+ * @param int $py portrait, max height
+ * 
+ * @return array An array with two values, X and Y for new size.
+ */
+function calc__fit_constraints_lspt($x, $y, $lx, $ly, $px=null, $py=null){
+
+    if($px===null) $px = $ly;
+    if($py===null) $py = $lx;
+
+    if($x > $y)
+        return calc__fit_constraints($x, $y, $lx, $ly);
+
+    return calc__fit_constraints($x, $y, $px, $py);
+}
