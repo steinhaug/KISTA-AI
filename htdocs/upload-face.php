@@ -272,8 +272,9 @@ switch($modulus) {
 
             <div class="card card-style">
                 <div class="content mb-0">
+                    <p>Temporarely disabled!</p>
                     <div class="row mt-4"><div class="col" style="text-align:center">
-                        <button id="submitBtn" type="submit" class="btn btn-xxl mb-3 rounded-s text-uppercase font-700 shadow-s bg-green-dark" disabled="">Upload and create my new AI Images</button>
+                        <button id="submitBtn_" type="submit" class="btn btn-xxl mb-3 rounded-s text-uppercase font-700 shadow-s bg-green-dark" disabled="">Upload and create my new AI Images</button>
                     </div></div>
                 </div>
             </div>
