@@ -8,7 +8,8 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, extra webfolder for NGROK tunnel and Replicate webhooks for development
 - added, POC for inference.
 - added, new upload feature for style transfer / avatar mode.
-
+- added, Added abstraction layer for handling with the _SESSION tasks
+  
 ### v0.9.6
 - fixed, Moving action sheets, snackbars and sidebars outside page-content
 - added, PWA installer button for the frontpage
