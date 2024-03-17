@@ -4,6 +4,10 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 
 ## changelog
 
+### v0.10.0
+- added, extra webfolder for NGROK tunnel and Replicate webhooks for development
+- added, POC for inference.
+
 ### v0.9.6
 - fixed, Moving action sheets, snackbars and sidebars outside page-content
 - added, PWA installer button for the frontpage

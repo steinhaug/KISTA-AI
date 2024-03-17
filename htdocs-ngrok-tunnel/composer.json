@@ -18,6 +18,8 @@
         "benbjurstrom/replicate-php": "^0.3.0",
         "steinhaug/sqlbuddy": "^1.3",
         "steinhaug/mysqli": "^1.6",
-        "steinhaug/libs": "^2.0"
+        "steinhaug/libs": "^2.0",
+        "mmucklo/krumo": "^0.7.0",
+        "elephox/mimey": "^4.0"
     }
 }

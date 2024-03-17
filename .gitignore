@@ -11,3 +11,5 @@ credentials/**/*
 htdocs/test.php
 htdocs/test2.php
 htdocs-ngrok-tunnel/composer.lock
+htdocs-ngrok-tunnel/uploads/**/*
+htdocs-ngrok-tunnel/downloads/**/*
