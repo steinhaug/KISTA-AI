@@ -6,12 +6,29 @@ $api = new Replicate(
     apiToken: $replicate_api_token,
 );
 
+
+$st_WWW_path    = 'https://fish-touching-suddenly.ngrok-free.app/images/style-transfers/';
+$user_WWW_path  = 'https://fish-touching-suddenly.ngrok-free.app/uploaded_files/r/';
+$hook_WWW_path  = 'https://fish-touching-suddenly.ngrok-free.app/';
+
+try {
+    copy(
+        UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r' . DIRECTORY_SEPARATOR . $item['filename'],
+        'I:/python-htdocs/KISTA-AI/htdocs-ngrok-tunnel/uploaded_files/r/' . $item['filename']
+    );
+} catch (Exception $e) {
+    throw new RepliImage('Image copy error, ' . $item['filename']);
+}
+
+$user_image          = $user_WWW_path . $item['filename'];
+$styleTransfer_image = $st_WWW_path . substr($item['stylename'], 0, -3) . 'jpg';
+
 $version = '42cf9559131f57f018bf8cdc239a74f4871c5852045ce8f23b346e4ef8f56aa8';
 $input = [
     "seed"=> 6969696969,
-    "image"=> "https://fish-touching-suddenly.ngrok-free.app/uploads/upl001.jpg",
+    "image"=> $user_image,
     "prompt"=> "a person",
-    "image_to_become"=> "https://fish-touching-suddenly.ngrok-free.app/uploads/tpl_sketch.jpg",
+    "image_to_become"=> $styleTransfer_image,
     "negative_prompt"=> "",
     "prompt_strength"=> 2,
     "number_of_images"=> 2,
@@ -23,5 +40,18 @@ $input = [
     "disable_safety_checker"=>true
 ];
 
-$data = $api->predictions()->withWebhook('https://fish-touching-suddenly.ngrok-free.app/webhook.php')->create($version, $input);
-echo $data->id;
+try {
+
+    $data = $api->predictions()->withWebhook($hook_WWW_path . 'webhook.php', ['completed'])->create($version, $input);
+    //echo $data->id;
+
+    $sql = new sqlbuddy;
+    $sql->que('replicate_id', $data->id, 'string');
+    $sql->que('status', $data->id, 'string');
+    $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . $reid));
+
+} catch (Exception $e) {
+
+    throw new ReplicateAPIException('Replicate API error, ' . $e->getMessage());
+
+}

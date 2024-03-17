@@ -12,7 +12,7 @@ require_once 'func.inc.php';
 require_once 'func.login.php';
 
 if( empty($_GET['reid']) ){
-    header('Location: error.php');
+    header('Location: show-avatar.php?error=true');
     exit;
 }
 
@@ -92,9 +92,9 @@ function initiateImageProcessing(){
             try {
                 var json = JSON.parse(xhr.responseText);
                 if (json.status === "complete") {
-                    window.location.href = "reciepe.php?reid=<?=$reid?>";
+                    window.location.href = "show-avatar.php?reid=<?=$reid?>";
                 } else if(json.status === "error") {
-                    window.location.href = "error.php?reid=<?=$reid?>";
+                    window.location.href = "show-avatar.php?error=true&reid=<?=$reid?>";
                 } else if(json.status === "idle") {
                     var progressElement = document.getElementById('page-content');
                     progressElement.innerHTML = '<h1>Page idle</h1><p>Nothing to do...</p>';
@@ -120,9 +120,9 @@ function pollImageProcessing() {
                     var progressElement = document.getElementById('page-content');
                     progressElement.innerHTML = '<h1>Page idle</h1><p>Nothing to do...</p>';
                 } else if (json.status === "complete") {
-                    window.location.href = "reciepe.php?reid=<?=$reid?>";
+                    window.location.href = "show-avatar.php?reid=<?=$reid?>";
                 } else if (json.status === "error") {
-                    window.location.href = "error.php?reid=<?=$reid?>";
+                    window.location.href = "show-avatar.php?error=true&reid=<?=$reid?>";
                 } else {
                     if (json.hasOwnProperty('progress') && Number.isInteger(json.progress)) {
                         updateProgress(json.progress);

@@ -521,3 +521,24 @@ function _GET($val, $else_val=null, $filter=null){
     return $return_var;
 
 }
+
+/**
+ * Validate a string as integer
+ * 
+ * is_int() validates if the resource is integer, a post or get will always be a string.
+ * 
+ * @param string $val String to validate
+ * @return boolean True if string is considered integer, false if not 
+ */
+function isInteger($val){
+    if (!is_scalar($val) || is_bool($val)) {
+        return false;
+    }
+    if(!is_numeric($val))
+        return false;
+
+    if (is_float($val + 0) && ($val + 0) > PHP_INT_MAX) {
+        return false;
+    }
+    return is_float($val) ? false : preg_match('~^((?:\+|-)?[0-9]+)$~', $val);
+}

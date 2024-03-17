@@ -1,13 +1,13 @@
 <?php
 class ReplicateAPIException extends Exception { }
-class SegWayImage extends Exception { }
+class RepliImage extends Exception { }
 
 function updateUploadFile($reid, $status, $log){
     global $mysqli, $kista_dp;
     $sql = new sqlbuddy;
     $sql->que('status', $status, 'string');
     $sql->que('log', json_encode($log), 'text');
-    $success = $mysqli->query($sql->build('update', $kista_dp . "uploaded_files", 'reid=' . $reid));
+    $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . $reid));
 }
 
 $error = null;
@@ -30,8 +30,16 @@ if ($res->num_rows) {
             require AJAX_FOLDER_PATH . '/replicate/task01-pushInferences.php';
             updateUploadFile($reid, 'task1', $log);
 
+            $sql = new sqlbuddy;
+            $sql->que('status', 'complete', 'string');
+            $sql->que('log', json_encode($log), 'text');
+            $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . $reid));
 
-        } catch (SegWayImage $e) {
+            #unset($_SESSION['task'][$curentTaskID]);
+            echo json_encode(['status'=>'complete','progress'=>100,'message'=>'All tasks completed.']); exit;
+
+
+        } catch (RepliImage $e) {
             $error = $e->getMessage();
             $sql = new sqlbuddy;
             $sql->que('status', 'complete', 'string');
@@ -83,5 +91,4 @@ if ($res->num_rows) {
     echo json_encode(['error'=>$error]);
     exit;
 }
-
 

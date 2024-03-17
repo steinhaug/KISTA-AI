@@ -5,7 +5,7 @@ $transferable_style_presets = [
     '-9c3a6E911o.png','advance-sketch-3.png','advance-sketch-5.png','angrybird.png','anime-1.png','antheia4.png','art-1.png',
     'art-2.png','art-from-renaissance.png','blyant.png','graffiti-art.png','great-wave-off-kanagawa-crop.png','karrikatur-1.png',
     'kim-jong-1.png','kim-jung-2.png','lennon-blue.png','maleri.png','mona-lisa.png','pastel.png','putin-1.png','sketch.png','starry-night.png',
-    'stefano_phen.png','tattoo-1.png','tattoo-2-3.png','van-gogh.png','van-gogh-2.png','vladimir-putin.png','VrQAuHMYfxA.png'
+    'stefano_phen.png','tattoo-1.png','tattoo-2.png','van-gogh.png','van-gogh-2.png','vladimir-putin.png','VrQAuHMYfxA.png'
 ];
 
 ob_start();
@@ -34,7 +34,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
 
     if(!empty($_FILES['file1']['size']) and !empty($_POST['selected_style_transfer']) and in_array($_POST['selected_style_transfer'], $transferable_style_presets)){
 
-        $upload_path = UPLOAD_PATH . '/r';
+        $upload_path = UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r';
 
         require APPDATA_PATH . '/XUploadFile.inc.php';
         $myU1 = new Xupload("file1",1);
@@ -89,6 +89,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                 $sql->que('filesize', $file1_size, 'int');
                 $sql->que('thumbnail', '', 'string');
                 $sql->que('status', 'start', 'string');
+                $sql->que('log', '', 'string');
                 $sql->que('error', '', 'string');
                 $mysqli->query( $sql->build('insert', $kista_dp . "replicate__uploads") );
                 $reid = $mysqli->insert_id;
@@ -240,9 +241,9 @@ switch($modulus) {
 
 
 
-        <form action="upload-face.php" method="post" id="faceForm">
+        <form action="upload-face.php" method="post" enctype="multipart/form-data" id="faceForm">
             <input type="hidden" name="bonus_conf" id="bonus_conf" value="">
-            <input name="selected_style_transfer" type="hidden" class="form-control" id="sel_style" placeholder="">
+            <input type="hidden" name="selected_style_transfer" class="form-control" id="sel_style">
 
             <div class="card card-style ms-0 me-0 rounded-0">
                 <div class="content">
@@ -272,7 +273,7 @@ switch($modulus) {
             <div class="card card-style">
                 <div class="content mb-0">
                     <div class="row mt-4"><div class="col" style="text-align:center">
-                        <button id="submitBtn" class="btn btn-xxl mb-3 rounded-s text-uppercase font-700 shadow-s bg-green-dark" disabled="">Upload and create my new AI Images</button>
+                        <button id="submitBtn" type="submit" class="btn btn-xxl mb-3 rounded-s text-uppercase font-700 shadow-s bg-green-dark" disabled="">Upload and create my new AI Images</button>
                     </div></div>
                 </div>
             </div>
