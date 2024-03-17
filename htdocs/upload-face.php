@@ -89,6 +89,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                 $sql->que('filesize', $file1_size, 'int');
                 $sql->que('thumbnail', '', 'string');
                 $sql->que('status', 'start', 'string');
+                $sql->que('error', '', 'string');
                 $mysqli->query( $sql->build('insert', $kista_dp . "replicate__uploads") );
                 $reid = $mysqli->insert_id;
                 addSessionTask( ['reid'=>$reid, 'status'=>'start', 'progress'=>0] );
