@@ -1,0 +1,128 @@
+Data located.Data received:
+Array
+(
+    [completed_at] => 2024-03-17T16:38:07.127678Z
+    [created_at] => 2024-03-17T16:36:50.74497Z
+    [error] => 
+    [id] => 4oyj7h3b3gzl75nijch6frmozq
+    [input] => Array
+        (
+            [control_depth_strength] => 0.9
+            [denoising_strength] => 0.8
+            [disable_safety_checker] => 1
+            [image] => https://fish-touching-suddenly.ngrok-free.app/uploaded_files/r/20130605-092558.jpg
+            [image_to_become] => https://fish-touching-suddenly.ngrok-free.app/images/style-transfers/angrybird.jpg
+            [image_to_become_noise] => 0.25
+            [image_to_become_strength] => 0.8
+            [instant_id_strength] => 1
+            [negative_prompt] => 
+            [number_of_images] => 2
+            [prompt] => a person
+            [prompt_strength] => 2
+            [seed] => 6969696969
+        )
+
+    [logs] => Checking inputs
+✅ /tmp/inputs/image_of_face.jpg
+✅ /tmp/inputs/image_to_become.jpg
+====================================
+Running workflow
+got prompt
+Executing node 83, title: Load Image, class type: LoadImage
+Executing node 22, title: Load Image, class type: LoadImage
+Executing node 67, title: 🔧 Image Resize, class type: ImageResize+
+Executing node 49, title: AIO Aux Preprocessor, class type: AIO_Preprocessor
+Requested to load SDXLClipModel
+Loading 1 new model
+Executing node 79, title: Control Net Stacker, class type: Control Net Stacker
+Executing node 2, title: Efficient Loader, class type: Efficient Loader
+----------------------------------------
+[36mEfficient Loader Models Cache:[0m
+Ckpt:
+[1] dreamshaperXL_lightningDPMSDE
+Executing node 41, title: Apply InstantID, class type: ApplyInstantID
+Executing node 81, title: Apply IPAdapter, class type: IPAdapterApply
+Executing node 85, title: Duplicate Image Batch 🎥🅥🅗🅢, class type: VHS_DuplicateImages
+Executing node 51, title: VAE Encode, class type: VAEEncode
+Executing node 75, title: KSampler, class type: KSampler
+Requested to load SDXL
+Requested to load ControlNet
+Requested to load ControlNet
+Loading 3 new models
+  0%|          | 0/4 [00:00<?, ?it/s]
+ 25%|██▌       | 1/4 [00:01<00:03,  1.16s/it]
+ 50%|█████     | 2/4 [00:02<00:02,  1.16s/it]
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.16s/it]
+100%|██████████| 4/4 [00:04<00:00,  1.08it/s]
+100%|██████████| 4/4 [00:04<00:00,  1.01s/it]
+Executing node 76, title: VAE Decode, class type: VAEDecode
+Executing node 5, title: Save Image, class type: SaveImage
+Prompt executed in 27.54 seconds
+outputs:  {'5': {'images': [{'filename': 'ComfyUI_00001_.png', 'subfolder': '', 'type': 'output'}, {'filename': 'ComfyUI_00002_.png', 'subfolder': '', 'type': 'output'}]}}
+====================================
+Contents of /tmp/outputs:
+ComfyUI_00001_.png
+ComfyUI_00002_.png
+
+    [metrics] => Array
+        (
+            [predict_time] => 32.599034
+        )
+
+    [model] => fofr/become-image
+    [output] => Array
+        (
+            [0] => https://replicate.delivery/pbxt/jptoSzRMY3ZQCteLf8ufslYnIczN9u8j5kjDISMUhtqbzZClA/ComfyUI_00001_.png
+            [1] => https://replicate.delivery/pbxt/kUoBsJj0LB6tK51PNhMVLIVjLgUtROcgbKfV9mocdhS3cmQJA/ComfyUI_00002_.png
+        )
+
+    [started_at] => 2024-03-17T16:37:34.528644Z
+    [status] => succeeded
+    [urls] => Array
+        (
+            [cancel] => https://api.replicate.com/v1/predictions/4oyj7h3b3gzl75nijch6frmozq/cancel
+            [get] => https://api.replicate.com/v1/predictions/4oyj7h3b3gzl75nijch6frmozq
+        )
+
+    [version] => 42cf9559131f57f018bf8cdc239a74f4871c5852045ce8f23b346e4ef8f56aa8
+    [webhook] => https://fish-touching-suddenly.ngrok-free.app/webhook.php
+    [webhook_events_filter] => Array
+        (
+            [0] => completed
+        )
+
+)
+
+Data located.Image jptoSzRMY3ZQCteLf8ufslYnIczN9u8j5kjDISMUhtqbzZClA.png ready for download.<br>
+Image 1 created.<br>
+Image kUoBsJj0LB6tK51PNhMVLIVjLgUtROcgbKfV9mocdhS3cmQJA.png ready for download.<br>
+Image 2 created.<br>
+Data received:
+Array
+(
+    [0] => 1
+)
+
+Data located.<br />
+<font size='1'><table class='xdebug-error xe-warning' dir='ltr' border='1' cellspacing='0' cellpadding='1'>
+<tr><th align='left' bgcolor='#f57900' colspan="5"><span style='background-color: #cc0000; color: #fce94f; font-size: x-large;'>( ! )</span> Warning: foreach() argument must be of type array|object, null given in I:\python-htdocs\KISTA-AI\htdocs-ngrok-tunnel\webhook.php on line <i>64</i></th></tr>
+<tr><th align='left' bgcolor='#e9b96e' colspan='5'>Call Stack</th></tr>
+<tr><th align='center' bgcolor='#eeeeec'>#</th><th align='left' bgcolor='#eeeeec'>Time</th><th align='left' bgcolor='#eeeeec'>Memory</th><th align='left' bgcolor='#eeeeec'>Function</th><th align='left' bgcolor='#eeeeec'>Location</th></tr>
+<tr><td bgcolor='#eeeeec' align='center'>1</td><td bgcolor='#eeeeec' align='center'>0.0004</td><td bgcolor='#eeeeec' align='right'>440624</td><td bgcolor='#eeeeec'>{main}(  )</td><td title='I:\python-htdocs\KISTA-AI\htdocs-ngrok-tunnel\webhook.php' bgcolor='#eeeeec'>...\webhook.php<b>:</b>0</td></tr>
+</table></font>
+Data received:
+Array
+(
+    [0] => 1
+)
+
+Data located.Expired!Data received:
+Array
+(
+    [0] => 1
+)
+
+Data located.<Expired/><OK/>
+<located/>Image 4 created.<br>
+Image 5 created.<br>
+<OK/>

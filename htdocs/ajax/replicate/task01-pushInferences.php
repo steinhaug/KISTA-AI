@@ -42,7 +42,7 @@ $input = [
 
 try {
 
-    $data = $api->predictions()->withWebhook($hook_WWW_path . 'webhook.php', ['completed'])->create($version, $input);
+    $data = $api->predictions()->withWebhook($hook_WWW_path . 'webhook.php')->create($version, $input);
     //echo $data->id;
 
     $sql = new sqlbuddy;

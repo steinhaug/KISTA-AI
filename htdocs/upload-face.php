@@ -56,7 +56,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
             $_SESSION['error_msg'] = $msg;
             header('Location: ' . $callbackURL . '?error');
             exit;
-        } else if(in_array($file_extension, $allowedExtensions)){
+        } else if(in_array(strtolower($file_extension), $allowedExtensions)){
 
             // Make sure we don't have jpeg files
             $file_extension = str_replace('jpeg','jpg',strtolower($file_extension));
