@@ -9,7 +9,8 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, POC for inference.
 - added, new upload feature for style transfer / avatar mode.
 - added, Added abstraction layer for handling with the _SESSION tasks
-  
+- changed, replicate will now read as waiting, for webhook. Webhook will download all images and create thumbs.
+
 ### v0.9.6
 - fixed, Moving action sheets, snackbars and sidebars outside page-content
 - added, PWA installer button for the frontpage
