@@ -31,21 +31,21 @@ if ($res->num_rows) {
             updateUploadFile($reid, 'task1', $log);
 
             $sql = new sqlbuddy;
-            $sql->que('status', 'complete', 'string');
+            $sql->que('status', 'waiting', 'string');
             $sql->que('log', json_encode($log), 'text');
             $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . $reid));
 
             #unset($_SESSION['task'][$curentTaskID]);
-            echo json_encode(['status'=>'complete','progress'=>100,'message'=>'All tasks completed.']); exit;
+            echo json_encode(['status'=>'waiting','progress'=>50,'message'=>'All tasks completed.']); exit;
 
 
         } catch (RepliImage $e) {
             $error = $e->getMessage();
             $sql = new sqlbuddy;
-            $sql->que('status', 'complete', 'string');
+            $sql->que('status', 'error', 'string');
             $sql->que('error', 'Replicate error: ' . $error, 'text');
             $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . $reid));
-            echo json_encode(['status'=>'complete','progress'=>100,'error'=>'No fridge']); exit;
+            echo json_encode(['status'=>'complete','progress'=>100,'error'=>'Image problems']); exit;
         } catch (ReplicateAPIException $e) {
             $error = $e->getMessage();
             $sql = new sqlbuddy;
@@ -71,10 +71,7 @@ if ($res->num_rows) {
         switch ($item['status']) {
             case 'start': $progress = 10; break;
             case 'task1': $progress = 20; break;
-            case 'task2': $progress = 40; break;
-            case 'task3': $progress = 60; break;
-            case 'task4': $progress = 80; break;
-            case 'task10': $progress = 90; break;
+            case 'waiting': $progress = 40; unset($_SESSION['task'][$curentTaskID]); break;
             case 'complete': $progress = 100; unset($_SESSION['task'][$curentTaskID]); break;
             case 'error': $progress = 100; unset($_SESSION['task'][$curentTaskID]); break;
             case 'failed': $progress = 100; unset($_SESSION['task'][$curentTaskID]); break;

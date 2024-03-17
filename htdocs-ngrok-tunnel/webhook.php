@@ -109,6 +109,12 @@ if ($jsonData) {
                     } else {
                         //echo '<img src="/downloads/' . $filename . '">';
                     }
+
+                    // Release processing
+                    $sql = new sqlbuddy;
+                    $sql->que('status', 'complete','string');
+                    $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . (int) $item['reid']));
+
                 }
             } else {
                 echo '<Expired/>';
