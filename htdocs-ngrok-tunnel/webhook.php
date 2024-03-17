@@ -1,10 +1,13 @@
 <?php
 require './vendor/autoload.php';
-require dirname(dirname(__FILE__)) . '/credentials.php';
+
+define('APPDATA_PATH', dirname(dirname(__FILE__)) . '/htdocs/inc_appdata');
+require 'func.inc.php';
+
 
 ob_start();
 
-echo "<h1>Environment Debug Script</h1>";
+# echo "<h1>Environment Debug Script</h1>";
 
 // Function to safely print arrays with htmlspecialchars
 function safePrintArray($array) {
@@ -44,7 +47,6 @@ if ($jsonData) {
         echo 'Data NOT FOUND...';
     }
 
-
     echo "Data received:\n";
     print_r($jsonData);
 
@@ -53,14 +55,15 @@ if ($jsonData) {
 }
 
 // Debugging HTTP Request
+/*
 echo "<h2>HTTP Request Details</h2>";
 echo "<strong>Request Method:</strong> " . $_SERVER['REQUEST_METHOD'] . "<br>";
 echo "<strong>Request URI:</strong> " . $_SERVER['REQUEST_URI'] . "<br>";
 echo "<strong>Query String:</strong> " . $_SERVER['QUERY_STRING'] . "<br>";
 echo "<strong>Remote Address:</strong> " . $_SERVER['REMOTE_ADDR'] . "<br>";
-
+*/
 $page = ob_get_contents();
 ob_end_clean();
 
-echo 'OK';
+echo $page; // 'OK';
 file_put_contents('webhook.log', $page . "\n", FILE_APPEND);

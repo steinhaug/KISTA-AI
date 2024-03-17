@@ -2,6 +2,19 @@
 
 
 
+require dirname(dirname(APPDATA_PATH)) . '/credentials.php';
+
+require APPDATA_PATH . '/notifications.php';
+require APPDATA_PATH . '/error_handling.php';
+require APPDATA_PATH . '/db_helpers.php';
+require APPDATA_PATH . '/string_manipulation.php';
+
+if(!function_exists('sqlError__alertAndStop')){ function sqlError__alertAndStop($sql_error, $sql_query, $reference = '', $UserID = 0, $trace = null){
+    return time();
+} }
+
+
+
 /**
  * openai__guzzleDownloader: downloads file
  *
@@ -74,3 +87,4 @@ function openai__guzzleDownloader($url, $code404_mode = false){
     }
 
 }
+
