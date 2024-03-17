@@ -43,10 +43,13 @@ if (session_status() == PHP_SESSION_NONE) {
 
 if( isset($_GET['go_replicate_id']) and !empty($_GET['go_replicate_id']) ){
 
+    $verbose = true;
     $jsonData = [true];
     $replicate_id = (string) trim($_GET['go_replicate_id']);
 
 } else {
+
+    $verbose = false;
     $rawData = file_get_contents("php://input");
     $jsonData = json_decode($rawData, true);
     $replicate_id = basename($jsonData['urls']['get']);
@@ -54,26 +57,46 @@ if( isset($_GET['go_replicate_id']) and !empty($_GET['go_replicate_id']) ){
 
 if ($jsonData) {
     if( ($item = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate__uploads` `ru` WHERE `ru`.`replicate_id`=?", 's', [$replicate_id], true)) !== null ){
-        echo '<located/>';
 
        $api = new Replicate(
             apiToken: $replicate_api_token,
         );
         $data = $api->predictions()->get($replicate_id);
+
+        #$json_packed_string = json_encode($data->error, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        #krumo($data); $page = ob_get_contents(); ob_end_clean(); echo $page; exit;
+
+        if( !empty($rawData) ){
+            $sql = new sqlbuddy;
+            if(!is_null($data->error))
+                $sql->que('status', 'error','string');
+            $sql->que('log', $rawData,'string');
+            if(!is_null($data->error))
+                $sql->que('error', json_encode($data->error, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),'string');
+            $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . (int) $item['reid']));
+        }
+
+        if($verbose) echo htmlentities('<located status="' . $data->status . '"/>');
         if($data->status == 'succeeded'){
+
             if(is_array($data->output) or is_object($data->output)){
                 foreach($data->output as $url){
 
                     $image_filename = basename(dirname($url)) . '.' . get_extension($url);
-                    #echo 'Image ' . $image_filename . ' ready for download.<br>' . "\n";
+                    if($verbose) echo htmlentities('<url>' . $image_filename . '</url>');
 
-                    if (!file_exists(REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . $image_filename)) {
+                        $download_savePath = REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . $image_filename;
+
+                        if (file_exists($download_savePath)) {
+                            unlink($download_savePath);
+                        }
+
                         $data = openai__guzzleDownloader($url);
                         if ($data[0]=='200' and $data[2]=='png') {
 
-                            $pngfile_path = REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . $image_filename;
-                            file_put_contents($pngfile_path, $data[1]);
-                            $size = filesize($pngfile_path);
+                            file_put_contents($download_savePath, $data[1]);
+                            $size = filesize($download_savePath);
+                            if($verbose) echo htmlentities('<db/>');
 
                             $sql = new sqlbuddy;
                             $sql->que('uuid', generateUuid4(),'string');
@@ -87,10 +110,10 @@ if ($jsonData) {
                             $sql->que('status', 'done','string');
                             $mysqli->query( $sql->build('insert', $kista_dp . "replicate__images") );
                             $image_id = $mysqli->insert_id;
-                            echo 'Image ' . $image_id . ' created.<br>' . "\n";
+                            if($verbose) echo htmlentities('<img id="' . $image_id . '"/>');
 
                             createThumbnail(
-                                $pngfile_path,
+                                $download_savePath,
                                 REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
                                 ['resize' => [384, 512]]
                             );
@@ -103,21 +126,25 @@ if ($jsonData) {
                             $sql = new sqlbuddy;
                             $sql->que('thumbnail', 'm, s','string');
                             $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__images", 'image_id=' . $image_id));
-
                             //echo '<img src="/downloads/' . $filename . '">';
                         }
-                    } else {
-                        //echo '<img src="/downloads/' . $filename . '">';
-                    }
 
                     // Release processing
                     $sql = new sqlbuddy;
                     $sql->que('status', 'complete','string');
                     $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . (int) $item['reid']));
-
                 }
+
             } else {
-                echo '<Expired/>';
+                if( is_null($data->output) ){
+                    $sql = new sqlbuddy;
+                    $sql->que('status', 'error','string');
+                    $sql->que('error', 'AI-Server didnt reply, broken output. Try again.','string');
+                    $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . (int) $item['reid']));
+                    echo htmlentities('<broken/>');
+                } else {
+                    echo htmlentities('<Expired/>');
+                }
             }
 
         }

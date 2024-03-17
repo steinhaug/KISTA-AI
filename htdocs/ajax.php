@@ -46,7 +46,11 @@ if (($curentTaskID = getSessionTaskKey(['aiid'=> _GET('aiid', 0, 'int')])) !== n
             task_validation__replicate_tasks($item);
             if($item['status']=='error')
                 $_SESSION['error_msg'] = $item['error'];
-            echo json_encode(['status'=>$item['status'], 'progress'=>200]);
+
+            if($item['status'] == 'waiting')
+                echo json_encode(['status'=>$item['status'], 'progress'=>60]);
+                else
+                echo json_encode(['status'=>$item['status'], 'progress'=>200]);
             exit;
         }
     }
