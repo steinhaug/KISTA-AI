@@ -77,24 +77,6 @@ if(!function_exists('sqlError__alertAndStop')){ function sqlError__alertAndStop(
 } }
 
 /**
- * Returns the filetype from a filename, eg. "jpg"
- */
-function get_extension($filename){
-    return substr(strrchr((string) $filename, "." ),1);
-}
-
-/**
- * Returns the filename without extension, eg. "MyImage.jpg" => "MyImage"
- *
- * @param string $filename A filename string
- * 
- * @return string Returns the string without the last extension
- */
-function get_name_only($filename){
-    return substr($filename, 0, strrpos($filename, '.'))
-}
-
-/**
  * openai__guzzleDownloader: downloads file
  *
  * @param string $url Url to download

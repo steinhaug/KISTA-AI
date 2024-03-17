@@ -1,11 +1,11 @@
 <?php
 
 use BenBjurstrom\Replicate\Replicate;
+use Intervention\Image\ImageManagerStatic as Image;
 
 $api = new Replicate(
     apiToken: $replicate_api_token,
 );
-
 
 $imgName = $item['filename'];
 

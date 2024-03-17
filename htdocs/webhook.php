@@ -1,45 +1,34 @@
 <?php
 use BenBjurstrom\Replicate\Replicate;
 
+if(!defined('WEBROOT')) define('WEBROOT', dirname(dirname(__FILE__)) . '/htdocs');
+if(!defined('APPDATA_PATH')) define('APPDATA_PATH', dirname(__FILE__) . '/inc_appdata');
+if(!defined('UPLOAD_PATH')) define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 
-require './vendor/autoload.php';
+require_once WEBROOT . '/func.inc.php';
+// require_once 'func.login.php';
+define('REPLICATE_INFERENCE_FOLDER', UPLOAD_PATH . '/ri');
 
-define('APPDATA_PATH', dirname(dirname(__FILE__)) . '/htdocs/inc_appdata');
-require 'func.inc.php';
+/* End the page */
+function save_webhook_and_exit($end_message){
+    echo htmlentities($end_message);
+    echo "\n\n" . REPLICATE_INFERENCE_FOLDER . "\n";
 
-define('REPLICATE_INFERENCE_FOLDER', dirname(dirname(__FILE__)) . '/htdocs/uploaded_files/ri/');
-
-
-ob_start();
-
-# echo "<h1>Environment Debug Script</h1>";
-
-// Function to safely print arrays with htmlspecialchars
-function safePrintArray($array) {
-    foreach ($array as $key => $value) {
-        if (is_array($value)) {
-            echo htmlspecialchars($key) . ' => Array:<br>';
-            echo '<ul>';
-            safePrintArray($value);
-            echo '</ul>';
-        } else {
-            echo htmlspecialchars($key) . ' => ' . htmlspecialchars($value) . '<br>';
-        }
-    }
+    $page = ob_get_contents();
+    ob_end_clean();
+    file_put_contents('webhook.log', $page . "\n", FILE_APPEND);
+    //file_put_contents(dirname(WEBROOT) . '/logs/webhook.log', $page . "\n", FILE_APPEND);
+    exit;
 }
 
-/*
-echo "<h2>Superglobals</h2>";
-echo "<h3>\$_SERVER</h3>";
-echo "<pre>";
-safePrintArray($_SERVER);
-echo "</pre>";
-*/
+$verbose = false;
+$rawData = file_get_contents("php://input");
+file_put_contents('webhook.log', $rawData, FILE_APPEND);
 
+ob_start();
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-
 
 if( isset($_GET['go_replicate_id']) and !empty($_GET['go_replicate_id']) ){
 
@@ -49,10 +38,14 @@ if( isset($_GET['go_replicate_id']) and !empty($_GET['go_replicate_id']) ){
 
 } else {
 
-    $verbose = false;
-    $rawData = file_get_contents("php://input");
+    // Triggering the page will just stop it
+    if( !strlen($rawData) ){
+        echo htmlentities('<stop/>'); 
+        save_webhook_and_exit();
+    }
+
     $jsonData = json_decode($rawData, true);
-    $replicate_id = basename($jsonData['urls']['get']);
+    $replicate_id = $jsonData['id'];
 }
 
 if ($jsonData) {
@@ -94,43 +87,51 @@ if ($jsonData) {
                         $data = openai__guzzleDownloader($url);
                         if ($data[0]=='200' and $data[2]=='png') {
 
-                            file_put_contents($download_savePath, $data[1]);
-                            $size = filesize($download_savePath);
-                            if($verbose) echo htmlentities('<db/>');
+                            try {
 
-                            $sql = new sqlbuddy;
-                            $sql->que('uuid', generateUuid4(),'string');
-                            $sql->que('reid', $item['reid'],'int');
-                            $sql->que('created', 'NOW()','raw');
-                            $sql->que('url', $url,'string');
-                            $sql->que('filename', $image_filename,'string');
-                            $sql->que('extension', get_extension($url),'string');
-                            $sql->que('filesize', $size,'int');
-                            $sql->que('thumbnail', '','string');
-                            $sql->que('status', 'done','string');
-                            $mysqli->query( $sql->build('insert', $kista_dp . "replicate__images") );
-                            $image_id = $mysqli->insert_id;
-                            if($verbose) echo htmlentities('<img id="' . $image_id . '"/>');
+                                file_put_contents($download_savePath, $data[1]);
+                                $size = filesize($download_savePath);
+                                if($verbose) echo htmlentities('<db/>');
 
-                            createThumbnail(
-                                $download_savePath,
-                                REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
-                                ['resize' => [512, 768]]
-                            );
+                                $sql = new sqlbuddy;
+                                $sql->que('uuid', generateUuid4(),'string');
+                                $sql->que('reid', $item['reid'],'int');
+                                $sql->que('created', 'NOW()','raw');
+                                $sql->que('url', $url,'string');
+                                $sql->que('filename', $image_filename,'string');
+                                $sql->que('extension', get_extension($url),'string');
+                                $sql->que('filesize', $size,'int');
+                                $sql->que('thumbnail', '','string');
+                                $sql->que('status', 'done','string');
+                                $mysqli->query( $sql->build('insert', $kista_dp . "replicate__images") );
+                                $image_id = $mysqli->insert_id;
+                                if($verbose) echo htmlentities('<img id="' . $image_id . '"/>');
 
-                            createThumbnail(
-                                REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
-                                REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_s.jpg',
-                                ['resize' => [150, 224]]
-                            );
+                                createThumbnail(
+                                    $download_savePath,
+                                    REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
+                                    ['resize' => [512, 768]]
+                                );
 
-                            convertImage(REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
-                                         REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.jpg');
+                                createThumbnail(
+                                    REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
+                                    REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_s.jpg',
+                                    ['resize' => [150, 224]]
+                                );
 
-                            $sql = new sqlbuddy;
-                            $sql->que('thumbnail', 'm, s','string');
-                            $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__images", 'image_id=' . $image_id));
-                            //echo '<img src="/downloads/' . $filename . '">';
+                                convertImage(REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
+                                            REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.jpg');
+
+                                $sql = new sqlbuddy;
+                                $sql->que('thumbnail', 'm, s','string');
+                                $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__images", 'image_id=' . $image_id));
+                                //echo '<img src="/downloads/' . $filename . '">';
+
+                            } catch (Exception $e) {
+                                throw new Exception('Could not retrieve the AI Image, ' . $imgName);
+                            }
+
+
                         }
 
                     // Release processing
@@ -146,9 +147,9 @@ if ($jsonData) {
                     $sql->que('status', 'error','string');
                     $sql->que('error', 'AI-Server didnt reply, broken output. Try again.','string');
                     $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . (int) $item['reid']));
-                    echo htmlentities('<broken/>');
+                    save_webhook_and_exit('<broken/>');
                 } else {
-                    echo htmlentities('<Expired/>');
+                    save_webhook_and_exit('<Expired/>');
                 }
             }
 
@@ -158,10 +159,10 @@ if ($jsonData) {
 
     #echo "Data received:\n";
     #print_r($jsonData);
-    echo '<OK/>';
+    save_webhook_and_exit('<OK/>');
 
 } else {
-    echo '<BUGGER/>';
+    save_webhook_and_exit('<BUGGER/>');
 }
 
 // Debugging HTTP Request
@@ -172,8 +173,8 @@ echo "<strong>Request URI:</strong> " . $_SERVER['REQUEST_URI'] . "<br>";
 echo "<strong>Query String:</strong> " . $_SERVER['QUERY_STRING'] . "<br>";
 echo "<strong>Remote Address:</strong> " . $_SERVER['REMOTE_ADDR'] . "<br>";
 */
-$page = ob_get_contents();
-ob_end_clean();
 
-echo $page; // 'OK';
-file_put_contents('webhook.log', $page . "\n", FILE_APPEND);
+
+
+save_webhook_and_exit('<end/>');
+

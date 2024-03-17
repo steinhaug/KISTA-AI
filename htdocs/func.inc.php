@@ -83,7 +83,10 @@ class KistaDashboardException extends Exception
 }
 define('LF', "\n");
 
-require dirname(dirname(APPDATA_PATH)) . '/vendor/autoload.php';
+// Loaded from http tunnel 
+if( !(defined('SKIP_VENDOR_AUTOLOAD') AND SKIP_VENDOR_AUTOLOAD) )
+    require dirname(dirname(APPDATA_PATH)) . '/vendor/autoload.php';
+
 require dirname(dirname(APPDATA_PATH)) . '/credentials.php';
 require APPDATA_PATH . '/notifications.php';
 require APPDATA_PATH . '/error_handling.php';
@@ -299,12 +302,7 @@ function convert_high_ascii($s) {
   $s = preg_replace($find,$replace,(string) $s);
   return $s;
 }
-/**
- * Returns the filetype from a filename
- */
-function get_extension($filename){
-    return substr(strrchr((string) $filename, "." ),1);
-}
+
 /* function prepare_filename
    split up filename for further use  */
 function prepare_filename($filename){
