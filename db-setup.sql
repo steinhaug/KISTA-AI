@@ -137,29 +137,48 @@ ALTER TABLE `kistaai_users__sessions`
 
 /* * * * * * */
 
+
+
+
+
+
 CREATE TABLE `kistaai_replicate__uploads` (
-	`upload_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`user_id` INT(10) NULL DEFAULT NULL,
+	`reid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Replicate Upload ID',
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
+	`replicate_id` VARCHAR(128) NOT NULL DEFAULT '' COMMENT 'ID returned from API' COLLATE 'utf8mb4_danish_ci',
+	`user_id` INT(10) NULL DEFAULT NULL COMMENT 'KISTA-AI UserID',
 	`created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`updated` DATETIME NULL DEFAULT NULL,
+	`stylename` VARCHAR(128) NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
 	`realname` VARCHAR(255) NULL DEFAULT NULL COMMENT 'Presentation' COLLATE 'utf8mb4_danish_ci',
 	`filename` VARCHAR(255) NULL DEFAULT NULL COMMENT 'On disk' COLLATE 'utf8mb4_danish_ci',
 	`extension` VARCHAR(32) NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
 	`filesize` INT(10) UNSIGNED NOT NULL DEFAULT '0',
 	`thumbnail` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
 	`status` VARCHAR(64) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
-	PRIMARY KEY (`upload_id`) USING BTREE
-) COLLATE='utf8mb4_danish_ci' ENGINE=InnoDB AUTO_INCREMENT=1;
-
+	`log` TEXT NOT NULL COLLATE 'utf8mb4_danish_ci',
+	`error` TEXT NOT NULL COLLATE 'utf8mb4_danish_ci',
+	PRIMARY KEY (`reid`) USING BTREE
+)
+COLLATE='utf8mb4_danish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1
+;
 CREATE TABLE `kistaai_replicate__images` (
 	`image_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`upload_id` INT(10) NULL DEFAULT NULL,
-	`user_id` INT(10) NULL DEFAULT NULL,
+	`uuid` VARCHAR(36) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
+	`reid` INT(10) NULL DEFAULT NULL,
 	`created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`url` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
 	`filename` VARCHAR(255) NULL DEFAULT NULL COMMENT 'On disk' COLLATE 'utf8mb4_danish_ci',
 	`extension` VARCHAR(32) NULL DEFAULT NULL COLLATE 'utf8mb4_danish_ci',
 	`filesize` INT(10) UNSIGNED NOT NULL DEFAULT '0',
 	`thumbnail` VARCHAR(255) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
 	`status` VARCHAR(64) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci',
 	PRIMARY KEY (`image_id`) USING BTREE
-) COLLATE='utf8mb4_danish_ci' ENGINE=InnoDB AUTO_INCREMENT=1;
+)
+COLLATE='utf8mb4_danish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=1
+;
+
