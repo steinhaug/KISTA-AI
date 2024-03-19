@@ -191,3 +191,17 @@ ALTER TABLE `kistaai_replicate__uploads`
 ALTER TABLE `kistaai_replicate__uploads`
 	CHANGE COLUMN `replicate_id` `replicate_id` VARCHAR(26) NOT NULL DEFAULT '' COMMENT 'ID returned from API' COLLATE 'utf8mb4_danish_ci' AFTER `uuid`;
 
+CREATE TABLE `kistaai_replicate__hooks` (
+	`whid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'WebHook ID',
+	`processed` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '0=no, 1=yes',
+	`replicate_id` VARCHAR(128) NOT NULL DEFAULT '' COMMENT 'ID returned from API' COLLATE 'utf8mb4_danish_ci',
+	`created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`json` JSON NOT NULL,
+	PRIMARY KEY (`whid`) USING BTREE
+)
+COLLATE='utf8mb4_danish_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=6
+;
+
+* * * *
