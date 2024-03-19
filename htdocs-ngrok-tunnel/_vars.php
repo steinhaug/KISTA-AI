@@ -13,3 +13,8 @@ $PWA_Name = 'Avatarify';
 
 //Setting Service Worker Locations scope = folder | location = service worker js location
 $PWA_DOMAIN = 'https://avatarify.steinhaug.no';
+
+$PWA_LANG = [
+    'nb' => ['title'=>'Avatarify! - KISTA AI'],
+    'en' => ['title'=>'Avatarify! - KISTA AI']
+];
