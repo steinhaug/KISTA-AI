@@ -13,6 +13,8 @@ require_once 'func.login.php';
     exit;
 */
 
+
+/*
 $json = file_get_contents('../htdocs-ngrok-tunnel/webhook.log');
 
 $d = json_decode($json,1);
@@ -28,3 +30,12 @@ $mysqli->query( $sql->build('insert', 'kistaai_replicate__hooks') );
 $hook_id = $mysqli->insert_id;
 
 echo $hook_id;
+*/
+
+$item = ['replicate_id'=>'b7idjslbe4d6zltxahouw665mi'];
+
+if (($data = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate__hooks` `hooks` WHERE `hooks`.`replicate_id`=?", 's', [$item['replicate_id']], true)) !== null) {
+    $hook = json_decode($data['json'],true);
+    var_dump($hook);
+
+}
