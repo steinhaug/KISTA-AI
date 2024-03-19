@@ -182,7 +182,7 @@ if($lang=='en'){
                             <li><b>Transform:</b> With just a click, our advanced AI blends your photo with your selected theme, crafting a personalized masterpiece that mirrors your individuality.</li>
                             <li><b>Share and Impress:</b> Download your transformed avatar and share it with the world. Be it for your social media profiles, a fun project, or a digital keepsake, your Avatarify creation is sure to turn heads and spark conversations.</li>
                         </ol>
-                        <p><a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start ">Avatarify Yourself</a></p>
+                        <p><a href="https://avatarify.steinhaug.no" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start external-link">Go to app: Avatarify Yourself</a></p>
                     </div></div>
                 </div>
             </div>
@@ -191,7 +191,7 @@ if($lang=='en'){
                 <div class="content mb-0">
                     <div class="row"><div class="col">
                         <p class="mb-n1 color-highlight font-600">KISTA-AI</p>
-                        <h1>Avatarify Yourself: Forvandle Selfien Din til et Mesterverk</h1>
+                        <h1>Avatarify: Forvandle Selfien Din til et Mesterverk</h1>
                         <p class="mb-3">
                             Velkommen til den ultimate lekeplassen for selvuttrykk, hvor dine selfies transcenderer det ordinære og entrer et rike av ekstraordinær kunstnerisk kreativitet. Med Avatarify Yourself blir portrettet ditt lerretet, og din fantasi setter grensene. Slik fungerer det:
                         </p>
@@ -201,7 +201,10 @@ if($lang=='en'){
                             <li><b>Transformér:</b> Med bare ett klikk blander vår avanserte AI bildet ditt med det valgte temaet, og skaper et personlig mesterverk som speiler din individualitet.</li>
                             <li><b>Del og imponér:</b> Last ned ditt transformerte avatar og del det med verden. Enten det er for dine sosiale medieprofiler, et morsomt prosjekt, eller en digitalt minnesmerke, vil din Avatarify-kreasjon garantert vekke oppsikt og starte samtaler.</li>
                         </ol>
-                        <p><a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start ">Avatarify Yourself</a></p>
+                        <p>
+                            Legg ut på en kreativ reise med Avatarify Yourself og se dine selfies forvandles til fengslende kunstverk som forteller din historie på måter ord aldri kunne.
+                        </p>
+                        <p><a href="https://avatarify.steinhaug.no" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start external-link">Go to app: Avatarify Yourself</a></p>
                     </div></div>
                 </div>
             </div>
