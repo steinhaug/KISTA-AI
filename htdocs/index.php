@@ -1,5 +1,5 @@
 <?php
-if(!(in_array($_SERVER['SERVER_NAME'],['kista-ai.steinhaug.no','kista-ai.local']))) { http_response_code(404); exit; }
+
 
 if( isset($_GET['action']) and ($_GET['action']=='logout') ){ require 'auto-logout-from-site.php'; exit; }
 if( !empty($_GET['google_login']) ){ require 'auto-google-login-redirect.php'; exit; }

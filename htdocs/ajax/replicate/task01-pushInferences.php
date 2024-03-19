@@ -9,9 +9,9 @@ $api = new Replicate(
 
 $imgName = $item['filename'];
 
-$st_WWW_path    = 'https://fish-touching-suddenly.ngrok-free.app/images/style-transfers/';
-$user_WWW_path  = 'https://fish-touching-suddenly.ngrok-free.app/uploaded_files/r/';
-$hook_WWW_path  = 'https://fish-touching-suddenly.ngrok-free.app/';
+$st_WWW_path    = $ngrok_tunnel_domain . '/images/style-transfers/';
+$user_WWW_path  = $ngrok_tunnel_domain . '/uploaded_files/r/';
+$hook_WWW_path  = $ngrok_tunnel_domain . '/';
 
 // Load and check image size
 $img = Image::make(UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r' . DIRECTORY_SEPARATOR . $imgName);
@@ -24,14 +24,16 @@ if(anyHigher(1200, $width, $height)){
     $img->resize($new_x, $new_y)->save(UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r' . DIRECTORY_SEPARATOR . $imgName, 90);
 }
 
-try {
-    logfile('Dev: copying file to tunneled site, ' . $imgName);
-    copy(
-        UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r' . DIRECTORY_SEPARATOR . $imgName,
-        'I:/python-htdocs/KISTA-AI/htdocs-ngrok-tunnel/uploaded_files/r/' . $imgName
-    );
-} catch (Exception $e) {
-    throw new RepliImage('Image copy error, ' . $imgName);
+if ($ngrok_tunnel_domain == 'https://fish-touching-suddenly.ngrok-free.app') {
+    try {
+        logfile('Dev: copying file to tunneled site, ' . $imgName);
+        copy(
+            UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r' . DIRECTORY_SEPARATOR . $imgName,
+            'I:/python-htdocs/KISTA-AI/htdocs-ngrok-tunnel/uploaded_files/r/' . $imgName
+        );
+    } catch (Exception $e) {
+        throw new RepliImage('Image copy error, ' . $imgName);
+    }
 }
 
 $prompt = 'a person';
