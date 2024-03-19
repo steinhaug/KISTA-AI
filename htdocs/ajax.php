@@ -16,12 +16,26 @@ require_once 'func.login.php';
 ignore_user_abort(true);
 set_time_limit(0);
 
-
 if (($curentTaskID = getSessionTaskKey(['aiid'=> _GET('aiid', 0, 'int')])) !== null) {
     require_once AJAX_FOLDER_PATH . '/openai/run-tasks.php';
 } else if( ($curentTaskID = getSessionTaskKey(['reid'=> _GET('reid', 0, 'int')])) !== null ){
     require_once AJAX_FOLDER_PATH . '/replicate/run-tasks.php';
 } else {
+
+    /*
+    if(isset($_GET['test'])){
+        $res = $mysqli->query("SELECT * FROM `" . $kista_dp . "replicate__uploads` WHERE `reid`=28");
+        if ($res->num_rows) {
+        logfile('4');
+            $item = $res->fetch_assoc();
+            require AJAX_FOLDER_PATH . '/replicate/background-task01-downloadResults.php';
+        }
+
+        logfile('done');
+        exit;
+    }
+    */
+
 
 
     if( !empty($_GET['aiid'])){
