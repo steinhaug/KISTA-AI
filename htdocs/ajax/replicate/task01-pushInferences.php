@@ -20,10 +20,12 @@ $height = $img->height();
 if(anyHigher(1200, $width, $height)){
     $imgName = get_name_only($item['filename']) . '_l.jpg';
     [$new_x, $new_y] = calc__fit_constraints_lspt($width, $height, 1024, 768, 768, 1024);
+    logfile('Resizing image from ' . $width . 'x' . $height . ' to ' . $new_x . 'x' . $new_y);
     $img->resize($new_x, $new_y)->save(UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r' . DIRECTORY_SEPARATOR . $imgName, 90);
 }
 
 try {
+    logfile('Dev: copying file to tunneled site, ' . $imgName);
     copy(
         UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r' . DIRECTORY_SEPARATOR . $imgName,
         'I:/python-htdocs/KISTA-AI/htdocs-ngrok-tunnel/uploaded_files/r/' . $imgName
@@ -71,15 +73,14 @@ try {
 
     $data = $api->predictions()->withWebhook($hook_WWW_path . 'webhook.php')->create($version, $input);
     //echo $data->id;
+    logfile('replicate_id: ' . $data->id);
 
-    $sql = new sqlbuddy;
-    $sql->que('replicate_id', $data->id, 'string');
-    $sql->que('status', 'task1', 'string');
-    #$sql->que('data', json_encode($img_arrays, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), 'string');
-    $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . $reid));
+    $status = updateStatus__replicate($item['reid'], ['status'=>'task1', 'replicate_id'=>$data->id ]);
+    logfile('- TASK 1 completed.');
 
 } catch (Exception $e) {
 
+    logfile('Replicate API error, ' . $e->getMessage());
     throw new ReplicateAPIException('Replicate API error, ' . $e->getMessage());
 
 }

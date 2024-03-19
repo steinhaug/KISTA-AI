@@ -19,3 +19,5 @@ if (($data = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate
     var_dump( $json['logs'] );
     echo '</pre>';
 }
+
+echo '<a href="index.php">index.php</a>';

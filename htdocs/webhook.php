@@ -15,6 +15,8 @@ define('REPLICATE_INFERENCE_FOLDER', UPLOAD_PATH . '/ri');
  *
  */
 function save_webhook_and_exit($end_message, $reason=''){
+
+    logfile('HOOK ENDED: ' . $end_message);
     echo htmlentities($end_message);
     echo "\n\n" . REPLICATE_INFERENCE_FOLDER . "\n";
 
