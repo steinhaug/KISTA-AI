@@ -132,7 +132,8 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="fonts/css/fontawesome-all.min.css">
 <link rel="manifest" href="_manifest.json.php?<?=$PWA_APP_VER?>" data-pwa-version="<?=$PWA_APP_VER?>">
-<link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="<?=$PWA_LANG['ico_folder']?>/icon-192x192.png">
+<?=$PWA_LANG['highlight']?>
 </head>
 
 <body class="theme-light">
@@ -246,7 +247,7 @@ switch($modulus) {
             <input type="hidden" name="bonus_conf" id="bonus_conf" value="">
             <input type="hidden" name="selected_style_transfer" class="form-control" id="sel_style">
 
-            <div class="card card-style ms-0 me-0 rounded-0">
+            <div class="card card-style ms-0 me-0 rounded-0" id="step3">
                 <div class="content">
 
 
@@ -271,7 +272,7 @@ switch($modulus) {
             </div>
 
 
-            <div class="card card-style">
+            <div class="card card-style" id="step4">
                 <div class="content mb-0">
                     <div class="row mt-4"><div class="col" style="text-align:center">
                         <button id="submitBtn" type="submit" class="btn btn-xxl mb-3 rounded-s text-uppercase font-700 shadow-s bg-green-dark" disabled="">Upload and create my new AI Images</button>
@@ -324,6 +325,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // Update the value of the #sel_style input field
     var styleValue = this.getAttribute('data-style');
     document.getElementById('sel_style').value = styleValue;
+
+    var element = document.getElementById("step3");
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    }
+
   }
 
   // Attach the click event listener to each link
@@ -356,6 +363,11 @@ document.addEventListener("DOMContentLoaded", function() {
         previewContainer.hidden = false; // Show the preview container
         extraBtn.setAttribute('hidden', true); // Hide the extra button
         submitBtn.disabled = false; // Enable the submit button
+        var element = document.getElementById("step4");
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+
       };
 
       fileReader.readAsDataURL(files[0]);
