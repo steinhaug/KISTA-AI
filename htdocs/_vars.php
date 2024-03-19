@@ -13,3 +13,9 @@ $PWA_Name = 'MagicMealMaker';
 
 //Setting Service Worker Locations scope = folder | location = service worker js location
 $PWA_DOMAIN = 'https://magic-meal-maker.steinhaug.no';
+
+$PWA_LANG = [
+    'ico_folder' => './app/icons',
+    'nb' => ['title'=>'Kjøleskapets hemmelige kokk! - KISTA AI'],
+    'en' => ['title'=>'Your Refrigerator\'s Secret Chef! - KISTA AI']
+];
