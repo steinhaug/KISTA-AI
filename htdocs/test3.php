@@ -31,11 +31,23 @@ $hook_id = $mysqli->insert_id;
 
 echo $hook_id;
 */
-
+/*
 $item = ['replicate_id'=>'b7idjslbe4d6zltxahouw665mi'];
 
 if (($data = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate__hooks` `hooks` WHERE `hooks`.`replicate_id`=?", 's', [$item['replicate_id']], true)) !== null) {
     $hook = json_decode($data['json'],true);
     var_dump($hook);
 
+}
+*/
+
+echo pathinfo('dr1pOBltZUb3Axbbn6L06jK07u4YK0tBOfsMfiiKnnwFqshSA_m.jpg', PATHINFO_FILENAME);
+
+if (($items = $mysqli->prepared_query("SELECT * FROM `" . $kista_dp . "replicate__images` `reimg` WHERE `reimg`.`reid`=?", 'i', [29])) !== []) {
+
+    foreach ($items as $img) {
+        echo '<pre>';
+        var_dump($img);
+        echo '</pre>';
+    }
 }

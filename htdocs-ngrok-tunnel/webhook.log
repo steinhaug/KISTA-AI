@@ -273,3 +273,58 @@
 
 * * * * *
 
+<h3>$_SERVER</h3><pre><ul>
+  <li>PATH => C:\ImageMagick;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.3\libnvvp;C:\Python311\Scripts;C:\Users\steinhaug\AppData\Roaming\Python\Python311\Scripts;C:\Python311\;C:\Program Files\Python310\Scripts\;C:\Program Files\Python310\;C:\Users\steinhaug\AppData\Roaming\Python\Python310\Scripts;C:\Python38\Scripts\;C:\Python38\;C:\Users\steinhaug\AppData\Roaming\Python\Python38\Scripts;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\steinhaug\AppData\Roaming\npm;C:\Program Files\Microsoft VS Code\bin;C:\php81;C:\php\phar;C:\composer;C:\usr\bin;C:\Program Files\Gource\cmd;C:\Git\cmd;C:\Git\mingw64\bin;C:\Git\usr\bin;C:\ProgramData\chocolatey\bin;C:\yarn\bin\;E:\Program Files\Putty\;E:\Program Files\010 Editor;C:\Git LFS;C:\Program Files\dotnet\;C:\Program Files\nodejs\;C:\Program Files\NVIDIA Corporation\Nsight Compute 2023.3.1\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps</li>
+  <li>SYSTEMROOT => C:/Windows</li>
+  <li>COMSPEC => C:\WINDOWS\system32\cmd.exe</li>
+  <li>PATHEXT => .COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW</li>
+  <li>WINDIR => C:\WINDOWS</li>
+  <li>SYSTEMDRIVE => C:</li>
+  <li>TEMP => C:/WINDOWS/Temp</li>
+  <li>TMP => C:/WINDOWS/Temp</li>
+  <li>PHPRC => C:/php81/php.ini</li>
+  <li>PHP_FCGI_MAX_REQUESTS => 1000</li>
+  <li>_FCGI_SHUTDOWN_EVENT_ => 1564</li>
+  <li>HTTP_CONNECTION => close</li>
+  <li>SCRIPT_NAME => /webhook.php</li>
+  <li>REQUEST_URI => /webhook.php</li>
+  <li>QUERY_STRING => </li>
+  <li>REQUEST_METHOD => POST</li>
+  <li>SERVER_PROTOCOL => HTTP/1.1</li>
+  <li>GATEWAY_INTERFACE => CGI/1.1</li>
+  <li>REMOTE_PORT => 64784</li>
+  <li>SCRIPT_FILENAME => I:/python-htdocs/KISTA-AI/htdocs-ngrok-tunnel/webhook.php</li>
+  <li>SERVER_ADMIN => admin@example.com</li>
+  <li>CONTEXT_DOCUMENT_ROOT => I:/python-htdocs/KISTA-AI/htdocs-ngrok-tunnel/</li>
+  <li>CONTEXT_PREFIX => </li>
+  <li>REQUEST_SCHEME => http</li>
+  <li>DOCUMENT_ROOT => I:/python-htdocs/KISTA-AI/htdocs-ngrok-tunnel/</li>
+  <li>REMOTE_ADDR => ::1</li>
+  <li>SERVER_PORT => 80</li>
+  <li>SERVER_ADDR => ::1</li>
+  <li>SERVER_NAME => fish-touching-suddenly.ngrok-free.app</li>
+  <li>SERVER_SOFTWARE => Apache/2.4.51 (Win64) OpenSSL/1.1.1l mod_fcgid/2.3.10-dev PHP/8.1.1</li>
+  <li>SERVER_SIGNATURE => </li>
+  <li>SystemRoot => C:\WINDOWS</li>
+  <li>HTTP_ACCEPT_ENCODING => gzip</li>
+  <li>HTTP_X_FORWARDED_PROTO => https</li>
+  <li>HTTP_X_FORWARDED_HOST => fish-touching-suddenly.ngrok-free.app</li>
+  <li>HTTP_X_FORWARDED_FOR => 50.112.21.217</li>
+  <li>HTTP_WEBHOOK_TIMESTAMP => 1710825180</li>
+  <li>HTTP_WEBHOOK_SIGNATURE => v1,kgmgl704T/SfwnwBrh97igI9XTUpBKFAs8cDhN+2qzc=</li>
+  <li>HTTP_WEBHOOK_ID => msg_2dtR2OnUM9mcO8aPYwDrCMo1vCG</li>
+  <li>CONTENT_TYPE => application/json</li>
+  <li>HTTP_ACCEPT => */*</li>
+  <li>CONTENT_LENGTH => 3781</li>
+  <li>HTTP_USER_AGENT => Webhooks/1.21.0</li>
+  <li>HTTP_HOST => fish-touching-suddenly.ngrok-free.app</li>
+  <li>FCGI_ROLE => RESPONDER</li>
+  <li>PHP_SELF => /webhook.php</li>
+  <li>REQUEST_TIME_FLOAT => 1710825180.2621</li>
+  <li>REQUEST_TIME => 1710825180</li>
+</ul>
+</pre>
+{"completed_at":"2024-03-19T05:12:59.901188Z","created_at":"2024-03-19T05:12:21.756276Z","error":null,"id":"s25a5a3bzgxjo57cm77vpu4n74","input":{"control_depth_strength":0.9,"denoising_strength":0.8,"disable_safety_checker":true,"image":"https://fish-touching-suddenly.ngrok-free.app/uploaded_files/r/180120091587_l.jpg","image_to_become":"https://fish-touching-suddenly.ngrok-free.app/images/style-transfers/graffiti-art.jpg","image_to_become_noise":0.25,"image_to_become_strength":0.8,"instant_id_strength":1,"negative_prompt":"","number_of_images":2,"prompt":"graffiti art of a person with a crown on his head, frida, highly detailed cover art, paid art assets, vivid color, lv, exploited, cash, key art, various artists, despacito, vincent, with neon signs, lowres, panini, wtf","prompt_strength":2,"seed":6969696969},"logs":"Checking inputs\n✅ /tmp/inputs/image_of_face.jpg\n✅ /tmp/inputs/image_to_become.jpg\n====================================\nRunning workflow\ngot prompt\nExecuting node 83, title: Load Image, class type: LoadImage\nExecuting node 22, title: Load Image, class type: LoadImage\nExecuting node 67, title: 🔧 Image Resize, class type: ImageResize+\nExecuting node 49, title: AIO Aux Preprocessor, class type: AIO_Preprocessor\nExecuting node 79, title: Control Net Stacker, class type: Control Net Stacker\nExecuting node 2, title: Efficient Loader, class type: Efficient Loader\nRequested to load SDXLClipModel\nLoading 1 new model\n----------------------------------------\n\u001b[36mEfficient Loader Models Cache:\u001b[0m\nCkpt:\n[1] dreamshaperXL_lightningDPMSDE\nExecuting node 41, title: Apply InstantID, class type: ApplyInstantID\n\u001b[33mINFO: the IPAdapter reference image is not a square, CLIPImageProcessor will resize and crop it at the center. If the main focus of the picture is not in the middle the result might not be what you are expecting.\u001b[0m\nExecuting node 81, title: Apply IPAdapter, class type: IPAdapterApply\nExecuting node 85, title: Duplicate Image Batch 🎥🅥🅗🅢, class type: VHS_DuplicateImages\nExecuting node 51, title: VAE Encode, class type: VAEEncode\nRequested to load SDXL\nRequested to load ControlNet\nRequested to load ControlNet\nLoading 3 new models\nExecuting node 75, title: KSampler, class type: KSampler\n  0%|          | 0/4 [00:00<?, ?it/s]\n 25%|██▌       | 1/4 [00:01<00:03,  1.19s/it]\n 50%|█████     | 2/4 [00:02<00:02,  1.18s/it]\n 75%|███████▌  | 3/4 [00:03<00:01,  1.17s/it]\n100%|██████████| 4/4 [00:04<00:00,  1.06it/s]\n100%|██████████| 4/4 [00:04<00:00,  1.03s/it]\nExecuting node 76, title: VAE Decode, class type: VAEDecode\nExecuting node 5, title: Save Image, class type: SaveImage\nPrompt executed in 30.65 seconds\noutputs:  {'5': {'images': [{'filename': 'ComfyUI_00001_.png', 'subfolder': '', 'type': 'output'}, {'filename': 'ComfyUI_00002_.png', 'subfolder': '', 'type': 'output'}]}}\n====================================\nContents of /tmp/outputs:\nComfyUI_00001_.png\nComfyUI_00002_.png\n","metrics":{"predict_time":38.10809},"model":"fofr/become-image","output":["https://replicate.delivery/pbxt/KVSE1qmJ9ML2KJfFepImEeVV4gv5EvcRvUi7tOeRHNzrN0GKB/ComfyUI_00001_.png","https://replicate.delivery/pbxt/iC7cOJONOSJyKpOzimTvm8C1NsTsRCKZ67z622NPf7ebDthSA/ComfyUI_00002_.png"],"started_at":"2024-03-19T05:12:21.793098Z","status":"succeeded","urls":{"cancel":"https://api.replicate.com/v1/predictions/s25a5a3bzgxjo57cm77vpu4n74/cancel","get":"https://api.replicate.com/v1/predictions/s25a5a3bzgxjo57cm77vpu4n74"},"version":"42cf9559131f57f018bf8cdc239a74f4871c5852045ce8f23b346e4ef8f56aa8","webhook":"https://fish-touching-suddenly.ngrok-free.app/webhook.php","webhook_events_filter":["completed"]}
+
+* * * * *
+

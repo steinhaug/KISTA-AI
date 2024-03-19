@@ -68,13 +68,15 @@ if( str_contains($HTTP_ACCEPT_LANGUAGE, 'nb-NO') ){
     $lang = 'nb';
     $appConf = [
         'headTitle' => 'Kjøleskapets hemmelige kokk! - KISTA AI',
-        'menuFooter' => 'menu-footer-nb.html'
+        'menuFooter' => 'menu-footer-nb.html',
+        'menuFooterAvatar' => 'menu-footer-avatar-nb.html'
     ];
 } else {
     $lang = 'en';
     $appConf = [
         'headTitle' => 'Your Refrigerator\'s Secret Chef! - KISTA AI',
-        'menuFooter' => 'menu-footer-en.html'
+        'menuFooter' => 'menu-footer-en.html',
+        'menuFooterAvatar' => 'menu-footer-avatar-en.html'
     ];
 }
 
@@ -144,6 +146,24 @@ function HTML_FOOTER($i){
         <a href="index.php" class="' . setActiveIf($i,2) . '"><i class="fa fa-file"></i><span>' . $titles[0] . '</span></a>
         <a href="upload.php" class="circle-nav ' . setActiveIf($i,3) . ' external-link"><i class="fa fa-home"></i><span>' . $titles[1] . '</span></a>
         <a href="gallery.php" class="' . setActiveIf($i,4) . '"><i class="fa fa-camera"></i><span>' . $titles[2] . '</span></a>
+        <!-- <a href="#" data-menu="menu-main" class="' . setActiveIf($i,5) . '"><i class="fa fa-bars"></i><span>Menu</span></a> -->
+    </div>
+    ';
+}
+function HTML_FOOTER_AVATAR($i){
+    global $lang;
+
+    if($lang == 'nb')
+        $titles = ['Sider', 'Last opp', 'Galleri'];
+        else
+        $titles = ['Pages', 'Upload', 'Gallery'];
+
+    return '
+    <div id="footer-bar" class="footer-bar-6">
+        <!-- <a href="index-components.html" class="' . setActiveIf($i,1) . '"><i class="fa fa-layer-group"></i><span>Features</span></a> -->
+        <a href="index.php" class="' . setActiveIf($i,2) . '"><i class="fa fa-file"></i><span>' . $titles[0] . '</span></a>
+        <a href="upload-face.php" class="circle-nav ' . setActiveIf($i,3) . ' external-link"><i class="fa fa-home"></i><span>' . $titles[1] . '</span></a>
+        <a href="gallery-avatar.php" class="' . setActiveIf($i,4) . '"><i class="fa fa-camera"></i><span>' . $titles[2] . '</span></a>
         <!-- <a href="#" data-menu="menu-main" class="' . setActiveIf($i,5) . '"><i class="fa fa-bars"></i><span>Menu</span></a> -->
     </div>
     ';

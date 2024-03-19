@@ -48,27 +48,27 @@ try {
                     $sql->que('status', 'done', 'string');
                     $mysqli->query($sql->build('insert', $kista_dp . "replicate__images"));
                     $image_id = $mysqli->insert_id;
-                    logfile('Created replicate image');
+                    logfile('Created replicate images...');
 
                     createThumbnail(
                         $download_savePath,
-                        REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
+                        REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . get_name_only($image_filename) . '_m.png',
                         ['resize' => [512, 768]]
                     );
-                    logfile('Created replicate thumb 1/3');
+                    logfile('Created replicate thumb 1/3: ' . get_name_only($image_filename) . '_m.png');
 
                     createThumbnail(
-                        REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
-                        REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_s.jpg',
+                        REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . get_name_only($image_filename) . '_m.png',
+                        REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . get_name_only($image_filename) . '_s.jpg',
                         ['resize' => [150, 224]]
                     );
-                    logfile('Created replicate thumb 2/3');
+                    logfile('Created replicate thumb 2/3: ' . get_name_only($image_filename) . '_s.jpg');
 
                     convertImage(
-                        REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.png',
-                        REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . pathinfo($url, PATHINFO_FILENAME) . '_m.jpg'
+                        REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . get_name_only($image_filename) . '_m.png',
+                        REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . get_name_only($image_filename) . '_m.jpg'
                     );
-                    logfile('Created replicate thumb 3/3');
+                    logfile('Created replicate thumb 3/3: ' . get_name_only($image_filename) . '_m.jpg');
 
                     $sql = new sqlbuddy;
                     $sql->que('thumbnail', 'm, s', 'string');

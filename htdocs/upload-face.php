@@ -146,7 +146,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
         <?=HTML_HEADER('header-fixed')?>
     </div>
 
-    <?=HTML_FOOTER(3)?>
+    <?=HTML_FOOTER_AVATAR(3)?>
 
 
     <div class="page-content header-clear-medium">
@@ -284,7 +284,7 @@ switch($modulus) {
 
 
 
-        <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooterAvatar']?>"></div>
     </div>
     <!-- Page content ends here-->
     

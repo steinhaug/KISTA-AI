@@ -192,5 +192,7 @@ function get_extension($filename){
  * @return string Returns the string without the last extension
  */
 function get_name_only($filename){
+
+    return pathinfo($filename, PATHINFO_FILENAME);
     return substr($filename, 0, strrpos($filename, '.'));
 }

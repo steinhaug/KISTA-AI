@@ -167,19 +167,45 @@ if($lang=='en'){
 <?php } ?>
 
 
-
+<?php if($lang=='en'){ ?>
             <div class="card card-style">
                 <div class="content mb-0">
                     <div class="row"><div class="col">
-                        <p class="mb-n1 color-highlight font-600">Magic Avatar Maker</p>
-                        <h1>Create stunning AI art photos of yourself</h1>
+                        <p class="mb-n1 color-highlight font-600">KISTA-AI</p>
+                        <h1>Avatarify Yourself</h1>
                         <p class="mb-3">
-                            Check out new <a href="upload-face.php" class="external-link">Ai Avatar Maker</a>
+                            Welcome to the ultimate self-expression playground, where your selfies transcend the ordinary and enter the realm of extraordinary artistry. With Avatarify Yourself, your portrait becomes the canvas, and your imagination is the limit. Here's how it works:
                         </p>
+                        <ol>
+                            <li><b>Capture or Upload:</b> Snap a selfie or choose your favorite portrait from your gallery.</li>
+                            <li><b>Select Your Style:</b> Browse our diverse gallery of themed images, each one a unique artistic universe waiting to be explored.</li>
+                            <li><b>Transform:</b> With just a click, our advanced AI blends your photo with your selected theme, crafting a personalized masterpiece that mirrors your individuality.</li>
+                            <li><b>Share and Impress:</b> Download your transformed avatar and share it with the world. Be it for your social media profiles, a fun project, or a digital keepsake, your Avatarify creation is sure to turn heads and spark conversations.</li>
+                        </ol>
+                        <p><a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start ">Avatarify Yourself</a></p>
                     </div></div>
                 </div>
             </div>
-
+<?php } else { ?>
+            <div class="card card-style">
+                <div class="content mb-0">
+                    <div class="row"><div class="col">
+                        <p class="mb-n1 color-highlight font-600">KISTA-AI</p>
+                        <h1>Avatarify Yourself: Forvandle Selfien Din til et Mesterverk</h1>
+                        <p class="mb-3">
+                            Velkommen til den ultimate lekeplassen for selvuttrykk, hvor dine selfies transcenderer det ordinære og entrer et rike av ekstraordinær kunstnerisk kreativitet. Med Avatarify Yourself blir portrettet ditt lerretet, og din fantasi setter grensene. Slik fungerer det:
+                        </p>
+                        <ol>
+                            <li><b>Ta bilde eller last opp:</b> Knips en selfie eller velg ditt favorittportrett fra galleriet ditt.</li>
+                            <li><b>Velg din stil:</b> Bla gjennom vårt mangfoldige galleri av temabilder, hvor hvert ett er et unikt kunstnerisk univers som venter på å bli utforsket.</li>
+                            <li><b>Transformér:</b> Med bare ett klikk blander vår avanserte AI bildet ditt med det valgte temaet, og skaper et personlig mesterverk som speiler din individualitet.</li>
+                            <li><b>Del og imponér:</b> Last ned ditt transformerte avatar og del det med verden. Enten det er for dine sosiale medieprofiler, et morsomt prosjekt, eller en digitalt minnesmerke, vil din Avatarify-kreasjon garantert vekke oppsikt og starte samtaler.</li>
+                        </ol>
+                        <p><a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start ">Avatarify Yourself</a></p>
+                    </div></div>
+                </div>
+            </div>
+<?php } ?>
 
         <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
     </div>
