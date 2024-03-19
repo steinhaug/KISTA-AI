@@ -4,6 +4,10 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 
 ## changelog
 
+### v0.11.0
+- added, avatarify concept and icons
+- added, avatarify gallery and view
+
 ### v0.10.0
 - added, extra webfolder for NGROK tunnel and Replicate webhooks for development
 - added, POC for inference.
