@@ -184,3 +184,10 @@ AUTO_INCREMENT=1
 
 ALTER TABLE `kistaai_replicate__uploads`
 	ADD COLUMN `data` TEXT NOT NULL AFTER `status`;
+
+
+* * *
+
+ALTER TABLE `kistaai_replicate__uploads`
+	CHANGE COLUMN `replicate_id` `replicate_id` VARCHAR(26) NOT NULL DEFAULT '' COMMENT 'ID returned from API' COLLATE 'utf8mb4_danish_ci' AFTER `uuid`;
+

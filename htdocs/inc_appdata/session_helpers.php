@@ -264,3 +264,41 @@ function removeSessionTask($x){
 
     return null;
 }
+
+
+/**
+ * Usefull when doing background stuff, this will close the connection for the browser so execution can complete in background
+ *
+ * @param [type] $message
+ * @return void
+ */
+function end_connection($message){
+    // Start output buffering
+    ob_start();
+
+    // Your message to the user
+    echo $message;
+
+    // Calculate the size of the output
+    $size = ob_get_length();
+
+    // Send headers to tell the browser to close the connection
+    header("Content-Length: $size");
+    header('Connection: close');
+
+    // Flush all output buffers to the client
+    ob_end_flush();
+    flush();
+
+    // Continue processing after the client disconnects
+    ignore_user_abort(true);
+    set_time_limit(0); // Remove time limit for script execution if needed
+
+    // Close session write if needed
+    if (session_id()) session_write_close();
+
+    // Send additional data to ensure the browser considers the response complete
+    echo str_repeat(' ', 1024*64); // Send 64KB of whitespace
+    flush();
+
+}

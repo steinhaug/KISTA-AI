@@ -134,3 +134,61 @@ function task_validation__replicate_tasks($item){
 
     return removeSessionTask(['reid'=>$item['reid']]);
 }
+
+/**
+ * Update status for replicate task
+ *
+ * @param int $reid
+ * @param string $status
+ * @param mixed $log String or array to save in the log column
+ * @return void
+ */
+function updateStatus__replicate($reid, $props){
+    global $mysqli, $kista_dp;
+
+    if( empty($props) or !is_array($props))
+        throw new Exception('updateStatus__replicate($props must be array!)');
+
+    $sql = new sqlbuddy;
+
+    $sql->que('updated', 'NOW()', 'raw');
+    $sql->que('status', $props['status'], 'string');
+
+    if(isset($props['data']))
+        $sql->que('data', json_encode_if_arrobj($props['data']), 'text');
+    if(isset($props['log']))
+        $sql->que('log', json_encode_if_arrobj($props['log']), 'text');
+    if(isset($props['error']))
+        $sql->que('error', json_encode_if_arrobj($props['error']), 'text');
+
+    $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . $reid));
+
+    return $success;
+}
+
+
+/**
+ * json_encode string if array or object
+ *
+ * @param mixed $rawData String, array or object.
+ * @return string Will return a string for insertion
+ */
+function json_encode_if_arrobj($rawData){
+    if( is_array($rawData) or is_object($rawData) ){
+        try {
+            $jsonData = json_encode((string) $rawData);
+            if (JSON_ERROR_NONE !== json_last_error()) {
+                throw new RuntimeException('json_encode_if_array(): ' . json_last_error());
+            }
+            return $jsonData;
+        } catch(RuntimeException $e) {
+            $error_id = debug_log_error($e->getMessage());
+            return 'Json encode error, ErrorID: ' . $error_id;
+        } catch(Exception $e) {
+            $error_id = debug_log_error($e->getMessage());
+            return 'Json encode exception, ErrorID: ' . $error_id;
+        }
+    } else {
+        return (string) $rawData;
+    }
+}

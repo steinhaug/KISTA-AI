@@ -63,7 +63,97 @@ if($lang == 'en'){
     <div class="page-content header-clear-medium">
 
 
+
+
+
+        <div class="content mt-4 pt-2 mb-0">
+            <div class="d-flex">
+                <div class="align-self-center">
+                    <h1 class="mb-0 font-18">Our Favorites</h1>
+                </div>
+                <div class="ms-auto align-self-center">
+                    <a href="#" class="float-end font-12 font-400">See All</a>
+                </div>
+            </div>
+        </div>
+        <div class="splide double-slider slider-no-arrows slider-no-dots" id="double-slider-2">
+            <div class="splide__track">
+                <div class="splide__list">
+                    <div class="splide__slide">
+                        <div class="card  card-style">
+                            <img src="images/food/regular/1.jpg" class="img-fluid">
+                            <div class="p-2 bg-theme rounded-sm">
+                                <div class="d-flex">
+                                    <div>
+                                        <h4 class="mb-n1 font-14 line-height-xs pb-2">Royal <br>Burger</h4>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <h4 class="font-16">$24,25</h4>
+                                    </div>
+                                </div>
+                                <p class="font-10 mb-0"><i class="fa fa-star color-yellow-dark pe-2"></i>34 Recommend It</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="splide__slide">
+                        <div class="card  card-style">
+                            <img src="images/food/regular/2.jpg" class="img-fluid">
+                            <div class="p-2 bg-theme rounded-sm">
+                                <div class="d-flex">
+                                    <div>
+                                        <h4 class="mb-n1 font-14 line-height-xs pb-2">Pizza <br>Prosciutto</h4>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <h4 class="font-16">$24,25</h4>
+                                    </div>
+                                </div>
+                                <p class="font-10 mb-0"><i class="fa fa-star color-yellow-dark pe-2"></i>34 Recommend It</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="splide__slide">
+                        <div class="card card-style">
+                            <img src="images/food/regular/3.jpg" class="img-fluid">
+                            <div class="p-2 bg-theme rounded-sm">
+                                <div class="d-flex">
+                                    <div>
+                                        <h4 class="mb-n1 font-14 line-height-xs pb-2">Chocolate <br>Dessert</h4>
+                                    </div>
+                                    <div class="ms-auto">
+                                        <h4 class="font-16">$24,25</h4>
+                                    </div>
+                                </div>
+                                <p class="font-10 mb-0"><i class="fa fa-star color-yellow-dark pe-2"></i>34 Recommend It</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
 <?php
+$items_list = [];
+$items = $mysqli->result('assoc')->query("SELECT * FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != '' AND `status`='complete'");
+foreach ($items as $item) {
+    if ($item['reciepe'] == '<no_fridge />') {
+        $src = reciepe_thumb($item['reciepe_image']);
+        $link = 'no-reciepe.php?rid=' . $item['upload_id'];
+    } else {
+        $src = reciepe_thumb($item['reciepe_image']);
+        $link = 'reciepe.php?rid=' . $item['upload_id'];
+    }
+    $title = reciepe_title($item['reciepe']);
+    $items_list[] = [$title, $link, $src];
+}
+
+echo count($items_list);
+
+
+
+
+
+
 $count = $mysqli->query1("SELECT count(*) as `count` FROM `" . $kista_dp . "uploaded_files` WHERE `user_id`=" . $USER_ID . " AND `reciepe_image` != '' AND `status`='complete'",0);
 
 if($count>5){ ?>

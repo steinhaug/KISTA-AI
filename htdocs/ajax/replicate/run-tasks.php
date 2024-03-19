@@ -2,13 +2,7 @@
 class ReplicateAPIException extends Exception { }
 class RepliImage extends Exception { }
 
-function updateUploadFile($reid, $status, $log){
-    global $mysqli, $kista_dp;
-    $sql = new sqlbuddy;
-    $sql->que('status', $status, 'string');
-    $sql->que('log', json_encode($log), 'text');
-    $success = $mysqli->query($sql->build('update', $kista_dp . "replicate__uploads", 'reid=' . $reid));
-}
+
 
 $error = null;
 $reid = (int) $_SESSION['task'][$curentTaskID]['reid'];
@@ -28,7 +22,7 @@ if ($res->num_rows) {
             }
 
             require AJAX_FOLDER_PATH . '/replicate/task01-pushInferences.php';
-            //updateUploadFile($reid, 'task1', $log);
+            //updateStatus__replicate($reid, ['status'=>'task1', 'log'=>$log]);
 
             $sql = new sqlbuddy;
             $sql->que('status', 'waiting', 'string');
@@ -71,7 +65,12 @@ if ($res->num_rows) {
         switch ($item['status']) {
             case 'start': $progress = 10; break;
             case 'task1': $progress = 20; break;
-            case 'waiting': $progress = 40; unset($_SESSION['task'][$curentTaskID]); break;
+            case 'waiting': updateStatus__replicate($item['reid'], ['status'=>'waiting2']); $progress = 30; break;
+            case 'waiting2': updateStatus__replicate($item['reid'], ['status'=>'waiting3']); $progress = 50; break;
+            case 'waiting3': updateStatus__replicate($item['reid'], ['status'=>'waiting4']); $progress = 60; break;
+            case 'waiting4': updateStatus__replicate($item['reid'], ['status'=>'waiting5']); $progress = 80; break;
+            case 'waiting5': $progress = 90; break;
+            case 'inference-complete': $progress = 80; break;
             case 'complete': $progress = 100; unset($_SESSION['task'][$curentTaskID]); break;
             case 'error': $progress = 100; unset($_SESSION['task'][$curentTaskID]); break;
             case 'failed': $progress = 100; unset($_SESSION['task'][$curentTaskID]); break;

@@ -64,7 +64,8 @@ class KistaDashboardException extends Exception
 {
 }
 define('LF', "\n");
-require dirname(dirname(APPDATA_PATH)) . '/credentials.php';
+require dirname(dirname(__FILE__)) . '/credentials.php';
+
 
 require APPDATA_PATH . '/notifications.php';
 require APPDATA_PATH . '/error_handling.php';
@@ -215,4 +216,64 @@ function isInteger($val){
         return false;
     }
     return is_float($val) ? false : preg_match('~^((?:\+|-)?[0-9]+)$~', $val);
+}
+
+function safePrintArray($array) {
+    echo '<ul>' . "\n";
+    foreach ($array as $key => $value) {
+        if (is_array($value)) {
+            echo '  <li>';
+            echo htmlspecialchars($key) . ' => Array:<br>';
+            safePrintArray($value);
+            echo '</li>';
+        } else {
+            echo '  <li>';
+            if( is_null($key) )
+                echo 'null' . ' => ' . htmlspecialchars($value);
+            else if( is_null($value) )
+                echo htmlspecialchars($key) . ' => ' . 'null';
+            else
+                echo htmlspecialchars($key) . ' => ' . htmlspecialchars($value);
+            echo '</li>' . "\n";
+
+        }
+    }
+    echo '</ul>' . "\n";
+}
+
+/**
+ * Usefull when doing background stuff, this will close the connection for the browser so execution can complete in background
+ *
+ * @param [type] $message
+ * @return void
+ */
+function end_connection($message){
+    // Start output buffering
+    ob_start();
+
+    // Your message to the user
+    echo $message;
+
+    // Calculate the size of the output
+    $size = ob_get_length();
+
+    // Send headers to tell the browser to close the connection
+    header("Content-Length: $size");
+    header('Connection: close');
+
+    // Flush all output buffers to the client
+    ob_end_flush();
+    flush();
+
+    // Continue processing after the client disconnects
+    ignore_user_abort(true);
+    set_time_limit(0); // Remove time limit for script execution if needed
+
+    // Close session write if needed
+    if (session_id()) session_write_close();
+
+    // Send additional data to ensure the browser considers the response complete
+    echo str_repeat(' ', 1024*64); // Send 64KB of whitespace
+    flush();
+
 }

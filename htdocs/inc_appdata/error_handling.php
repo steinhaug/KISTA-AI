@@ -36,7 +36,6 @@ function debug_log_error($reference, $trace = null){
         '_COOKIE' => is_array($_COOKIE) ? json_encode($_COOKIE) : null,
     ];
 
-
     $sql = new sqlbuddy();
     $sql->que('user_id', $USER_ID, 'int');
     $sql->que('created', 'now()', 'raw');
