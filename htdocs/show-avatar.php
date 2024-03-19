@@ -52,7 +52,8 @@ if (($item = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="fonts/css/fontawesome-all.min.css">
 <link rel="manifest" href="_manifest.json.php?<?=$PWA_APP_VER?>" data-pwa-version="<?=$PWA_APP_VER?>">
-<link rel="apple-touch-icon" sizes="180x180" href="app/icons/icon-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="<?=$PWA_LANG['ico_folder']?>/icon-192x192.png">
+<?=$PWA_LANG['highlight']?>
 </head>
 
 <body class="theme-light">
