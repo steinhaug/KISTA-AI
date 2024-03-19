@@ -109,16 +109,17 @@ if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename`
                             <div class="p-2 bg-theme rounded-sm">
                                 <div class="d-flex">
                                     <div>
-                                        <h4 class="mb-n1 font-14 line-height-xs pb-2">' . $src_name . '</h4>
+                                        <h4 class="mb-n1 font-14 line-height-xs pb-2">' . $img['created'] . '</h4>
                                     </div>
                                     <div class="ms-auto">
-                                        <a href="show-avatar.php?reid=' . $reid . '&download=' . $img['filename'] . '">
-                                            <i class="fa font-14 fa-download rounded-xl shadow-xl blue-brown-dark"></i>
-                                            <span>Download</span>
-                                        </a> 
+
+                                    <a href="show-avatar.php?reid=' . $reid . '&download=' . $img['filename'] . '" class="icon icon-s bg-theme shadow-xl rounded-xl float-end external-link"><i class="fa color-theme fa-download"></i></a>
+                                    <a href="#" data-menu="timed-2" class="icon icon-s bg-theme shadow-xl rounded-xl float-end me-2 external-link" data-imid="' . $img['image_id'] . '" data-action="rotate-left"><i class="fa color-theme fa-rotate-left"></i></a>
+                                    <a href="#" data-menu="timed-2" class="icon icon-s bg-theme shadow-xl rounded-xl float-end me-2 external-link" data-imid="' . $img['image_id'] . '" data-action="rotate-right"><i class="fa color-theme fa-rotate-right"></i></a>
+
                                     </div>
                                 </div>
-                                <!-- <p class="font-10 mb-0"><i class="fa fa-star color-yellow-dark pe-2"></i>34 Recommend It</p> -->
+                                <!-- fa-rotate-left fa-rotate-right <p class="font-10 mb-0"><i class="fa fa-star color-yellow-dark pe-2"></i>34 Recommend It</p> -->
                             </div>
                         </div>
                     </div>
@@ -142,6 +143,14 @@ if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename`
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
+    <div id="timed-2" 
+         class="menu menu-box-modal rounded-m" 
+         data-menu-hide="1000"
+         data-menu-width="220"
+         data-menu-height="160">
+         <h1 class="text-center fa-5x mt-2 pt-3 pb-2"><i class="fa fa-times-circle color-red-dark"></i></h1>
+         <h2 class="text-center">Funksjon ikke aktivert!</h2>
+    </div>
 
 </div>
 
