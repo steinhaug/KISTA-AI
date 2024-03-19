@@ -1,3 +1,20 @@
+<?php
+define('APPDATA_PATH', dirname(dirname(__FILE__)) . '/inc_appdata');
+define('UPLOAD_PATH', dirname(dirname(__FILE__)) . '/uploaded_files');
+
+require_once '../func.inc.php';
+
+$uploadpath = '../uploaded_files/';
+$uploadCACHE = '_cache/';
+
+$swlib = new steinhaug_libs;
+$swlib->set_type('text/javascript');
+$swlib->set_cachedir($uploadpath . $uploadCACHE);
+$swlib->optimize_output = false;
+$swlib->start_ob(false,false);
+
+    $js_snippet = '';
+    $js_snippet .= <<<'EOD'
 //Removing Preloader
 setTimeout(function(){
     var preloader = document.getElementById('preloader')
@@ -10,16 +27,20 @@ document.addEventListener('DOMContentLoaded', () => {
     //Global Variables
     let isPWA = true;  // Enables or disables the service worker and PWA
     let isAJAX = true; // AJAX transitions. Requires local server or server
-    var pwaName = "MagicMealMaker"; //Local Storage Names for PWA
+
+EOD;
+    $js_snippet .= '    var pwaName = "' . $PWA_Name . '";' . "\n";
+
+    //Setting Service Worker Locations scope = folder | location = service worker js location
+    $js_snippet .= '    var pwaScope = "' . $PWA_DOMAIN . '/";' . "\n";
+    $js_snippet .= '    var pwaLocation = "' . $PWA_DOMAIN . '/_service-worker.js.php";' . "\n";
+
+    $js_snippet .= <<<'EOD'
+
     var pwaRemind = 1; //Days to re-remind to add to home
     var pwaNoCache = false; //Requires server and HTTPS/SSL. Will clear cache with each visit
 
     var CACHE_NAME = pwaName + '-' + '1.0';
-
-    //Setting Service Worker Locations scope = folder | location = service worker js location
-    var pwaScope = "https://magic-meal-maker.steinhaug.no/";
-    var pwaLocation = "https://magic-meal-maker.steinhaug.no/_service-worker.js.php";
-
 
     //Place all your custom Javascript functions and plugin calls below this line
     function init_template(){
@@ -1649,3 +1670,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
+
+EOD;
+    echo $swlib->minify_js($js_snippet);
+
+$swlib->end_ob();

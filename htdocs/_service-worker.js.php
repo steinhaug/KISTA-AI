@@ -13,7 +13,7 @@ $swlib->set_cachedir($uploadpath . $uploadCACHE);
 $swlib->optimize_output = false;
 $swlib->start_ob(false,false);
 
-    $js_snippet  = "var APP_NAME   = 'KistaAI';                     " . "\n";
+    $js_snippet  = "var APP_NAME   = '" . $PWA_APP_NAME . "';                     " . "\n";
     $js_snippet .= "var APP_VER    = '" . $PWA_APP_VER . "';        " . "\n";
     $js_snippet .= <<<'EOD'
 
