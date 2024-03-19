@@ -91,3 +91,4 @@ try {
 logfile('- EXIT');
 
 // Whatever happened we are completed now.
+exit;

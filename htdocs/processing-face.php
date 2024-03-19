@@ -44,7 +44,7 @@ if( empty($_GET['reid']) ){
         <?=HTML_HEADER('header-fixed')?>
     </div>
 
-    <?=HTML_FOOTER(3)?>
+    <?=HTML_FOOTER_AVATAR(3)?>
 
 
     <div class="page-content header-clear-medium">
@@ -67,7 +67,7 @@ if( empty($_GET['reid']) ){
             </div>
 
 
-        <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooterAvatar']?>"></div>
     </div>
     <!-- Page content ends here-->
     
@@ -90,7 +90,20 @@ function initiateImageProcessing(){
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             try {
-                var json = JSON.parse(xhr.responseText);
+
+                try {
+                    var json = JSON.parse(xhr.responseText.trim());
+                } catch (error) {
+                    var responseText = xhr.responseText;
+                    var endIndex = responseText.lastIndexOf('}');
+                    if (endIndex !== -1) {
+                        var trimmedResponse = responseText.substring(0, endIndex + 1);
+                        var json = JSON.parse(trimmedResponse);
+                    } else {
+                        throw new Error('Invalid JSON');
+                    }
+                }
+
                 if (json.status === "complete") {
                     window.location.href = "show-avatar.php?reid=<?=$reid?>";
                 } else if(json.status === "error") {
@@ -101,7 +114,7 @@ function initiateImageProcessing(){
                 }
             } catch (error) {
                 var progressElement = document.getElementById('page-content');
-                progressElement.innerHTML = "<h1>Error parsing JSON</h1>" + error + xhr.responseText;
+                progressElement.innerHTML = "<h1>Error parsing JSON</h1><p><a href=\"processing-face.php?reid=<?=$reid?>\">Refresh page to finish</a></p>" + error + xhr.responseText.trim();
             }
         }
     };
@@ -114,8 +127,21 @@ function pollImageProcessing() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             try {
-                var json = JSON.parse(xhr.responseText);
-                console.log(xhr.responseText);
+
+                try {
+                    var json = JSON.parse(xhr.responseText.trim());
+                } catch (error) {
+                    var responseText = xhr.responseText;
+                    var endIndex = responseText.lastIndexOf('}');
+                    if (endIndex !== -1) {
+                        var trimmedResponse = responseText.substring(0, endIndex + 1);
+                        var json = JSON.parse(trimmedResponse);
+                    } else {
+                        throw new Error('Invalid JSON');
+                    }
+                }
+
+                //console.log(xhr.responseText);
                 if (json.status === "idle") {
                     var progressElement = document.getElementById('page-content');
                     progressElement.innerHTML = '<h1>Page idle</h1><p>Nothing to do...</p>';
@@ -131,7 +157,7 @@ function pollImageProcessing() {
                 }
             } catch (error) {
                 var progressElement = document.getElementById('page-content');
-                progressElement.innerHTML = "<h1>Error parsing JSON</h1>" + error + xhr.responseText;
+                progressElement.innerHTML = "<h1>Error parsing JSON</h1><p><a href=\"processing-face.php?reid=<?=$reid?>\">Refresh page to finish</a></p>" + error + xhr.responseText.trim();
             }
         }
     };

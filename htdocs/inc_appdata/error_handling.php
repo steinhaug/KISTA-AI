@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 // Compute and set our REALPATH_RELATIVE_PATH_OFFSET for better readability for the error messages
 $relative_path_for_this_file = '/htdocs/inc_appdata/error_handling.php';
 if (DIRECTORY_SEPARATOR == '\\') {
@@ -27,7 +24,7 @@ function debug_log_error($reference, $trace = null){
         'toi' => $toi['trace'],
         'reference' => $reference,
         'mysqli' => is_object($mysqli) ? json_encode($mysqli) : null,
-        '_SESSION' => is_array($_SESSION) ? json_encode($_SESSION) : null,
+        '_SESSION' => isset($_SESSION) ? json_encode($_SESSION) : null,
         '_GET' => is_array($_GET) ? json_encode($_GET) : null,
         '_POST' => is_array($_POST) ? json_encode($_POST) : null,
         '_FILES' => is_array($_FILES) ? json_encode($_FILES) : null,
@@ -37,15 +34,15 @@ function debug_log_error($reference, $trace = null){
     ];
 
     $sql = new sqlbuddy();
-    $sql->que('user_id', $USER_ID, 'int');
+    $sql->que('user_id', is_null($USER_ID) ? 0 : $USER_ID, 'int');
     $sql->que('created', 'now()', 'raw');
     $sql->que('closed', 'NULL', 'raw');
     $sql->que('status', 1, 'int');
-    $sql->que('sourcepath', $toi['trace'], 'string:255');
-    $sql->que('reference', $reference, 'string:255');
-    $sql->que('state', json_encode($state_arrays), 'text');
-    $sql->que('backtrace', json_encode($trace), 'text');
-    $mysqli->query($sql->build('insert', $kista_dp . 'debug__errors'));
+    $sql->que('sourcepath', is_null($toi['trace']) ? 'null' : $toi['trace'], 'string:255');
+    $sql->que('reference', is_null($reference) ? 'null' : $reference, 'string:255');
+    $sql->que('state', is_null($state_arrays) ? 'null' : json_encode($state_arrays), 'text');
+    $sql->que('backtrace', is_null($trace) ? 'null' : json_encode($trace), 'text');
+    $mysqli->query($sql->build('insert', $kista_dp . 'debug__errors')); 
     $ErrorID = $mysqli->insert_id;
 
     return $ErrorID;

@@ -90,7 +90,7 @@ function initiateImageProcessing(){
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             try {
-                var json = JSON.parse(xhr.responseText);
+                var json = JSON.parse(xhr.responseText.trim());
                 if (json.status === "complete") {
                     window.location.href = "reciepe.php?rid=<?=$rid?>";
                 } else if(json.status === "error") {
@@ -114,7 +114,7 @@ function pollImageProcessing() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4 && xhr.status === 200) {
             try {
-                var json = JSON.parse(xhr.responseText);
+                var json = JSON.parse(xhr.responseText.trim());
                 console.log(xhr.responseText);
                 if (json.status === "idle") {
                     var progressElement = document.getElementById('page-content');

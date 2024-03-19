@@ -44,17 +44,16 @@ require_once 'func.login.php';
 <style>
 <?php
 if($lang=='en'){
-    $bgImgStyle = "background-image: url('/images/avatarify-main.jpg');";
+    $bgImgStyle = "background-image: url('/images/pictures/refrigerator-700-en.png');";
     //.bg-fpnb { background-image: url(/images/pictures/refrigerator-700-en.png); }
 } else {
-    $bgImgStyle = "background-image: url('/images/avatarify-main.jpg');";
+    $bgImgStyle = "background-image: url('/images/pictures/refrigerator-700-nb.png');";
     // .bg-fpnb { background-image: url(/images/pictures/refrigerator-700-nb.png); }
 }
 ?>
 .bg-gradient-2 {
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.1) 60%, rgba(0, 0, 0, 0.8) 80%, black 100%) !important;
 }
-
 </style>
 
 </head>
@@ -66,11 +65,11 @@ if($lang=='en'){
 <div id="page">
 
     <div class="header header-fixed header-logo-center header-auto-show">
-        <a href="index.php" class="header-title">Avatarify</a>
+        <a href="index.php" class="header-title">Magic Meal Maker</a>
         <?=HTML_HEADER('header-fixed')?>
     </div>
 
-    <?=HTML_FOOTER_AVATAR(2)?>
+    <?=HTML_FOOTER(2)?>
 
     <div class="page-content">
 
@@ -79,10 +78,10 @@ if($lang=='en'){
         <div class="card rounded-0 bg-fpnb" data-card-height="450" style="<?=$bgImgStyle?>">
             <div class="card-bottom text-end pe-3 pb-4 mb-4">
                 <h1 class="color-white font-21 mb-n1">
-                    Avatarify <sup>v1.0</sup>
+                    KISTA AI <sup>v1.0</sup>
                 </h1>
                 <p class="color-white font-12">
-                    Another KISTA-AI doing AI stuff
+                    Another AI app doing AI stuff
                 </p>
             </div>
             <div class="card-top mt-3 pb-5 ps-3">
@@ -93,85 +92,21 @@ if($lang=='en'){
             <div class="card-overlay bg-gradient-2"></div>
         </div>
         
-
-<?php if($lang=='en'){ ?>
-
-
-            <div class="card card-style" style="margin-top:-100px; z-index:1">
-                <div class="content mb-0">
-
-
-            <div class="card card-style mx-0 mt-3" style="background-image: url(/images/pictures/groceries-bar.jpg);" data-card-height="100" id="install" hidden>
-                <div class="card-center px-3 no-click">
-                    <h1 class="color-white mb-n2 font-24">Avatarify App</h1>
-                    <h5 class="color-white mt-n1 opacity-80 font-14">Installer KISTA-AI på telefonen</h5>
-                </div>
-                <div class="card-center">
-                    <a href="#" class="float-end mx-3 gradient-highlight btn-s rounded-sm shadow-xl text-uppercase font-800" id="install-button">Install App</a>
-                </div>
-                <div class="card-overlay bg-black opacity-60"></div>
-            </div>
-
-                    <div class="row"><div class="col">
-                        <p class="mb-n1 color-highlight font-600">KISTA-AI</p>
-                        <h1>Avatarify Yourself</h1>
-                        <p class="mb-3">
-                            Welcome to the ultimate self-expression playground, where your selfies transcend the ordinary and enter the realm of extraordinary artistry. With Avatarify Yourself, your portrait becomes the canvas, and your imagination is the limit. Here's how it works:
-                        </p>
-                        <ol>
-                            <li><b>Capture or Upload:</b> Snap a selfie or choose your favorite portrait from your gallery.</li>
-                            <li><b>Select Your Style:</b> Browse our diverse gallery of themed images, each one a unique artistic universe waiting to be explored.</li>
-                            <li><b>Transform:</b> With just a click, our advanced AI blends your photo with your selected theme, crafting a personalized masterpiece that mirrors your individuality.</li>
-                            <li><b>Share and Impress:</b> Download your transformed avatar and share it with the world. Be it for your social media profiles, a fun project, or a digital keepsake, your Avatarify creation is sure to turn heads and spark conversations.</li>
-                        </ol>
-                        <p><a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start external-link">Avatarify Yourself</a></p>
-                    </div></div>
-                </div>
-            </div>
-<?php } else { ?>
-
-            <div class="card card-style" style="margin-top:-100px; z-index:1">
-                <div class="content mb-0">
-
-
-            <div class="card card-style mx-0 mt-3" style="background-image: url(/images/pictures/groceries-bar.jpg);" data-card-height="100" id="install" hidden>
-                <div class="card-center px-3 no-click">
-                    <h1 class="color-white mb-n2 font-24">Avatarify App</h1>
-                    <h5 class="color-white mt-n1 opacity-80 font-14">Installer KISTA-AI på telefonen</h5>
-                </div>
-                <div class="card-center">
-                    <a href="#" class="float-end mx-3 gradient-highlight btn-s rounded-sm shadow-xl text-uppercase font-800" id="install-button">Install App</a>
-                </div>
-                <div class="card-overlay bg-black opacity-60"></div>
-            </div>
-
-                    <div class="row"><div class="col">
-                        <p class="mb-n1 color-highlight font-600">KISTA-AI</p>
-                        <h1>Avatarify: Forvandle Selfien Din til et Mesterverk</h1>
-                        <p class="mb-3">
-                            Velkommen til den ultimate lekeplassen for selvuttrykk, hvor dine selfies transcenderer det ordinære og entrer et rike av ekstraordinær kunstnerisk kreativitet. Med Avatarify Yourself blir portrettet ditt lerretet, og din fantasi setter grensene. Slik fungerer det:
-                        </p>
-                        <ol>
-                            <li><b>Ta bilde eller last opp:</b> Knips en selfie eller velg ditt favorittportrett fra galleriet ditt.</li>
-                            <li><b>Velg din stil:</b> Bla gjennom vårt mangfoldige galleri av temabilder, hvor hvert ett er et unikt kunstnerisk univers som venter på å bli utforsket.</li>
-                            <li><b>Transformér:</b> Med bare ett klikk blander vår avanserte AI bildet ditt med det valgte temaet, og skaper et personlig mesterverk som speiler din individualitet.</li>
-                            <li><b>Del og imponér:</b> Last ned ditt transformerte avatar og del det med verden. Enten det er for dine sosiale medieprofiler, et morsomt prosjekt, eller en digitalt minnesmerke, vil din Avatarify-kreasjon garantert vekke oppsikt og starte samtaler.</li>
-                        </ol>
-                        <p>
-                            Legg ut på en kreativ reise med Avatarify Yourself og se dine selfies forvandles til fengslende kunstverk som forteller din historie på måter ord aldri kunne.
-                        </p>
-                        <p><a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start external-link">Avatarify Yourself</a></p>
-                    </div></div>
-                </div>
-            </div>
-<?php } ?>
-
-
-
 <?php if($lang=='en'){ ?>
         <!-- margin top  negative value repesent how much you want the article to go over the above image-->
-        <div class="card card-style card-full-left">
+        <div class="card card-style card-full-left" style="margin-top:-100px; z-index:1">
             <div class="content">
+
+                <div class="card card-style mx-0 mt-3" style="background-image: url(/images/pictures/groceries-bar.jpg);" data-card-height="100" id="install" hidden>
+                    <div class="card-center px-3 no-click">
+                        <h1 class="color-white mb-n2 font-24">KISTA-AI</h1>
+                        <h5 class="color-white mt-n1 opacity-80 font-14">Installer appen på telefonen</h5>
+                    </div>
+                    <div class="card-center">
+                        <a href="#" class="float-end mx-3 gradient-highlight btn-s rounded-sm shadow-xl text-uppercase font-800" id="install-button">Install App</a>
+                    </div>
+                    <div class="card-overlay bg-black opacity-60"></div>
+                </div>
 
                 <p class="mb-n1 color-highlight font-600">Magic Meal Maker</p>
                 <h1>
@@ -189,13 +124,25 @@ if($lang=='en'){
                 <p>
                     With Magic Meal Maker, unleash your inner chef, reduce food waste, and discover new ways to enjoy the ingredients you already have. Whether you're a cooking novice or a culinary wizard, our app is designed to inspire creativity and bring joy to your mealtime. Let's turn your fridge finds into your next gastronomic adventure!
                 </p>
-                <p><a href="https://magic-meal-maker.steinhaug.no" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start ">Go to: Magic Meal Maker App</a></p>
+                <p><a href="/upload.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start ">To the upload page</a></p>
             </div>
         </div>
 <?php } else { ?>
         <!-- margin top  negative value repesent how much you want the article to go over the above image-->
-        <div class="card card-style card-full-left">
+        <div class="card card-style card-full-left" style="margin-top:-100px; z-index:1">
             <div class="content">
+
+                <div class="card card-style mx-0 mt-3" style="background-image: url(/images/pictures/groceries-bar.jpg);" data-card-height="100" id="install" hidden>
+                    <div class="card-center px-3 no-click">
+                        <h1 class="color-white mb-n2 font-24">KISTA-AI</h1>
+                        <h5 class="color-white mt-n1 opacity-80 font-14">Installer appen på telefonen</h5>
+                    </div>
+                    <div class="card-center">
+                        <a href="#" class="float-end mx-3 gradient-highlight btn-s rounded-sm shadow-xl text-uppercase font-800" id="install-button">Install App</a>
+                    </div>
+                    <div class="card-overlay bg-black opacity-60"></div>
+                </div>
+
 
                 <p class="mb-n1 color-highlight font-600">Magic Meal Maker</p>
                 <h1>
@@ -214,11 +161,54 @@ if($lang=='en'){
                 <p>
                     Med Magic Meal Maker, frigjør din indre kokk, reduser matsvinn, og oppdag nye måter å nyte ingrediensene du allerede har. Enten du er en matlagingsnovise eller en kulinarisk trollmann, er vår app designet for å inspirere kreativitet og bringe glede til måltidet ditt. La oss forvandle funnene fra kjøleskapet ditt til ditt neste gastronomiske eventyr!
                 </p>
-                <p><a href="https://magic-meal-maker.steinhaug.no" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start ">Gp til: Magic Meal Maker</a></p>
+                <p><a href="/upload.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start ">Til opplastningssiden</a></p>
             </div>
         </div>
 <?php } ?>
 
+
+<?php if($lang=='en'){ ?>
+            <div class="card card-style">
+                <div class="content mb-0">
+                    <div class="row"><div class="col">
+                        <p class="mb-n1 color-highlight font-600">KISTA-AI</p>
+                        <h1>Avatarify Yourself</h1>
+                        <p class="mb-3">
+                            Welcome to the ultimate self-expression playground, where your selfies transcend the ordinary and enter the realm of extraordinary artistry. With Avatarify Yourself, your portrait becomes the canvas, and your imagination is the limit. Here's how it works:
+                        </p>
+                        <ol>
+                            <li><b>Capture or Upload:</b> Snap a selfie or choose your favorite portrait from your gallery.</li>
+                            <li><b>Select Your Style:</b> Browse our diverse gallery of themed images, each one a unique artistic universe waiting to be explored.</li>
+                            <li><b>Transform:</b> With just a click, our advanced AI blends your photo with your selected theme, crafting a personalized masterpiece that mirrors your individuality.</li>
+                            <li><b>Share and Impress:</b> Download your transformed avatar and share it with the world. Be it for your social media profiles, a fun project, or a digital keepsake, your Avatarify creation is sure to turn heads and spark conversations.</li>
+                        </ol>
+                        <p><a href="https://avatarify.steinhaug.no" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start external-link">Go to app: Avatarify Yourself</a></p>
+                    </div></div>
+                </div>
+            </div>
+<?php } else { ?>
+            <div class="card card-style">
+                <div class="content mb-0">
+                    <div class="row"><div class="col">
+                        <p class="mb-n1 color-highlight font-600">KISTA-AI</p>
+                        <h1>Avatarify: Forvandle Selfien Din til et Mesterverk</h1>
+                        <p class="mb-3">
+                            Velkommen til den ultimate lekeplassen for selvuttrykk, hvor dine selfies transcenderer det ordinære og entrer et rike av ekstraordinær kunstnerisk kreativitet. Med Avatarify Yourself blir portrettet ditt lerretet, og din fantasi setter grensene. Slik fungerer det:
+                        </p>
+                        <ol>
+                            <li><b>Ta bilde eller last opp:</b> Knips en selfie eller velg ditt favorittportrett fra galleriet ditt.</li>
+                            <li><b>Velg din stil:</b> Bla gjennom vårt mangfoldige galleri av temabilder, hvor hvert ett er et unikt kunstnerisk univers som venter på å bli utforsket.</li>
+                            <li><b>Transformér:</b> Med bare ett klikk blander vår avanserte AI bildet ditt med det valgte temaet, og skaper et personlig mesterverk som speiler din individualitet.</li>
+                            <li><b>Del og imponér:</b> Last ned ditt transformerte avatar og del det med verden. Enten det er for dine sosiale medieprofiler, et morsomt prosjekt, eller en digitalt minnesmerke, vil din Avatarify-kreasjon garantert vekke oppsikt og starte samtaler.</li>
+                        </ol>
+                        <p>
+                            Legg ut på en kreativ reise med Avatarify Yourself og se dine selfies forvandles til fengslende kunstverk som forteller din historie på måter ord aldri kunne.
+                        </p>
+                        <p><a href="https://avatarify.steinhaug.no" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start external-link">Go to app: Avatarify Yourself</a></p>
+                    </div></div>
+                </div>
+            </div>
+<?php } ?>
 
         <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
     </div>

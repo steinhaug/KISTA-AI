@@ -67,14 +67,14 @@ if( empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
 if( str_contains($HTTP_ACCEPT_LANGUAGE, 'nb-NO') ){
     $lang = 'nb';
     $appConf = [
-        'headTitle' => 'Kjøleskapets hemmelige kokk! - KISTA AI',
+        'headTitle' => $PWA_LANG['nb']['title'],
         'menuFooter' => 'menu-footer-nb.html',
         'menuFooterAvatar' => 'menu-footer-avatar-nb.html'
     ];
 } else {
     $lang = 'en';
     $appConf = [
-        'headTitle' => 'Your Refrigerator\'s Secret Chef! - KISTA AI',
+        'headTitle' => $PWA_LANG['en']['title'],
         'menuFooter' => 'menu-footer-en.html',
         'menuFooterAvatar' => 'menu-footer-avatar-en.html'
     ];
@@ -574,4 +574,27 @@ function isInteger($val){
         return false;
     }
     return is_float($val) ? false : preg_match('~^((?:\+|-)?[0-9]+)$~', $val);
+}
+
+function safePrintArray($array) {
+    echo '<ul>' . "\n";
+    foreach ($array as $key => $value) {
+        if (is_array($value)) {
+            echo '  <li>';
+            echo htmlspecialchars($key) . ' => Array:<br>';
+            safePrintArray($value);
+            echo '</li>';
+        } else {
+            echo '  <li>';
+            if( is_null($key) )
+                echo 'null' . ' => ' . htmlspecialchars($value);
+            else if( is_null($value) )
+                echo htmlspecialchars($key) . ' => ' . 'null';
+            else
+                echo htmlspecialchars($key) . ' => ' . htmlspecialchars($value);
+            echo '</li>' . "\n";
+
+        }
+    }
+    echo '</ul>' . "\n";
 }

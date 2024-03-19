@@ -1,43 +1,35 @@
 <?php
 
+
 ob_start();
+session_cache_expire(720);
 session_start();
+
 define('APPDATA_PATH', dirname(__FILE__) . '/inc_appdata');
 define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
+
 require_once 'func.inc.php';
 require_once 'func.login.php';
 
-
-
-if(empty($_GET['reid'])){
-    header('Location: gallery.php');
-    exit;
+if($lang == 'en'){
+    $txts = [
+        'pageTitle' => 'Gallery',
+        'supTitle' => 'Gallery',
+        'title' => 'Your avatars',
+        'paragraph' => 'Click on the thumbnail to view more.',
+        'reciepe' => 'Reciepe'
+    ];
+} else {
+    $txts = [
+        'pageTitle' => 'Galleri',
+        'supTitle' => 'Galleri',
+        'title' => 'Mine avatarer',
+        'paragraph' => 'Klikk på bilde for å se mer.',
+        'reciepe' => 'Oppskrift'
+    ];
 }
 
 
-if(isset($_GET['download'])){
-    if(file_exists(UPLOAD_PATH . '/ri/' . $_GET['download'])){
-        $download_file = UPLOAD_PATH . '/ri/' . $_GET['download'];
-        header('Content-Type: application/download');
-        header('Content-Disposition: attachment; filename="' . $_GET['download'] . '"');
-        header("Content-Length: " . filesize($download_file));
-
-        $fp = fopen($download_file, "r");
-        fpassthru($fp);
-        fclose($fp);
-        exit;
-    } else {
-        die('File not found.'); //  . UPLOAD_PATH . '/ri/' . $_GET['download']);
-    }
-}
-
-
-$reid = _GET('reid',0,'int');
-if (($item = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate__uploads` `ru` WHERE `ru`.`reid`=? AND `user_id`=?", 'si', [$reid, $_SESSION['USER_ID']], true)) === null) {
-    $_SESSION['error_msg'] = 'Resource does not exist.';
-    header('Location: gallery.php?rid=' . $reid);
-    exit;
-}
 ?>
 <!DOCTYPE HTML>
 <html lang="<?=$lang?>">
@@ -62,17 +54,17 @@ if (($item = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate
 <div id="page">
 
     <div class="header header-fixed header-logo-center">
-        <a href="reciepe.php" class="header-title">AI Avatar Image</a>
+        <a href="gallery.php" class="header-title"><?=$txts['pageTitle']?></a>
         <?=HTML_HEADER('header-fixed')?>
     </div>
 
-    <?=HTML_FOOTER_AVATAR(2)?>
+    <?=HTML_FOOTER_AVATAR(4)?>
 
     <div class="page-content header-clear-medium">
 
 
 
- 
+
         <div class="content mt-0 mb-0">
             <div class="d-flex">
                 <div class="align-self-center">
@@ -85,8 +77,11 @@ if (($item = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate
         </div>
         
 <?php
+
+
+
 define('REPLICATE_INFERENCE_FOLDER', UPLOAD_PATH . '/ri');
-if (($items = $mysqli->prepared_query("SELECT * FROM `" . $kista_dp . "replicate__images` `reimg` WHERE `reimg`.`reid`=?", 'i', [$reid])) !== []) {
+if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename` FROM `" . $kista_dp . "replicate__images` `reim` INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.reid = `reup`.reid AND `reup`.user_id = ?", 'i', [$USER_ID])) !== []) {
 
     echo '
         <div class="splide double-slider visible-slider slider-no-arrows slider-no-dots" id="double-slider-1">
@@ -96,6 +91,10 @@ if (($items = $mysqli->prepared_query("SELECT * FROM `" . $kista_dp . "replicate
 
     foreach($items as $img){
 
+        if( !file_exists(REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . $img['filename']) )
+            continue;
+
+        $reid = $img['reid'];
         $src_name = $img['filename'];
         $medium = get_name_only($src_name) . '_m.' . 'jpg';
         $webUrl = '/uploaded_files/ri/';
@@ -138,7 +137,6 @@ if (($items = $mysqli->prepared_query("SELECT * FROM `" . $kista_dp . "replicate
 
         <div data-menu-load="<?=$appConf['menuFooterAvatar']?>"></div>
     </div>
-    <!-- Page content ends here-->
     
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  

@@ -72,6 +72,7 @@ if ($res->num_rows) {
             case 'waiting5': $progress = 90; break;
             case 'inference-complete':
                 // status comes from hook
+                $progress = 95;
                 updateStatus__replicate($item['reid'], ['status'=>'downloading']); 
                 end_connection(json_encode(['status'=>'downloading', 'progress'=>95]));
                 require AJAX_FOLDER_PATH . '/replicate/background-task01-downloadResults.php';
