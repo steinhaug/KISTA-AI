@@ -4,9 +4,15 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 
 ## changelog
 
+### v0.11.1
+- added, session create skip for facebook crawler
+- changed, gallery page for avatar images has new icons for rotate and download.
+
 ### v0.11.0
 - added, avatarify concept and icons
 - added, avatarify gallery and view
+- added, style setting for framework
+- added, replicate upload auto scroll to steps
 
 ### v0.10.0
 - added, extra webfolder for NGROK tunnel and Replicate webhooks for development
