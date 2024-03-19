@@ -15,6 +15,8 @@ $PWA_Name = 'Avatarify';
 $PWA_DOMAIN = 'https://avatarify.steinhaug.no';
 
 $PWA_LANG = [
+    'ico_folder' => './app/avatarify',
     'nb' => ['title'=>'Avatarify! - KISTA AI'],
-    'en' => ['title'=>'Avatarify! - KISTA AI']
+    'en' => ['title'=>'Avatarify! - KISTA AI'],
+    'highlight' => '<link rel="stylesheet" class="page-highlight" type="text/css" href="styles/highlights/highlight_red.css">'
 ];

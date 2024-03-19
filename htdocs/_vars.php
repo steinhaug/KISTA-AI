@@ -17,5 +17,6 @@ $PWA_DOMAIN = 'https://magic-meal-maker.steinhaug.no';
 $PWA_LANG = [
     'ico_folder' => './app/icons',
     'nb' => ['title'=>'Kjøleskapets hemmelige kokk! - KISTA AI'],
-    'en' => ['title'=>'Your Refrigerator\'s Secret Chef! - KISTA AI']
+    'en' => ['title'=>'Your Refrigerator\'s Secret Chef! - KISTA AI'],
+    'highlight' => ''
 ];
