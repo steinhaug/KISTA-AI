@@ -149,7 +149,12 @@ function updateStatus__replicate($reid, $props){
     if( empty($props) or !is_array($props))
         throw new Exception('updateStatus__replicate($props must be array!)');
 
+    logfile('reid ' . $reid . ', new status: ' . $props['status']);
+
     $sql = new sqlbuddy;
+
+    if(isset($props['replicate_id']))
+        $sql->que('replicate_id', $props['replicate_id'], 'string:26');
 
     $sql->que('updated', 'NOW()', 'raw');
     $sql->que('status', $props['status'], 'string');
@@ -191,4 +196,11 @@ function json_encode_if_arrobj($rawData){
     } else {
         return (string) $rawData;
     }
+}
+
+function processHook($whid){
+    global $mysqli, $kista_dp;
+
+    return $mysqli->query("UPDATE `" . $kista_dp . "replicate__hooks` SET `processed`=1 WHERE `whid`=" . (int) $whid);
+
 }
