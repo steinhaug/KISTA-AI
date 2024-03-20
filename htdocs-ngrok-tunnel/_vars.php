@@ -1,8 +1,8 @@
 <?php
 
 // Parameter added script tags to prevent caching
-$PWA_APP_VER = '1.0';
-$html_NoCache_Version = 'v1.0';
+$PWA_APP_VER = '1.1';
+$html_NoCache_Version = 'v1.1';
 $include_login_button = false;
 
 $PWA_APP_NAME       = 'Avatarify';
