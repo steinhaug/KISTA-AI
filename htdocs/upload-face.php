@@ -1,11 +1,13 @@
 <?php
-
+use Intervention\Image\ImageManagerStatic as Image;
 
 $transferable_style_presets = [
     '-9c3a6E911o.png','advance-sketch-3.png','advance-sketch-5.png','angrybird.png','anime-1.png','antheia4.png','art-1.png',
     'art-2.png','art-from-renaissance.png','blyant.png','graffiti-art.png','great-wave-off-kanagawa-crop.png','karrikatur-1.png',
     'kim-jong-1.png','kim-jung-2.png','lennon-blue.png','maleri.png','mona-lisa.png','pastel.png','putin-1.png','sketch.png','starry-night.png',
-    'stefano_phen.png','tattoo-1.png','tattoo-2.png','van-gogh.png','van-gogh-2.png','vladimir-putin.png','VrQAuHMYfxA.png'
+    'stefano_phen.png','van-gogh.png','van-gogh-2.png','vladimir-putin.png','VrQAuHMYfxA.png',
+    'tattoo-1.png','tattoo-2.png',
+    'alien-01.png','indian-01.png','indian-02.png','moody-01.png','skullman-01.png','skullman-02.png','skullman-03.png','tiled-01.png','tiled-02.png','weird-01.png','weird-02.png','weird-03.png'
 ];
 
 ob_start();
@@ -182,6 +184,22 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
 $i = 0;
 foreach( $transferable_style_presets as $style ){
 
+        $dirPath = dirname(UPLOAD_PATH) . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'style-transfers' . DIRECTORY_SEPARATOR;
+
+        $imgName = get_name_only($style) . '_thumb.jpg';
+        if( !file_exists($dirPath . $imgName) ){
+            if( file_exists($dirPath . $style) ){
+                $img = Image::make($dirPath . $style);
+                $width = $img->width();
+                $height = $img->height();
+                if(anyHigher(700, $width)){
+                    [$new_x, $new_y] = calc__fit_constraints_lspt($width, $height, 832, 704, 704, 832);
+                    logfile('Resizing ' . $style . ' from ' . $width . 'x' . $height . ' to ' . $new_x . 'x' . $new_y);
+                    $img->resize($new_x, $new_y)->save($dirPath . $imgName, 90);
+                }
+            }
+        }
+
         $modulus = ($i % 4) + 1;
         switch($modulus){
             case 1:
@@ -189,13 +207,13 @@ foreach( $transferable_style_presets as $style ){
                 <div class="splide__slide">
                     <div class="row row-cols-2 px-1 mb-0">
                         <a class="col p-2" href="#" data-style="' . $style . '">
-                            <img src="/images/style-transfers/' . $style . '" alt="img" class="img-fluid rounded-sm shadow-xl">
+                            <img src="/images/style-transfers/' . $imgName . '" alt="img" class="img-fluid rounded-sm shadow-xl">
                         </a>';
                 break;
             case 2:
             echo '
                         <a class="col p-2" href="#" data-style="' . $style . '">
-                            <img src="/images/style-transfers/' . $style . '" alt="img" class="img-fluid rounded-sm shadow-xl">
+                            <img src="/images/style-transfers/' . $imgName . '" alt="img" class="img-fluid rounded-sm shadow-xl">
                         </a>
                     </div>';
                 break;
@@ -203,13 +221,13 @@ foreach( $transferable_style_presets as $style ){
             echo '
                     <div class="row row-cols-2 px-1 mb-0">
                         <a class="col p-2" href="#" data-style="' . $style . '">
-                            <img src="/images/style-transfers/' . $style . '" alt="img" class="img-fluid rounded-sm shadow-xl">
+                            <img src="/images/style-transfers/' . $imgName . '" alt="img" class="img-fluid rounded-sm shadow-xl">
                         </a>';
                 break;
             case 4:
             echo '
                         <a class="col p-2" href="#" data-style="' . $style . '">
-                            <img src="/images/style-transfers/' . $style . '" alt="img" class="img-fluid rounded-sm shadow-xl">
+                            <img src="/images/style-transfers/' . $imgName . '" alt="img" class="img-fluid rounded-sm shadow-xl">
                         </a>
                     </div>
                 </div>';
