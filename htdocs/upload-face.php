@@ -77,6 +77,8 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                     $file_extension = 'jpg';
                 }
 
+                $filehash = hash_file('sha256', $upload_path . '/' . $filename['file']);
+
                 $sql = new sqlbuddy;
 
                 $sql->que('uuid', generateUuid4(),'string');
@@ -86,6 +88,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                 $sql->que('updated', 'NULL','raw');
                 $sql->que('stylename', $_POST['selected_style_transfer'], 'string');
                 $sql->que('realname', $_real_filename_from_upload, 'string');
+                $sql->que('filehash', $filehash, 'string');
                 $sql->que('filename', $filename['file'], 'string');
                 $sql->que('extension', $file_extension, 'string');
                 $sql->que('filesize', $file1_size, 'int');
