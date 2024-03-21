@@ -1,0 +1,29 @@
+{
+  "name": "kista-ai",
+  "version": "1.0.0",
+  "description": "Doing AI-stuff for no other reason than doing AI-stuff",
+  "main": "gulpfile.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steinhaug/KISTA-AI.git"
+  },
+  "author": "Kim Steinhaug",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/steinhaug/KISTA-AI/issues"
+  },
+  "homepage": "https://github.com/steinhaug/KISTA-AI#readme",
+  "dependencies": {
+    "del": "^7.1.0",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-debug": "^5.0.1",
+    "gulp-uglify": "^3.0.2"
+  }
+}
