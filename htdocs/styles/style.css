@@ -7411,3 +7411,24 @@ a.img-fluid img.img-fluid {
     display:block;
     padding-left: 47px;
 }
+
+/* animation */
+
+.animate__removeItem {
+    max-width: 100%;
+    opacity: 1;
+    animation: grow 1s ease-in-out forwards;
+    -webkit-animation: grow 1s ease-in-out forwards;
+}
+@-webkit-keyframes grow {
+    to {
+        max-width: 0px;
+        opacity: 0;
+    }
+}
+@keyframes grow {
+    to {
+        max-width: 0px;
+        opacity: 0;
+    }
+}

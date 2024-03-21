@@ -4,6 +4,19 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 
 ## changelog
 
+### v0.11.3
+- added, new AJAX communication layer added for easy prototyping.
+- added, new animation layer added for smooth transitions.
+- added, avatarify gallery image controls now have ajax communication with server.
+- added, 3 new AJAX command dummy-files setup to handle image controls.
+
+### v0.11.2
+- added, avatarify gallery image controls. Added confirmation buttons ready for AJAX.
+- added, jQuery added together with custom fuctionality and uglify compression scripts via gulp
+- changed, replicate settings for style transfer have been tweaked for better results
+- changed, avatarify upload page have been reordered so that first you upload image before selecting style
+- changed, avatarify upload page now display styles images instead of results of myself to prevent confusion
+
 ### v0.11.1
 - added, session create skip for facebook crawler
 - changed, gallery page for avatar images has new icons for rotate and download.

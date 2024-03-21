@@ -12,9 +12,36 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 
 require_once 'func.inc.php';
 require_once 'func.login.php';
+require_once 'ajax/functions.php';
 
 ignore_user_abort(true);
 set_time_limit(0);
+
+
+
+
+if( isset($_POST['module']) AND ($_POST['module'] == 'image-controls') ){
+    $jsondata = ['status'=>0];
+
+    $valid_commands = ['rotate-left','rotate-right','delete'];
+    if( isset($_POST['command']) AND in_array($_POST['command'], $valid_commands) ){
+        require 'ajax/' . $_POST['module'] . '/' . $_POST['command'] . '.php';
+    } else {
+        $jsondata['errorcode'] = 1;
+        $jsondata['errormsg'] = 'Module ' . $_POST['module'] . ', unknown command: ' . $_POST['command'];
+    }
+
+    header("Content-type: application/json;charset=utf-8");
+    echo json_encode($jsondata);
+    exit;
+}
+
+
+
+
+
+
+
 
 if (($curentTaskID = getSessionTaskKey(['aiid'=> _GET('aiid', 0, 'int')])) !== null) {
     require_once AJAX_FOLDER_PATH . '/openai/run-tasks.php';
@@ -72,7 +99,6 @@ if (($curentTaskID = getSessionTaskKey(['aiid'=> _GET('aiid', 0, 'int')])) !== n
 
 }
 
-//http_response_code(102);
-header('HTTP/1.0 200 OK');
-echo json_encode(['status'=>'idle','progress'=>0,'message'=>'Nothing to do.']);
-exit;
+thats_it_for_now_incomming_payload_v2(['status'=>'idle','progress'=>0,'message'=>'Nothing to do.']);
+
+

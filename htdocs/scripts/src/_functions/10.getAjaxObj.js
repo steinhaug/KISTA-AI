@@ -77,8 +77,6 @@ function getAjaxObj2( cmd, mod, meta, callback ){
         var AjaxObjURL = (KistaJS && KistaJS.ajaxurl) ? KistaJS.ajaxurl : 'ajax.php';
     }
 
-    //var CSSID = meta.CSSID;
-
     $.ajax({
 
         type: 'post',
@@ -92,11 +90,9 @@ function getAjaxObj2( cmd, mod, meta, callback ){
                 $('#ajaxErrorModal').find('.modal-header .modal-title').html( response.status + ': ' + errorThrown.toString() );
                 $('#ajaxErrorModal').modal('show');
             } else if( response.responseJSON.hasOwnProperty('errormsg') && response.responseJSON.hasOwnProperty('errorcode') ){
-                quickToast('alert', 'AJAX Error, code #' + response.responseJSON.errorcode, '', response.responseJSON.errormsg);
-                //callback(response.responseJSON.errorcode, {errorcode: response.responseJSON.errorcode, errormsg: response.responseJSON.errormsg});
+                quickToast('error', 'AJAX Error, code #' + response.responseJSON.errorcode, '', response.responseJSON.errormsg);
             } else {
-                quickToast('alert', 'AJAX Generic error', '', 'This is not a good enough error, fix when you see me!');
-                //callback('Error occured');
+                quickToast('error', 'AJAX Generic error', '', 'This is not a good enough error, fix when you see me!');
             }
         },
         success: function (response, status, obj) {
@@ -113,15 +109,30 @@ function getAjaxObj2( cmd, mod, meta, callback ){
                 return '';
             }
 
-            // Error handling
+            // Trigger error if any error message is found
             if( !isEmpty(response.responseJSON) && response.responseJSON.hasOwnProperty('errormsg') && response.responseJSON.hasOwnProperty('errorcode') ){
-                quickToast('alert', 'AJAX Error, code #' + response.responseJSON.errorcode, '', response.responseJSON.errormsg);
+                quickToast('error', 'AJAX Error #' + response.responseJSON.errorcode, '', response.responseJSON.errormsg);
                 return '';
+            }
+
+            // Trigger error if any error message is found
+            if( !isEmpty(response) && response.hasOwnProperty('errormsg') && response.hasOwnProperty('errorcode') ){
+                quickToast('error', 'AJAX Error #' + response.errorcode, '', response.errormsg);
+                return '';
+            }
+
+            // Trigger error if CSSID is missing when being submitted
+            if (data.data && data.data.hasOwnProperty('CSSID')) {
+                if(!response.hasOwnProperty('CSSID')){
+                    quickToast('error', 'AJAX Data Error', '', 'CSSID is not returned in request, remove the CSSID parameter or make sure its returned.');
+                    return '';
+                }
             }
 
             // No errors, return the data to callback
             callback(response);
         }
+
     }).always(function (data) {
         //$('#spinner').hide();
     });

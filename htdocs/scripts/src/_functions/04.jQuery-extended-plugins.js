@@ -28,7 +28,20 @@ $.fn.extend({
             }
         });
         return this;
+    },
+    animateCss2: function (animationName, callback) {
+        this.addClass("animate__animated animate__" + animationName).one( whichTransitionEvent(), function() {
+            $(this).removeClass("animate__animated animate__" + animationName);
+            if (callback === true) {
+                $(this).remove();
+            } else if (callback) {
+                var self = this;
+                callback(self);
+            }
+        });
+        return this;
     }
+
 });
 
 

@@ -166,3 +166,50 @@ $_html_modal_templates['tplAlert'] = <<<EOF
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>    
 EOF;
+
+$_html_modal_templates['ajaxErrorModal'] = '
+<div class="modal fade" id="ajaxErrorModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="ajaxErrorModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ajaxErrorModalLabel">Modal title</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+';
+
+$_html_modal_templates['menuConfirmation'] = <<<EOF
+    <div id="menu-confirmation" class="menu menu-box-bottom rounded-m"
+         data-menu-height="230" 
+         data-menu-effect="menu-over">
+        <div class="menu-title">
+            <i class="fa fa-question-circle scale-box float-start me-3 ms-3 fa-3x mt-1 color-blue-dark"></i>
+            <p class="color-highlight">We need to know,</p>
+            <h1 class="font-20">Are you Sure?</h1>
+            <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
+        </div>
+        <div class="content mt-0">
+            <p class="pe-3">
+                Please confirm before proceeding to the next step.
+            </p>
+            <div class="row mb-0">
+                <div class="col-6">
+                    <a href="#" id="cancel" class="btn close-menu btn-full btn-m bg-red-dark font-600 rounded-s">No, cancel</a>
+                </div>
+                <div class="col-6">
+                    <a href="#" id="continue" class="btn close-menu btn-full btn-m bg-green-dark font-600 rounded-s">Yes, proceed!</a>
+                </div>
+            </div>
+        </div>
+    </div>  
+EOF;

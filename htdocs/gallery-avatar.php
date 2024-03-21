@@ -111,7 +111,7 @@ if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename`
             $src_name = $medium;
         }
         echo '
-                    <div class="splide__slide">
+                    <div class="splide__slide" style="overflow:hidden;">
                         <div class="card m-2 card-style">
                             <a href="' . $webUrl . $img['filename'] . '" data-gallery="new-inference" class="img-preview"><img src="' . $webUrl . $src_name . '" class="img-fluid"></a>
                             <div class="p-2 bg-theme rounded-sm">
@@ -151,52 +151,34 @@ if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename`
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
 
 
-
-
     <?php
-    que_modal_tpl('login','logout','tplToast','tplAlert');
+    que_modal_tpl('login','logout','tplToast','tplAlert','ajaxErrorModal','menuConfirmation');
     echo write_modal_tpls();
     ?>
-    <div id="menu-option-1" class="menu menu-box-bottom rounded-m"
-         data-menu-height="230" 
-         data-menu-effect="menu-over">
-        <div class="menu-title">
-            <i class="fa fa-question-circle scale-box float-start me-3 ms-3 fa-3x mt-1 color-blue-dark"></i>
-            <p class="color-highlight">We need to know,</p>
-            <h1 class="font-20">Are you Sure?</h1>
-            <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
-        </div>
-        <div class="content mt-0">
-            <p class="pe-3">
-                Please confirm before proceeding to the next step.
-            </p>
-            <div class="row mb-0">
-                <div class="col-6">
-                    <a href="#" id="cancel" class="btn close-menu btn-full btn-m bg-red-dark font-600 rounded-s">No, cancel</a>
-                </div>
-                <div class="col-6">
-                    <a href="#" id="continue" class="btn close-menu btn-full btn-m bg-green-dark font-600 rounded-s">Yes, proceed!</a>
-                </div>
-            </div>
-        </div>
-    </div>  
-    
+
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js?<?=$html_NoCache_Version?>"></script>
 
 <script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="scripts/gallery-controller.js"></script>
+<script type="text/javascript" src="scripts/gallery-controller.js?<?=$html_NoCache_Version?>"></script>
 
 <style>
 .working {
     border: 2px solid red !important;
 }
 </style>
+
 <script>
 
+const KistaJS = {
+    ajaxurl: 'ajax.php',
+    userid: <?=(int) $_SESSION['USER_ID']?>
+}
+
 $(document).ready(function() {
+    let USERID = '<?=$_SESSION['USER_ID']?>';
     $("#image-controls").on('click', 'a.controller-button', function (e) {
         let el_image = $(e.target).closest('.card').find('.img-preview');
         //$(el_image).addClass('working');
@@ -205,31 +187,39 @@ $(document).ready(function() {
         if( $(this).hasAttr('data-action') )
             action = $(this).data('action');
 
+        var CSSID = getCSSID($(this).closest('div.splide__slide'));
+
         if( action == 'delete' ){
 
             function showConfirmationDialog() {
-                document.getElementById('menu-option-1').classList.add('menu-active');
+                document.getElementById('menu-confirmation').classList.add('menu-active');
 
                 // Functions to handle user response
                 function handleCancel() {
-                    console.log('cancelled, nothing happened');
+                    //console.log('cancelled, nothing happened');
                     cleanup();
                 }
 
                 function handleContinue() {
-                    console.log('ID: ' + id + ', action: ' + action);
+                    //console.log('ID: ' + IMID + ', action: ' + action);
                     cleanup();
-                    quickToast('alert','Error', 'Funksjon ikke aktivert!');
+                    getAjaxObj2(action, {url: KistaJS.ajaxurl, mod: 'image-controls'}, { CMD: 'init', CSSID: CSSID, IMID: IMID, UserID: KistaJS.userid }, function (response){
+                        quickToast('info','Nothing happened', 'Funksjonen er ikke aktiv, bildet ble ikke slettet.');
+                        $('#' + response.CSSID).animateCss('removeItem',true);
+                        // if(parseInt(response.status,10)==200){ }
+                        //$('#loc-wrapper').html(response.html);
+                    });
+
                 }
 
                 function handleClose() {
-                    console.log('cancelled, nothing happened');
+                    //console.log('cancelled, nothing happened');
                     cleanup();
                 }
 
                 // Cleanup function to remove event listeners and close the menu
                 function cleanup() {
-                    document.getElementById('menu-option-1').classList.remove('menu-active');
+                    document.getElementById('menu-confirmation').classList.remove('menu-active');
                     document.getElementById('cancel').removeEventListener('click', handleCancel);
                     document.getElementById('continue').removeEventListener('click', handleContinue);
                     document.querySelectorAll('.close-menu').forEach(button => {
@@ -245,7 +235,7 @@ $(document).ready(function() {
                 });
             }
 
-            let id = $(this).data('imid');
+            let IMID = $(this).data('imid');
 
             // Trigger the confirmation dialog
             showConfirmationDialog();
