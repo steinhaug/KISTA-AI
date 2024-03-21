@@ -1,5 +1,5 @@
 <?php
-
+use Intervention\Image\ImageManagerStatic as Image;
 
 ob_start();
 session_cache_expire(720);
@@ -66,6 +66,8 @@ if($lang == 'en'){
 
 
 
+
+
         <div class="content mt-0 mb-0">
             <div class="d-flex">
                 <div class="align-self-center">
@@ -80,14 +82,13 @@ if($lang == 'en'){
 <?php
 
 
-
 define('REPLICATE_INFERENCE_FOLDER', UPLOAD_PATH . '/ri');
 if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename` FROM `" . $kista_dp . "replicate__images` `reim` INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.reid = `reup`.reid AND `reup`.user_id = ?", 'i', [$USER_ID])) !== []) {
 
     echo '
-        <div class="splide double-slider visible-slider slider-no-arrows slider-no-dots" id="double-slider-1">
+        <div data-splide=\'{"autoplay":false}\' class="splide double-slider visible-slider slider-no-arrows slider-no-dots" id="double-slider-1">
             <div class="splide__track">
-                <div class="splide__list">
+                <div class="splide__list" id="image-controls">
     ';
 
     foreach($items as $img){
@@ -101,21 +102,28 @@ if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename`
         $webUrl = '/uploaded_files/ri/';
         if( file_exists(REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . $medium)){
             $src_name = $medium;
+        } else {
+            createThumbnail(
+                REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . $img['filename'],
+                REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . $medium,
+                ['resize' => [512, 768]]
+            );
+            $src_name = $medium;
         }
         echo '
                     <div class="splide__slide">
                         <div class="card m-2 card-style">
-                            <a href="' . $webUrl . $img['filename'] . '" data-gallery="new-inference"><img src="' . $webUrl . $src_name . '" class="img-fluid"></a>
+                            <a href="' . $webUrl . $img['filename'] . '" data-gallery="new-inference" class="img-preview"><img src="' . $webUrl . $src_name . '" class="img-fluid"></a>
                             <div class="p-2 bg-theme rounded-sm">
+
+                                <h4 class="mb-n1 font-14 line-height-xs pb-2">' . $img['created'] . '</h4>
                                 <div class="d-flex">
-                                    <div>
-                                        <h4 class="mb-n1 font-14 line-height-xs pb-2">' . $img['created'] . '</h4>
-                                    </div>
                                     <div class="ms-auto">
 
-                                    <a href="show-avatar.php?reid=' . $reid . '&download=' . $img['filename'] . '" class="icon icon-s bg-theme shadow-xl rounded-xl float-end external-link"><i class="fa color-theme fa-download"></i></a>
-                                    <a href="#" data-menu="timed-2" class="icon icon-s bg-theme shadow-xl rounded-xl float-end me-2 external-link" data-imid="' . $img['image_id'] . '" data-action="rotate-left"><i class="fa color-theme fa-rotate-left"></i></a>
-                                    <a href="#" data-menu="timed-2" class="icon icon-s bg-theme shadow-xl rounded-xl float-end me-2 external-link" data-imid="' . $img['image_id'] . '" data-action="rotate-right"><i class="fa color-theme fa-rotate-right"></i></a>
+                                        <a href="show-avatar.php?reid=' . $reid . '&download=' . $img['filename'] . '" class="icon icon-s bg-theme shadow-xl rounded-xl float-end external-link"><i class="fa color-theme fa-download"></i></a>
+                                        <a href="#" class="controller-button icon icon-s bg-theme shadow-xl rounded-xl float-end me-2 external-link" data-imid="' . $img['image_id'] . '" data-action="rotate-left"><i class="fa color-theme fa-rotate-left"></i></a>
+                                        <a href="#" class="controller-button icon icon-s bg-theme shadow-xl rounded-xl float-end me-2 external-link" data-imid="' . $img['image_id'] . '" data-action="rotate-right"><i class="fa color-theme fa-rotate-right"></i></a>
+                                        <a href="#" class="controller-button icon icon-s bg-theme shadow-xl rounded-xl float-end me-2 external-link" data-imid="' . $img['image_id'] . '" data-action="delete"><i class="fa color-theme fa-trash"></i></a>
 
                                     </div>
                                 </div>
@@ -135,32 +143,125 @@ if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename`
 }
 ?>
 
-
-
         <div data-menu-load="<?=$appConf['menuFooterAvatar']?>"></div>
     </div>
     
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
-    <div id="timed-2" 
-         class="menu menu-box-modal rounded-m" 
-         data-menu-hide="1000"
-         data-menu-width="220"
-         data-menu-height="160">
-         <h1 class="text-center fa-5x mt-2 pt-3 pb-2"><i class="fa fa-times-circle color-red-dark"></i></h1>
-         <h2 class="text-center">Funksjon ikke aktivert!</h2>
-    </div>
 
+
+
+
+    <?php
+    que_modal_tpl('login','logout','tplToast','tplAlert');
+    echo write_modal_tpls();
+    ?>
+    <div id="menu-option-1" class="menu menu-box-bottom rounded-m"
+         data-menu-height="230" 
+         data-menu-effect="menu-over">
+        <div class="menu-title">
+            <i class="fa fa-question-circle scale-box float-start me-3 ms-3 fa-3x mt-1 color-blue-dark"></i>
+            <p class="color-highlight">We need to know,</p>
+            <h1 class="font-20">Are you Sure?</h1>
+            <a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a>
+        </div>
+        <div class="content mt-0">
+            <p class="pe-3">
+                Please confirm before proceeding to the next step.
+            </p>
+            <div class="row mb-0">
+                <div class="col-6">
+                    <a href="#" id="cancel" class="btn close-menu btn-full btn-m bg-red-dark font-600 rounded-s">No, cancel</a>
+                </div>
+                <div class="col-6">
+                    <a href="#" id="continue" class="btn close-menu btn-full btn-m bg-green-dark font-600 rounded-s">Yes, proceed!</a>
+                </div>
+            </div>
+        </div>
+    </div>  
+    
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js?<?=$html_NoCache_Version?>"></script>
 
+<script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="scripts/gallery-controller.js"></script>
+
+<style>
+.working {
+    border: 2px solid red !important;
+}
+</style>
+<script>
+
+$(document).ready(function() {
+    $("#image-controls").on('click', 'a.controller-button', function (e) {
+        let el_image = $(e.target).closest('.card').find('.img-preview');
+        //$(el_image).addClass('working');
+
+        let action;
+        if( $(this).hasAttr('data-action') )
+            action = $(this).data('action');
+
+        if( action == 'delete' ){
+
+            function showConfirmationDialog() {
+                document.getElementById('menu-option-1').classList.add('menu-active');
+
+                // Functions to handle user response
+                function handleCancel() {
+                    console.log('cancelled, nothing happened');
+                    cleanup();
+                }
+
+                function handleContinue() {
+                    console.log('ID: ' + id + ', action: ' + action);
+                    cleanup();
+                    quickToast('alert','Error', 'Funksjon ikke aktivert!');
+                }
+
+                function handleClose() {
+                    console.log('cancelled, nothing happened');
+                    cleanup();
+                }
+
+                // Cleanup function to remove event listeners and close the menu
+                function cleanup() {
+                    document.getElementById('menu-option-1').classList.remove('menu-active');
+                    document.getElementById('cancel').removeEventListener('click', handleCancel);
+                    document.getElementById('continue').removeEventListener('click', handleContinue);
+                    document.querySelectorAll('.close-menu').forEach(button => {
+                        button.removeEventListener('click', handleClose);
+                    });
+                }
+
+                // Attach event listeners
+                document.getElementById('cancel').addEventListener('click', handleCancel);
+                document.getElementById('continue').addEventListener('click', handleContinue);
+                document.querySelectorAll('.close-menu').forEach(button => {
+                    button.addEventListener('click', handleClose);
+                });
+            }
+
+            let id = $(this).data('imid');
+
+            // Trigger the confirmation dialog
+            showConfirmationDialog();
+
+        } else {
+            quickToast('alert','Error', 'Funksjon ikke aktivert!');
+        }
+
+    });
+
+});
+
+</script>
+
 <?php
 output_session_notification();
-que_modal_tpl('login','logout');
-echo write_modal_tpls();
 ?>
 
 </body><?php
