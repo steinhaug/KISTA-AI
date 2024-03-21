@@ -1,34 +1,15 @@
-const gulp = require('gulp');
-const uglify = require('gulp-uglify');
-const concat = require('gulp-concat');
-const debug = require('gulp-debug');
-const del = require('del');
+'use strict';
 
-/*
-import gulp from 'gulp';
-import uglify from 'gulp-uglify';
-import concat from 'gulp-concat';
-import debug from 'gulp-debug';
-import del from 'del';
-*/
+const { src, dest, series, parallel, watch } = require('gulp');
+var debug = require('gulp-debug');
+var del                 = require('del');
 
-async function _compress () {
+const { _compress } = require("./gulpfile-compress");
 
-    (async () => {
-        const deletedPaths = await del([
-            'scripts/gallery-controller.js'
-        ], {force: true, dryRun: false, onlyFiles:true});
-    })();
 
-    return gulp.src([
-            'htdocs/scripts/src/_functions/*.js'
-        ])
-        .pipe(debug())
-        .pipe(concat('gallery-controller.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('htdocs/scripts'));
+async function _default(){
+    console.log('  gulp compress');
 }
+exports.default = _default;
 
-exports.compress = gulp.series(
-  _compress
-);
+exports.compress     = _compress;

@@ -2,7 +2,7 @@
   "name": "kista-ai",
   "version": "1.0.0",
   "description": "Doing AI-stuff for no other reason than doing AI-stuff",
-  "exports": "index.js",
+  "main": "htdocs/index.php",
   "directories": {
     "doc": "docs"
   },
@@ -20,14 +20,11 @@
   },
   "homepage": "https://github.com/steinhaug/KISTA-AI#readme",
   "dependencies": {
-    "del": "^7.1.0",
+    "browser-sync": "^3.0.2",
+    "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
-    "gulp-debug": "^5.0.1",
+    "gulp-debug": "^4.0.0",
     "gulp-uglify": "^3.0.2"
-  },
-  "type": "module",
-  "engines": {
-    "node": ">=16"
   }
 }
