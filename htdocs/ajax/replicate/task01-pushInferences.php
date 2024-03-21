@@ -55,19 +55,19 @@ switch($styleTransfer_image){
 
 // Register the inference 
 $version = '42cf9559131f57f018bf8cdc239a74f4871c5852045ce8f23b346e4ef8f56aa8';
+//    "seed"=> 6969696969,
 $input = [
-    "seed"=> 6969696969,
     "image"=> $user_WWW_path . $imgName,
     "prompt"=> $prompt,
     "image_to_become"=> $st_WWW_path . $styleTransfer_image,
     "negative_prompt"=> "",
-    "prompt_strength"=> 2,
     "number_of_images"=> 2,
-    "denoising_strength"=> 0.8,
-    "instant_id_strength"=> 1,
-    "image_to_become_noise"=> 0.25,
-    "control_depth_strength"=> 0.9,
-    "image_to_become_strength"=> 0.8,
+    "denoising_strength"=> 0.75,
+    "prompt_strength"=> 2.5,
+    "control_depth_strength"=> 0.85,
+    "instant_id_strength"=> 0.9,
+    "image_to_become_strength"=> 0.9,
+    "image_to_become_noise"=> 0.4,
     "disable_safety_checker"=>true
 ];
 

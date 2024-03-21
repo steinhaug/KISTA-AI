@@ -155,6 +155,15 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
     <?=HTML_FOOTER_AVATAR(3)?>
 
 
+    <style>
+    .transfStylesGrid .row a img {
+        border: 10px solid #fff;
+    }
+    .transfStylesGrid .row a.selStyleTrans img {
+        border: 10px solid red;
+    }
+    </style>
+
     <div class="page-content header-clear-medium">
 
 
@@ -166,18 +175,35 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                 </div>
             </div>      
 
-            <style>
-            .transfStylesGrid .row a img {
-                border: 10px solid #fff;
-            }
-            .transfStylesGrid .row a.selStyleTrans img {
-                border: 10px solid red;
-            }
-            </style>
-            <div class="card card-style ms-0 me-0 rounded-0 mb-0">
+        <form action="upload-face.php" method="post" enctype="multipart/form-data" id="faceForm">
+            <input type="hidden" name="bonus_conf" id="bonus_conf" value="">
+            <input type="hidden" name="selected_style_transfer" class="form-control" id="sel_style">
+
+            <div class="card card-style ms-0 me-0 rounded-0 mb-4" id="step1">
                 <div class="content">
                     <p class="mb-n1 color-highlight font-600">AI Avatar</p>
-                    <h1>Select style:</h1>
+                    <h1 class="mt-4">1: Select your image:</h1>
+                    <p class="mb-3">
+                        Select a half-body portrait and you are ready for some AI-Goodiness.
+                    </p>
+
+
+                    <div class="row" hidden><div class="col">
+                        <input name="file1" type="file" accept="image/*" class="" id="file1_inp">
+                    </div></div>
+                    <div class="row mt-4"><div class="col" style="text-align:center">
+                        <div id="upload_preview" hidden><a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a><img /></div>
+                        <a href="#" id="file1_inp_extraBtn" class="btn btn-xxl mb-3 rounded-s text-uppercase font-700 shadow-s bg-highlight">Select image</a>
+                    </div></div>
+
+
+                </div>
+            </div>
+
+            <div class="card card-style ms-0 me-0 rounded-0 mb-4" id="step2">
+                <div class="content">
+                    <p class="mb-n1 color-highlight font-600">AI Avatar</p>
+                    <h1>2: Select style:</h1>
                     <p class="mb-3">
                         Swipe to browse the available styles, pick one.
                     </p>
@@ -189,6 +215,7 @@ foreach( $transferable_style_presets as $style ){
 
         $dirPath = dirname(UPLOAD_PATH) . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'style-transfers' . DIRECTORY_SEPARATOR;
 
+        /*
         $imgName = get_name_only($style) . '_thumb.jpg';
         if( !file_exists($dirPath . $imgName) ){
             if( file_exists($dirPath . $style) ){
@@ -202,6 +229,16 @@ foreach( $transferable_style_presets as $style ){
                 }
             }
         }
+        */
+
+        $imgName = get_name_only($style) . '_fit.jpg';
+        if( !file_exists($dirPath . $imgName) ){
+            if( file_exists($dirPath . $style) ){
+                $img = Image::make($dirPath . get_name_only($style) . '.jpg')->fit(500,600)->save($dirPath . $imgName, 90);
+            }
+        }
+
+        //$imgName = get_name_only($style) . '.jpg';
 
         $modulus = ($i % 4) + 1;
         switch($modulus){
@@ -264,37 +301,10 @@ switch($modulus) {
 
 
 
-        <form action="upload-face.php" method="post" enctype="multipart/form-data" id="faceForm">
-            <input type="hidden" name="bonus_conf" id="bonus_conf" value="">
-            <input type="hidden" name="selected_style_transfer" class="form-control" id="sel_style">
-
-            <div class="card card-style ms-0 me-0 rounded-0" id="step3">
-                <div class="content">
-
-
-
-                    <h1 class="mt-4">Select your image:</h1>
-                    <p class="mb-3">
-                        Select a half-body portrait and you are ready for some AI-Goodiness.
-                    </p>
-
-
-                    <div class="row" hidden><div class="col">
-                        <input name="file1" type="file" accept="image/*" class="" id="file1_inp">
-                    </div></div>
-                    <div class="row mt-4"><div class="col" style="text-align:center">
-                        <div id="upload_preview" hidden><a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a><img /></div>
-                        <a href="#" id="file1_inp_extraBtn" class="btn btn-xxl mb-3 rounded-s text-uppercase font-700 shadow-s bg-highlight">Select image</a>
-                    </div></div>
-
-
-
-                </div>
-            </div>
-
-
-            <div class="card card-style" id="step4">
+            <div class="card card-style" id="step3">
                 <div class="content mb-0">
+                    <p class="mb-n1 color-highlight font-600">AI Avatar</p>
+                    <h1>3: Upload</h1>
                     <div class="row mt-4"><div class="col" style="text-align:center">
                         <button id="submitBtn" type="submit" class="btn btn-xxl mb-3 rounded-s text-uppercase font-700 shadow-s bg-green-dark" disabled="">Upload and create my new AI Images</button>
                     </div></div>
@@ -349,7 +359,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     var element = document.getElementById("step3");
     if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
   }
@@ -384,9 +394,9 @@ document.addEventListener("DOMContentLoaded", function() {
         previewContainer.hidden = false; // Show the preview container
         extraBtn.setAttribute('hidden', true); // Hide the extra button
         submitBtn.disabled = false; // Enable the submit button
-        var element = document.getElementById("step4");
+        var element = document.getElementById("step2");
         if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
       };
