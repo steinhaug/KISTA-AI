@@ -16,3 +16,4 @@ htdocs-ngrok-tunnel/downloads/**/*
 vendor-cleaned.zip
 htdocs-ngrok-tunnel/uploaded_files/**/*
 htdocs/images/style-transfers/**/*_thumb.jpg
+package-lock.json

@@ -2,7 +2,7 @@
   "name": "kista-ai",
   "version": "1.0.0",
   "description": "Doing AI-stuff for no other reason than doing AI-stuff",
-  "main": "gulpfile.js",
+  "exports": "index.js",
   "directories": {
     "doc": "docs"
   },
@@ -25,5 +25,9 @@
     "gulp-concat": "^2.6.1",
     "gulp-debug": "^5.0.1",
     "gulp-uglify": "^3.0.2"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=16"
   }
 }
