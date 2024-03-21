@@ -7400,3 +7400,14 @@ a.img-fluid img.img-fluid {
     padding: 5px;
     border-radius: 20px;
 }
+
+.alert span svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.alert .body {
+    display:block;
+    padding-left: 47px;
+}
