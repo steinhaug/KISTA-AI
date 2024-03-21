@@ -205,3 +205,11 @@ AUTO_INCREMENT=6
 ;
 
 * * * *
+
+ALTER TABLE `kistaai_replicate__uploads`
+	CHANGE COLUMN `stylename` `stylename` VARCHAR(128) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci' AFTER `updated`,
+	CHANGE COLUMN `realname` `realname` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'Presentation' COLLATE 'utf8mb4_danish_ci' AFTER `stylename`,
+	ADD COLUMN `filehash` VARCHAR(64) NOT NULL DEFAULT '' AFTER `realname`,
+	CHANGE COLUMN `filename` `filename` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'On disk' COLLATE 'utf8mb4_danish_ci' AFTER `filehash`,
+	CHANGE COLUMN `extension` `extension` VARCHAR(32) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci' AFTER `filename`;
+
