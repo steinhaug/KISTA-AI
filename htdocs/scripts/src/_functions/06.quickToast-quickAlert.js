@@ -59,6 +59,9 @@ function quickToast(toastType, ...params) {
     let delay;
     switch (toastType) {
         case 'alert':
+            delay = 2500;
+            hex = '#ff0000';
+            break;
         case 'error':
             delay = 0;
             hex = '#ff0000';
