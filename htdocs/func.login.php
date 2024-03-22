@@ -47,7 +47,7 @@ if( !considered_crawler() and empty($_SESSION['url_google_login']) ){
     $client = new Google_Client();
     $client->setClientId($google_client_id);
     $client->setClientSecret($google_client_secret);
-    $client->setRedirectUri('https://kista-ai.steinhaug.no/login.php');
+    $client->setRedirectUri($google_redirect_uri);
     $client->addScope("email");
     $client->addScope("profile");
     //$google_url = $client->createAuthUrl();

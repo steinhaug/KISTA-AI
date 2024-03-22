@@ -4,6 +4,11 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 
 ## changelog
 
+### v0.11.4
+- fixed, index had old links to kista-ai.steinhaug.no, now set in _vars.php
+- fixed, Google API has updated syntax for oauth login.
+- fixed, Google Login redirect URI now set in credentials.
+
 ### v0.11.3
 - added, new AJAX communication layer added for easy prototyping.
 - added, new animation layer added for smooth transitions.

@@ -3,7 +3,7 @@ session_start();
 session_regenerate_id(true);
 define('APPDATA_PATH', dirname(__FILE__) . '/inc_appdata');
 define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
-require_once 'func.inc.php'; //require 'google-api/vendor/autoload.php';
+require_once 'func.inc.php';
 require_once 'func.login.php';
 
 if(isset($_SESSION['USER_GOOGLE_LOGIN'])){
@@ -12,10 +12,10 @@ if(isset($_SESSION['USER_GOOGLE_LOGIN'])){
 }
 
 // Creating new google client instance
-$client = new Google_Client();
-$client->setClientId($google_client_id);                            // Enter your Client ID
-$client->setClientSecret($google_client_secret);                    // Enter your Client Secrect
-$client->setRedirectUri('https://kista-ai.steinhaug.no/login.php'); // Enter the Redirect URL
+$client = new Google\Client();
+$client->setClientId($google_client_id);
+$client->setClientSecret($google_client_secret);
+$client->setRedirectUri($google_redirect_uri);
 
 // Adding those scopes which we want to get (email & profile Information)
 $client->addScope("email");
@@ -29,7 +29,7 @@ if(isset($_GET['code'])):
         $client->setAccessToken($token['access_token']);
 
         // getting profile information
-        $google_oauth = new Google_Service_Oauth2($client);
+        $google_oauth = new Google\Service\Oauth2($client);
         $google_account_info = $google_oauth->userinfo->get();
     
         // checking user already exists or not
