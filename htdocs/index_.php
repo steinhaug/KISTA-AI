@@ -36,9 +36,9 @@ require_once 'func.login.php';
 
 <meta property="og:site_name" content="Kjøleskapets hemmelige kokk! - KISTA AI">
 <meta property="og:title" content="Kjøleskapets hemmelige kokk! - KISTA AI">
-<meta property="og:url" content="https://kista-ai.steinhaug.no/">
+<meta property="og:url" content="<?=$PWA_DOMAIN?>/">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://kista-ai.steinhaug.no/images/app-screenshot.jpg">
+<meta property="og:image" content="<?=$PWA_DOMAIN?>/images/app-screenshot.jpg">
 <meta property="og:description" content="Har du noen gang stirret inn i kjøleskapet ditt, lurer på hva du skal lage? Si farvel til kulinariske gåter med Magic Meal Maker! Vår innovative app forvandler innholdet i kjøleskapet ditt til deilige, enkle å følge oppskrifter med et knappetrykk. Med Magic Meal Maker, frigjør din indre kokk, reduser matsvinn, og oppdag nye måter å nyte ingrediensene du allerede har. Enten du er en matlagingsnovise eller en kulinarisk trollmann, er vår app designet for å inspirere kreativitet og bringe glede til måltidet ditt. La oss forvandle funnene fra kjøleskapet ditt til ditt neste gastronomiske eventyr!">
 <?=$PWA_LANG['highlight']?>
 <style>
