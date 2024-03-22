@@ -6,7 +6,8 @@ A simple APP that utilizes the AI offered via API from OpenAPI in a quick and di
 
 ## APP Demo
 
-[https://kista-ai.steinhaug.no/](https://kista-ai.steinhaug.no/)
+[https://magic-meal-maker.steinhaug.no/](https://magic-meal-maker.steinhaug.no/)  
+[https://avatarify.steinhaug.no/](https://avatarify.steinhaug.no/)  
 
 ## The idea
 

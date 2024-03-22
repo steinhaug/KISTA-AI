@@ -25,12 +25,26 @@ var CACHE_NAME = APP_NAME + '-' + APP_VER;
 // Add all files you want to view offline below.
 // Leave REQUIRED_FILES = [] to disable offline.
 var REQUIRED_FILES = [
+
+    // pages
+    'menu-footer-avatar-en.html',
+    'menu-footer-avatar-nb.html',
+    'menu-colors.html',
+    'menu-footer-en.html',
+    'menu-footer-nb.html',
+    'menu-main.html',
+    'menu-share.html',
+
 	// Styles
 	'styles/style.css',
 	'styles/bootstrap.css',
+
 	// Scripts
 	'scripts/custom.js',
 	'scripts/bootstrap.min.js',
+    'scripts/jquery-3.7.1.min.js',
+    'scripts/gallery-controller.js',
+
 	// Plugins
 	'plugins/charts/charts.js',
 	'plugins/charts/charts-call-graphs.js',
@@ -42,12 +56,16 @@ var REQUIRED_FILES = [
 	'plugins/glightbox/glightbox.js',
 	'plugins/glightbox/glightbox.css',
 	'plugins/glightbox/glightbox-call.js',
+
 	// Fonts
 	'fonts/css/fontawesome-all.min.css',
 	'fonts/webfonts/fa-brands-400.woff2',
 	'fonts/webfonts/fa-regular-400.woff2',
 	'fonts/webfonts/fa-solid-900.woff2',
+
 	// Images
+    'app/icons/google-logo.svg',
+    'images/avatars/person.png',
 	'images/empty.png',
 	'images/pictures/refrigerator-700-en.png',
 	'images/pictures/refrigerator-700-nb.png',

@@ -6,7 +6,7 @@ $html_NoCache_Version = 'v1.0';
 $include_login_button = false;
 
 $PWA_APP_NAME       = 'Magic Meal Maker';
-$PWA_APP_NAME_SHORT = 'M-MealMaker';
+$PWA_APP_NAME_SHORT = 'MMealMaker';
 
 //Local Storage Names for PWA
 $PWA_Name = 'MagicMealMaker';
