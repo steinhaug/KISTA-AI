@@ -531,6 +531,12 @@ function output_session_notification(){
         unset($_SESSION['error_msg']);
     }
 
+
+    if( _bool(_GET('logged_out')) ){
+        echo "<script>quickToast('info','Logget ut!', 'Du er nå logget ut.');</script>";
+    }
+
+
     if (isset($_SESSION['info_msg'])) {
         echo '
     <div id="info-1" data-dismiss="info-1" data-bs-delay="5000" data-bs-autohide="true" class="notification bg-green-dark shadow-xl opacity-95">
