@@ -110,6 +110,11 @@ echo $Parsedown->text( $terms );
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
 
+    <?php
+    que_modal_tpl('login','logout');
+    echo write_modal_tpls();
+    ?>
+
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
@@ -117,8 +122,6 @@ echo $Parsedown->text( $terms );
 
 <?php
 output_session_notification();
-que_modal_tpl('login','logout');
-echo write_modal_tpls();
 ?>
 
 </body><?php

@@ -177,16 +177,15 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
 
+    <?php
+    que_modal_tpl('login','logout');
+    echo write_modal_tpls();
+    ?>
+
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js.php?<?=$html_NoCache_Version?>"></script>
-
-<?php
-output_session_notification();
-que_modal_tpl('login','logout');
-echo write_modal_tpls();
-?>
 
 
 <div id="error-2" data-dismiss="notification-4" data-bs-delay="1000" data-bs-autohide="true" class="notification bg-red-dark shadow-xl opacity-95 fade hide">
@@ -233,6 +232,11 @@ function validateEmail(email) {
     return re.test(email);
 }
 </script>
+
+
+<?php
+output_session_notification();
+?>
 
 </body><?php
 ob_end_flush();

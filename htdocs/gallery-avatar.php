@@ -150,7 +150,6 @@ if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename`
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
 
-
     <?php
     que_modal_tpl('login','logout','tplToast','tplAlert','ajaxErrorModal','menuConfirmation');
     echo write_modal_tpls();

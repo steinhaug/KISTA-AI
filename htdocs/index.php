@@ -229,16 +229,15 @@ if($lang=='en'){
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
 
+    <?php
+    que_modal_tpl('bookmark','login','logout','toast');
+    echo write_modal_tpls();
+    ?>
+
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js.php?<?=$html_NoCache_Version?>"></script>
-
-<?php
-output_session_notification();
-que_modal_tpl('bookmark','login','logout','toast');
-echo write_modal_tpls();
-?>
 
 <script>
 let installPrompt = null;
@@ -271,6 +270,11 @@ function disableInAppInstallPrompt() {
 }
 
 </script>
+
+
+<?php
+output_session_notification();
+?>
 
 </body><?php
 ob_end_flush();

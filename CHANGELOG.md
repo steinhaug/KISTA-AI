@@ -8,6 +8,7 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 ### v0.11.5
 - changed, _vars.php renamed for ../cred.{domain}_vars.php
 - changed, NROK tunnel = htdocs
+- changed, moving off-canvas elements outside page-content
 
 ### v0.11.4
 - fixed, index had old links to kista-ai.steinhaug.no, now set in _vars.php
