@@ -65,21 +65,20 @@ if($lang == 'en'){
 
 
 
-
-        <!--
+<!--
         <div class="card card-style">
             <div class="content mt-3">
-                <p class="mb-n1 color-highlight font-600 mb-n1">Project Briefing </p>
-                <h2>Description</h2>
+                <p class="mb-n1 color-highlight font-600 mb-n1">debugging info </p>
+                <h2>Session user id</h2>
                 <p><?php
                     echo 'USER_ID: ' . $_SESSION['USER_ID'] . '<br>';
                     $user_google_id = $_SESSION['USER_GOOGLE_LOGIN'][0] ?? 0;
                     echo 'user_google_id: ' . $user_google_id . '<br>';
-                    echo htmlentities( "SELECT *, `reim`.`filename` AS `filename` FROM `" . $kista_dp . "replicate__images` `reim` INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.reid = `reup`.reid AND `reup`.user_id = ?" );
+                    //echo htmlentities( "SELECT *, `reim`.`filename` AS `filename` FROM `" . $kista_dp . "replicate__images` `reim` INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.reid = `reup`.reid AND `reup`.user_id = ?" );
                 ?></p>
             </div>
 		</div>
-        -->
+-->
 
         <div class="content mt-0 mb-0">
             <div class="d-flex">
@@ -99,10 +98,10 @@ $user_google_id = $_SESSION['USER_GOOGLE_LOGIN'][0] ?? 0;
 if($user_google_id){
     $p_sql = [
         "SELECT *, `reim`.`filename` AS `filename` 
-         FROM `kistaai_replicate__images` `reim` 
-         INNER JOIN `kistaai_replicate__uploads` `reup` ON `reim`.`reid` = `reup`.`reid` 
-         INNER JOIN `kistaai_users__sessions` `s` ON `reup`.`user_id` = `s`.`user_id` 
-         WHERE (`s`.`user_id` = ? OR `s`.`google_id` = ?)", 
+         FROM `" . $kista_dp . "replicate__images` `reim` 
+         INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.`reid` = `reup`.`reid` 
+         INNER JOIN `" . $kista_dp . "users__sessions` `s` ON `reup`.`user_id` = `s`.`user_id` 
+         WHERE `reim`.`deleted` = 0 AND (`s`.`user_id` = ? OR `s`.`google_id` = ?)", 
         'ii', 
         [$USER_ID, $user_google_id]
     ];
@@ -110,7 +109,8 @@ if($user_google_id){
     $p_sql = [
         "SELECT *, `reim`.`filename` AS `filename` 
          FROM `" . $kista_dp . "replicate__images` `reim` 
-         INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.reid = `reup`.reid AND `reup`.user_id = ?", 
+         INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.`reid` = `reup`.`reid` 
+         WHERE `reim`.`deleted` = 0 AND `reup`.user_id = ?", 
         'i', 
         [$USER_ID]
     ];
@@ -192,7 +192,6 @@ if (($items = $mysqli->prepared_query($p_sql)) !== []) {
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js.php?<?=$html_NoCache_Version?>"></script>
-
 <script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="scripts/avatarify-app.js?<?=$html_NoCache_Version?>"></script>
 
@@ -225,31 +224,20 @@ $(document).ready(function() {
 
             function showConfirmationDialog() {
                 document.getElementById('menu-confirmation').classList.add('menu-active');
-
-                // Functions to handle user response
                 function handleCancel() {
-                    //console.log('cancelled, nothing happened');
                     cleanup();
                 }
-
                 function handleContinue() {
-                    //console.log('ID: ' + IMID + ', action: ' + action);
                     cleanup();
                     getAjaxObj2(action, {url: KistaJS.ajaxurl, mod: 'image-controls'}, { CMD: 'init', CSSID: CSSID, IMID: IMID, UserID: KistaJS.userid }, function (response){
-                        quickToast('info','Nothing happened', 'Funksjonen er ikke aktiv, bildet ble ikke slettet.');
                         $('#' + response.CSSID).animateCss('removeItem',true);
                         // if(parseInt(response.status,10)==200){ }
                         //$('#loc-wrapper').html(response.html);
                     });
-
                 }
-
                 function handleClose() {
-                    //console.log('cancelled, nothing happened');
                     cleanup();
                 }
-
-                // Cleanup function to remove event listeners and close the menu
                 function cleanup() {
                     document.getElementById('menu-confirmation').classList.remove('menu-active');
                     document.getElementById('cancel').removeEventListener('click', handleCancel);
@@ -258,7 +246,6 @@ $(document).ready(function() {
                         button.removeEventListener('click', handleClose);
                     });
                 }
-
                 // Attach event listeners
                 document.getElementById('cancel').addEventListener('click', handleCancel);
                 document.getElementById('continue').addEventListener('click', handleContinue);

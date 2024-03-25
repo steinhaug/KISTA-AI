@@ -22,7 +22,7 @@ try {
              FROM `" . $kista_dp . "replicate__images` `reim` 
              INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.`reid` = `reup`.`reid` AND `reim`.`image_id` = ? 
              INNER JOIN `" . $kista_dp . "users__sessions` `s` ON `reup`.`user_id` = `s`.`user_id` 
-             WHERE (`s`.`user_id` = ? OR `s`.`google_id` = ?)", 
+             WHERE `reim`.`deleted` = 0 AND (`s`.`user_id` = ? OR `s`.`google_id` = ?)", 
             'iii', 
             [$image_id, $USER_ID, $user_google_id], 
             true
@@ -31,7 +31,8 @@ try {
         $p_sql = [
             "SELECT `reim`.`reid` 
              FROM `" . $kista_dp . "replicate__images` `reim` 
-             INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.`reid` = `reup`.`reid` AND `reim`.`image_id` = ? AND `reup`.user_id = ?", 
+             INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.`reid` = `reup`.`reid` 
+             WHERE `reim`.`deleted` = 0 AND `reim`.`image_id` = ? AND `reup`.user_id = ?", 
             'ii', 
             [$image_id, $USER_ID], 
             true
@@ -41,8 +42,11 @@ try {
     if (($item = $mysqli->prepared_query1($p_sql)) === null)
         throw new Exception('Image not found');
 
+    $success = $mysqli->query("UPDATE `" . $kista_dp . "replicate__images` SET `deleted`=1 WHERE `image_id`=" . (int) $image_id);
+    logfile('Image ' . $image_id . ' deleted.');
+
     $jsondata['CSSID'] = $CSSID;
-    $jsondata['message'] = 'Ready for operation';
+    $jsondata['message'] = 'Image deleted';
 
 } catch (Exception $e) {
     $error = $e->getMessage();
