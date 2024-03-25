@@ -110,7 +110,7 @@ if (($items = $mysqli->prepared_query("SELECT * FROM `" . $kista_dp . "replicate
                             <div class="p-2 bg-theme rounded-sm">
                                 <div class="d-flex">
                                     <div>
-                                        <h4 class="mb-n1 font-14 line-height-xs pb-2">' . $src_name . '</h4>
+                                        <h4 class="mb-n1 font-14 line-height-xs pb-2">-</h4>
                                     </div>
                                     <div class="ms-auto">
                                         <a href="show-avatar.php?reid=' . $reid . '&download=' . $img['filename'] . '">
@@ -134,7 +134,11 @@ if (($items = $mysqli->prepared_query("SELECT * FROM `" . $kista_dp . "replicate
 
 }
 ?>
-
+        <div class="card card-style">
+            <div class="content mt-3">
+                <p>Bildene er lagt til galleri siden.</p>
+            </div>
+		</div>
 
 
         <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
@@ -154,6 +158,8 @@ if (($items = $mysqli->prepared_query("SELECT * FROM `" . $kista_dp . "replicate
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js.php?<?=$html_NoCache_Version?>"></script>
+<script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="scripts/avatarify-app.js?<?=$html_NoCache_Version?>"></script>
 
 <?php
 output_session_notification();
