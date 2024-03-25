@@ -9,6 +9,9 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - changed, _vars.php renamed for ../cred.{domain}_vars.php
 - changed, NROK tunnel = htdocs
 - changed, moving off-canvas elements outside page-content
+- added, help section explaining avatarify and ai-jargon
+- changed, new Avatarify main logo
+
 
 ### v0.11.4
 - fixed, index had old links to kista-ai.steinhaug.no, now set in _vars.php
