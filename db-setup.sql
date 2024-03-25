@@ -213,3 +213,8 @@ ALTER TABLE `kistaai_replicate__uploads`
 	CHANGE COLUMN `filename` `filename` VARCHAR(255) NOT NULL DEFAULT '' COMMENT 'On disk' COLLATE 'utf8mb4_danish_ci' AFTER `filehash`,
 	CHANGE COLUMN `extension` `extension` VARCHAR(32) NOT NULL DEFAULT '' COLLATE 'utf8mb4_danish_ci' AFTER `filename`;
 
+/* * *  */ 
+
+ALTER TABLE `kistaai_replicate__images`
+	ADD COLUMN `deleted` TINYINT NOT NULL DEFAULT 0 AFTER `image_id`;
+
