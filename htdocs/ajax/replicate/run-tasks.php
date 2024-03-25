@@ -65,11 +65,16 @@ if ($res->num_rows) {
         switch ($item['status']) {
             case 'start': $progress = 10; break;
             case 'task1': $progress = 20; break;
-            case 'waiting': updateStatus__replicate($item['reid'], ['status'=>'waiting2']); $progress = 30; break;
-            case 'waiting2': updateStatus__replicate($item['reid'], ['status'=>'waiting3']); $progress = 50; break;
-            case 'waiting3': updateStatus__replicate($item['reid'], ['status'=>'waiting4']); $progress = 60; break;
-            case 'waiting4': updateStatus__replicate($item['reid'], ['status'=>'waiting5']); $progress = 80; break;
-            case 'waiting5': $progress = 90; break;
+            case 'waiting':  updateStatus__replicate($item['reid'], ['status'=>'waiting2']); $progress = 30; break;
+            case 'waiting2': updateStatus__replicate($item['reid'], ['status'=>'waiting3']); $progress = 33; break;
+            case 'waiting3': updateStatus__replicate($item['reid'], ['status'=>'waiting4']); $progress = 45; break;
+            case 'waiting4': updateStatus__replicate($item['reid'], ['status'=>'waiting5']); $progress = 65; break;
+            case 'waiting5': updateStatus__replicate($item['reid'], ['status'=>'waiting6']); $progress = 73; break;
+            case 'waiting6': updateStatus__replicate($item['reid'], ['status'=>'waiting7']); $progress = 76; break;
+            case 'waiting7': updateStatus__replicate($item['reid'], ['status'=>'waiting8']); $progress = 79; break;
+            case 'waiting8': updateStatus__replicate($item['reid'], ['status'=>'waiting9']); $progress = 82; break;
+            case 'waiting9': updateStatus__replicate($item['reid'], ['status'=>'waiting10']); $progress = 86; break;
+            case 'waiting10': $progress = 90; break;
             case 'inference-complete':
                 // status comes from hook
                 $progress = 95;
