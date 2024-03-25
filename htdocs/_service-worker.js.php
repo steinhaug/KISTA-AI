@@ -21,17 +21,15 @@ $swlib->start_ob(false,false);
 // The app will serve fresh content right away or after 2-3 refreshes (open / close)
 var CACHE_NAME = APP_NAME + '-' + APP_VER;
 
-// Files required to make this app work offline.
-// Add all files you want to view offline below.
 // Leave REQUIRED_FILES = [] to disable offline.
 var REQUIRED_FILES = [
 
     // pages
-    'menu-footer-avatar-en.html',
     'menu-footer-avatar-nb.html',
-    'menu-colors.html',
+    'menu-footer-avatar-en.html',
     'menu-footer-en.html',
     'menu-footer-nb.html',
+    'menu-colors.html',
     'menu-main.html',
     'menu-share.html',
 
