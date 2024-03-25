@@ -196,3 +196,55 @@ function get_name_only($filename){
     return pathinfo($filename, PATHINFO_FILENAME);
     return substr($filename, 0, strrpos($filename, '.'));
 }
+
+function _bool($var, $g=null){
+
+    if($g!==null){
+        if($g=='_SESSION'){
+            $var = $_SESSION[$var] ?? '';
+        } else if($g=='_POST'){
+            $var = $_POST[$var] ?? '';
+        } else if($g=='_GET'){
+            $var = $_GET[$var] ?? '';
+        } else {
+            logfile('_bool $g unknown! ' . $g);
+            echo '_bool $g unknown! ' . $g;
+            exit;
+        }
+    }
+
+  if(is_bool($var)){
+    return $var;
+  } else if($var === NULL || $var === 'NULL' || $var === 'null'){
+    return false;
+  } else if(is_string($var)){
+    $var = strtolower(trim($var));
+    if($var=='false'){ return false;
+    } else if($var=='true'){ return true;
+    } else if($var=='no'){ return false;
+    } else if($var=='yes'){ return true;
+    } else if($var=='off'){ return false;
+    } else if($var=='on'){ return true;
+    } else if($var==''){ return false;
+    } else if(ctype_digit($var)){
+      if((int) $var)
+        return true;
+        else
+        return false;
+    } else { return true; }
+  } else if(ctype_digit((string) $var)){
+    if((int) $var)
+      return true;
+      else
+      return false;
+  } else if(is_array($var)){
+    if(count($var))
+      return true;
+      else
+      return false;
+  } else if(is_object($var)){
+    return true;// No reason to (bool) an object, we assume OK for crazy logic
+  } else {
+    return true;// Whatever came though must be something,  OK for crazy logic
+  }
+}
