@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "035f247ebc755fc9f80da56ac795cb46",
+    "content-hash": "7dbab09e18ce6cd9e4b0013649230063",
     "packages": [
         {
             "name": "benbjurstrom/replicate-php",
@@ -354,16 +354,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.339.0",
+            "version": "v0.341.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "5662d2ab3da41ac0e0e99db221a8c22c511c8f9c"
+                "reference": "50dad3cd4a3902bd2df0d96e7dc09cdaa2ba79b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/5662d2ab3da41ac0e0e99db221a8c22c511c8f9c",
-                "reference": "5662d2ab3da41ac0e0e99db221a8c22c511c8f9c",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/50dad3cd4a3902bd2df0d96e7dc09cdaa2ba79b9",
+                "reference": "50dad3cd4a3902bd2df0d96e7dc09cdaa2ba79b9",
                 "shasum": ""
             },
             "require": {
@@ -392,9 +392,9 @@
             ],
             "support": {
                 "issues": "https://github.com/googleapis/google-api-php-client-services/issues",
-                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.339.0"
+                "source": "https://github.com/googleapis/google-api-php-client-services/tree/v0.341.0"
             },
-            "time": "2024-03-10T01:06:17+00:00"
+            "time": "2024-03-24T01:08:16+00:00"
         },
         {
             "name": "google/auth",
@@ -2012,16 +2012,16 @@
         },
         {
             "name": "saloonphp/saloon",
-            "version": "v3.7.0",
+            "version": "v3.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/saloonphp/saloon.git",
-                "reference": "1830bf85a8157c6a618b4e0316f05f777f89716f"
+                "reference": "e669e8554f275c83aaa0b7d9d219b442e269f75f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/saloonphp/saloon/zipball/1830bf85a8157c6a618b4e0316f05f777f89716f",
-                "reference": "1830bf85a8157c6a618b4e0316f05f777f89716f",
+                "url": "https://api.github.com/repos/saloonphp/saloon/zipball/e669e8554f275c83aaa0b7d9d219b442e269f75f",
+                "reference": "e669e8554f275c83aaa0b7d9d219b442e269f75f",
                 "shasum": ""
             },
             "require": {
@@ -2044,12 +2044,14 @@
                 "phpstan/phpstan": "^1.9",
                 "saloonphp/xml-wrangler": "^1.1",
                 "spatie/ray": "^1.33",
-                "symfony/dom-crawler": "^6.0"
+                "symfony/dom-crawler": "^6.0 || ^7.0",
+                "symfony/var-dumper": "^6.3 || ^7.0"
             },
             "suggest": {
                 "illuminate/collections": "Required for the response collect() method.",
                 "saloonphp/xml-wrangler": "Required for the response xmlReader() method.",
-                "symfony/dom-crawler": "Required for the response dom() method."
+                "symfony/dom-crawler": "Required for the response dom() method.",
+                "symfony/var-dumper": "Required for default debugging drivers."
             },
             "type": "library",
             "autoload": {
@@ -2079,7 +2081,7 @@
             ],
             "support": {
                 "issues": "https://github.com/saloonphp/saloon/issues",
-                "source": "https://github.com/saloonphp/saloon/tree/v3.7.0"
+                "source": "https://github.com/saloonphp/saloon/tree/v3.8.0"
             },
             "funding": [
                 {
@@ -2087,7 +2089,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-02-27T19:57:41+00:00"
+            "time": "2024-03-20T23:14:31+00:00"
         },
         {
             "name": "steinhaug/libs",
