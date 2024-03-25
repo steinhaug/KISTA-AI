@@ -46,11 +46,11 @@ require_once 'func.login.php';
 
             <div class="card card-style">
                 <div class="content">
-                    <p class="mb-n1 color-highlight font-600">Legal</p>
+                    <p class="mb-n1 color-highlight font-600">Legal v1.0.1</p>
 <?php
-$terms = '### KISTA AI - Terms of Service
+$terms = '### ' . strtoupper($PWA_APP_NAME) . ' - Terms of Service
 
-These Terms of Service ("Terms") govern your access to and use of the KISTA AI website ("Website") and any services provided therein. Please read these Terms carefully before using the Website.
+These Terms of Service ("Terms") govern your access to and use of the ' . strtoupper($PWA_APP_NAME) . ' website ("Website") and any services provided therein. Please read these Terms carefully before using the Website.
 
 ##### 1. Acceptance of Terms
 
@@ -70,21 +70,21 @@ c. Security: Users must not attempt to interfere with the security or integrity 
 
 ##### 4. Intellectual Property
 
-a. Ownership: All intellectual property rights in the Website and its content belong to KISTA AI.  
+a. Ownership: All intellectual property rights in the Website and its content belong to ' . strtoupper($PWA_APP_NAME) . '.  
 b. Use of Content: Users may not reproduce, distribute, or modify any content from the Website without prior consent.  
 
 ##### 5. Limitation of Liability
 
-a. No Warranty: The Website is provided "as is" and KISTA AI makes no warranties, express or implied, regarding its accuracy, reliability, or suitability for any purpose.  
-b. Limitation of Liability: KISTA AI shall not be liable for any direct, indirect, incidental, special, or consequential damages arising out of the use of or inability to use the Website.  
+a. No Warranty: The Website is provided "as is" and ' . strtoupper($PWA_APP_NAME) . ' makes no warranties, express or implied, regarding its accuracy, reliability, or suitability for any purpose.  
+b. Limitation of Liability: ' . strtoupper($PWA_APP_NAME) . ' shall not be liable for any direct, indirect, incidental, special, or consequential damages arising out of the use of or inability to use the Website.  
 
 ##### 6. Indemnification
 
-Users agree to indemnify and hold harmless KISTA AI, its officers, directors, employees, and agents from any claims, liabilities, damages, or expenses arising out of their use of the Website or violation of these Terms.
+Users agree to indemnify and hold harmless ' . strtoupper($PWA_APP_NAME) . ', its officers, directors, employees, and agents from any claims, liabilities, damages, or expenses arising out of their use of the Website or violation of these Terms.
 
 ##### 7. Modifications
 
-KISTA AI reserves the right to modify or update these Terms at any time without prior notice. Users are encouraged to review these Terms regularly for any changes.
+' . strtoupper($PWA_APP_NAME) . ' reserves the right to modify or update these Terms at any time without prior notice. Users are encouraged to review these Terms regularly for any changes.
 
 ##### 8. Governing Law
 
@@ -94,7 +94,7 @@ These Terms shall be governed by and construed in accordance with the laws of No
 
 If you have any questions or concerns about these Terms, please contact us at steinhaug@gmail.com.
 
-By using the KISTA AI Website, you acknowledge that you have read, understood, and agree to be bound by these Terms.';
+By using the ' . strtoupper($PWA_APP_NAME) . ' Website, you acknowledge that you have read, understood, and agree to be bound by these Terms.';
 $Parsedown = new Parsedown();
 echo $Parsedown->text( $terms );
 ?>
