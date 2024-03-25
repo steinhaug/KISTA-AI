@@ -7432,3 +7432,16 @@ a.img-fluid img.img-fluid {
         opacity: 0;
     }
 }
+
+/* * * */
+
+.bg-6 {
+    background-image: url(/images/avatarify/700x466.jpg);
+}
+.bg-6s {
+    background-image: url(/images/avatarify/700x466-symbol.jpg);
+}
+.bg-6bg {
+    background-image: url(/images/avatarify/700x466-bg.jpg);
+}
+

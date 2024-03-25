@@ -44,10 +44,10 @@ require_once 'func.login.php';
 <style>
 <?php
 if($lang=='en'){
-    $bgImgStyle = "background-image: url('/images/avatarify-main.jpg');";
+    $bgImgStyle = "background-image: url('/images/avatarify/700x466.jpg');";
     //.bg-fpnb { background-image: url(/images/pictures/refrigerator-700-en.png); }
 } else {
-    $bgImgStyle = "background-image: url('/images/avatarify-main.jpg');";
+    $bgImgStyle = "background-image: url('/images/avatarify/700x466.jpg');";
     // .bg-fpnb { background-image: url(/images/pictures/refrigerator-700-nb.png); }
 }
 ?>
