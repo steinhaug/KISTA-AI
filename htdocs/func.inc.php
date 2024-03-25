@@ -4,7 +4,44 @@ highlight, green, grass, red, orange, yellow, sunny, blue, teal, mint, pink, pin
 facebook, linkedin, twitter, google, whatsapp, pinterest, instagram, mail, phone, color-highlight, white, black
 */
 
-require dirname(APPDATA_PATH) . '/_vars.php';
+if(!defined('APPDATA_PATH')) define('APPDATA_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'inc_appdata');
+if(!defined('UPLOAD_PATH')) define('UPLOAD_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'uploaded_files');
+
+if (!function_exists('getHost')) {
+    function getHost() {
+        $possibleHostSources = array('HTTP_X_FORWARDED_HOST', 'HTTP_HOST', 'SERVER_NAME', 'SERVER_ADDR');
+        $sourceTransformations = array(
+            "HTTP_X_FORWARDED_HOST" => function ($value) {
+                $elements = explode(',', $value);
+                return trim(end($elements));
+            }
+        );
+        $host = '';
+        foreach ($possibleHostSources as $source) {
+            if (!empty($host)) {
+                break;
+            }
+            if (empty($_SERVER[$source])) {
+                continue;
+            }
+            $host = $_SERVER[$source];
+            if (array_key_exists($source, $sourceTransformations)) {
+                $host = $sourceTransformations[$source]($host);
+            }
+        }
+
+        // Remove port number from host
+        $host = preg_replace('/:\d+$/', '', $host);
+
+        return trim($host);
+    }
+}
+
+$vars_file = 'cred.' . getHost() . '_vars.php';
+if( file_exists(dirname(dirname(APPDATA_PATH)) . DIRECTORY_SEPARATOR . $vars_file) )
+    require dirname(dirname(APPDATA_PATH)) . DIRECTORY_SEPARATOR . $vars_file;
+    else
+    require dirname(APPDATA_PATH) . DIRECTORY_SEPARATOR . '_vars.php';
 
 if(!function_exists('ob_flush')){ function ob_flush() { return true; }} // Patch for DG 80.64.202.13 server
 if(!function_exists('same_length')){ function same_length($a,$b,$s=' '){ if(strlen((string) $a) == strlen((string) $b)) return array($a,$b); if(strlen((string) $a) > strlen((string) $b)){ while(strlen((string) $a) > strlen((string) $b)){ $b .= $s; } return array($a,$b); } else { while(strlen((string) $a) < strlen((string) $b)){ $a .= $s; } return array($a,$b);} return array($a,$b);}}
@@ -46,18 +83,20 @@ mb_internal_encoding('UTF-8');
 setlocale(LC_TIME, "nb_NO.utf8");
 
 if(!isset($PHP_SELF))
-$PHP_SELF = $_SERVER["SCRIPT_NAME"];
+    $PHP_SELF = $_SERVER["SCRIPT_NAME"];
 
 if(!isset($HTTP_REFERER)){
-	if(isset($HTTP_REFERER))
-	$HTTP_REFERER = $_SERVER["HTTP_REFERER"];
-	else
-	$HTTP_REFERER = '';
+	if(isset($_SERVER["HTTP_REFERER"]))
+        $HTTP_REFERER = $_SERVER["HTTP_REFERER"];
+        else
+        $HTTP_REFERER = '';
 }
+
 if( !isset($_SERVER['HTTP_ACCEPT_ENCODING']) )
     $_SERVER['HTTP_ACCEPT_ENCODING'] = '';
+
 if( !isset($_SERVER['HTTP_USER_AGENT']) )
-    $_SERVER['HTTP_USER_AGENT'] = '';
+    $_SERVER['HTTP_USER_AGENT'] = 'N/A';
 
 if( empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) )
     $HTTP_ACCEPT_LANGUAGE = '';
@@ -83,6 +122,7 @@ if( str_contains($HTTP_ACCEPT_LANGUAGE, 'nb-NO') ){
 class KistaDashboardException extends Exception
 {
 }
+
 define('LF', "\n");
 
 // Loaded from http tunnel 
