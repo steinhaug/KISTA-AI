@@ -327,7 +327,7 @@ switch($modulus) {
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="scripts/custom.js?<?=$html_NoCache_Version?>"></script>
+<script type="text/javascript" src="scripts/custom.js.php?<?=$html_NoCache_Version?>"></script>
 
 <?php
 output_session_notification();

@@ -159,7 +159,7 @@ if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename`
 </div>
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
-<script type="text/javascript" src="scripts/custom.js?<?=$html_NoCache_Version?>"></script>
+<script type="text/javascript" src="scripts/custom.js.php?<?=$html_NoCache_Version?>"></script>
 
 <script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="scripts/gallery-controller.js?<?=$html_NoCache_Version?>"></script>
