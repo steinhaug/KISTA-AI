@@ -12,6 +12,38 @@ $imgs = [
     'docs/figs/style-transfer-03.png',
 ];
 
+
+
+
+
+/**
+ * Calculate the #id for 
+ *
+ * @return void
+ */
+function calculate_dataMenuActive(){
+    $name = pathinfo ($_SERVER['SCRIPT_NAME'], PATHINFO_FILENAME);
+    switch ($name ) {
+        case 'gallery-avatar':
+            $id = 'nav-gallery';
+            break;
+        case 'docs':
+            $id = 'nav-info';
+            break;
+        case 'contact':
+            $id = 'nav-contact';
+            break;
+        default:
+            $id = 'nav-home';
+            break;
+    }
+    return $id;
+}
+
+
+calculate_dataMenuActive();
+
+/*
 foreach( $imgs as $img ){
 
         $imgName = get_name_only($img) . '_thumb.jpg';
@@ -29,3 +61,4 @@ foreach( $imgs as $img ){
         }
 
 }
+*/

@@ -13,6 +13,8 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - changed, new Avatarify main logo
 - changed, avatarify gallery queries now handles google login sessions
 - fixed, when logging in with google the uses session table was not updated
+- added, added avatarify-app.js to all pages
+- added, delete image enabled
 
 ### v0.11.4
 - fixed, index had old links to kista-ai.steinhaug.no, now set in _vars.php

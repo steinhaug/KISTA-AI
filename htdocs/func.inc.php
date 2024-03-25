@@ -165,7 +165,29 @@ function anyHigher($max, ...$numbers){
     return false;
 }
 
-
+/**
+ * Calculate the #id for 
+ *
+ * @return void
+ */
+function calculate_dataMenuActive(){
+    $name = pathinfo ($_SERVER['SCRIPT_NAME'], PATHINFO_FILENAME);
+    switch ($name ) {
+        case 'gallery-avatar':
+            $id = 'nav-gallery';
+            break;
+        case 'docs':
+            $id = 'nav-info';
+            break;
+        case 'contact':
+            $id = 'nav-contact';
+            break;
+        default:
+            $id = 'nav-home';
+            break;
+    }
+    return $id;
+}
 
 function setActiveIf($x,$y){
     if($x == $y)
@@ -190,7 +212,8 @@ function HTML_FOOTER($i){
     </div>
     ';
 }
-function HTML_FOOTER_AVATAR($i){
+
+function HTML_FOOTER_AVATAR($i, $main_active=''){
     global $lang;
 
     if($lang == 'nb')
@@ -198,13 +221,15 @@ function HTML_FOOTER_AVATAR($i){
         else
         $titles = ['Home', 'Upload', 'Gallery'];
 
+    $data_menu_active = calculate_dataMenuActive();
+
     return '
     <div id="footer-bar" class="footer-bar-6">
         <!-- <a href="index-components.html" class="' . setActiveIf($i,1) . '"><i class="fa fa-layer-group"></i><span>Features</span></a> -->
         <a href="index.php" class="' . setActiveIf($i,2) . '"><i class="fa fa-file"></i><span>' . $titles[0] . '</span></a>
         <a href="upload-face.php" class="circle-nav ' . setActiveIf($i,3) . ' external-link"><i class="fa fa-home"></i><span>' . $titles[1] . '</span></a>
         <a href="gallery-avatar.php" class="' . setActiveIf($i,4) . '"><i class="fa fa-camera"></i><span>' . $titles[2] . '</span></a>
-        <a href="#" data-menu="menu-main" data-menu-active="" class="' . setActiveIf($i,5) . '"><i class="fa fa-bars"></i><span>Menu</span></a>
+        <a href="#" data-menu="menu-main" data-menu-active="' . $data_menu_active . '" class="' . setActiveIf($i,5) . '"><i class="fa fa-bars"></i><span>Menu</span></a>
     </div>
     ';
 }

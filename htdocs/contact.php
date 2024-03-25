@@ -186,6 +186,8 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js.php?<?=$html_NoCache_Version?>"></script>
+<script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="scripts/avatarify-app.js?<?=$html_NoCache_Version?>"></script>
 
 
 <div id="error-2" data-dismiss="notification-4" data-bs-delay="1000" data-bs-autohide="true" class="notification bg-red-dark shadow-xl opacity-95 fade hide">

@@ -70,6 +70,8 @@ require_once 'func.login.php';
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js.php?<?=$html_NoCache_Version?>"></script>
+<script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="scripts/avatarify-app.js?<?=$html_NoCache_Version?>"></script>
 
 <?php
 output_session_notification();
