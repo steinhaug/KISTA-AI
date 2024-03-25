@@ -1,6 +1,41 @@
 <?php
 header("Content-type: application/json;charset=utf-8");
-require '_vars.php';
+
+if(!defined('APPDATA_PATH')) define('APPDATA_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'inc_appdata');
+if (!function_exists('getHost')) {
+    function getHost() {
+        $possibleHostSources = array('HTTP_X_FORWARDED_HOST', 'HTTP_HOST', 'SERVER_NAME', 'SERVER_ADDR');
+        $sourceTransformations = array(
+            "HTTP_X_FORWARDED_HOST" => function ($value) {
+                $elements = explode(',', $value);
+                return trim(end($elements));
+            }
+        );
+        $host = '';
+        foreach ($possibleHostSources as $source) {
+            if (!empty($host)) {
+                break;
+            }
+            if (empty($_SERVER[$source])) {
+                continue;
+            }
+            $host = $_SERVER[$source];
+            if (array_key_exists($source, $sourceTransformations)) {
+                $host = $sourceTransformations[$source]($host);
+            }
+        }
+
+        // Remove port number from host
+        $host = preg_replace('/:\d+$/', '', $host);
+
+        return trim($host);
+    }
+}
+$vars_file = 'cred.' . getHost() . '_vars.php';
+if( file_exists(dirname(dirname(APPDATA_PATH)) . DIRECTORY_SEPARATOR . $vars_file) )
+    require dirname(dirname(APPDATA_PATH)) . DIRECTORY_SEPARATOR . $vars_file;
+    else
+    require dirname(APPDATA_PATH) . DIRECTORY_SEPARATOR . '_vars.php';
 ?>{
 "version": "<?=$PWA_APP_VER?>",
 "lang" : "en",
