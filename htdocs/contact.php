@@ -105,8 +105,8 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
                 <p class="text-center pt-3">
                     <i class="fa fa-quote-left fa-4x color-green-dark"></i>
                 </p>
-                <h1 class="text-center font-700 pb-3">My shit is quotable</h1>
-                <p class="text-center pb-4 color-highlight">- Kim Steinhaug 🤣</p>
+                <h1 class="text-center font-700 pb-3">Mind bending powers,<br>Bending the mind gives power<br>– or –<br>Power to bend the mind,<br>It is all in the mind<br>– !the power! -</h1>
+                <p class="text-center pb-4 color-highlight">- Kim Steinhaug, i det poetiske hjørnet 🤣</p>
             </div>
         </div>
 
@@ -173,7 +173,7 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
     </div>
     <!-- Page content ends here-->
     
-    <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>
+    <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html?<?=$html_NoCache_Version?>" data-menu-width="280" data-menu-active=""></div>
     <div id="menu-share" class="menu menu-box-bottom rounded-m" data-menu-load="menu-share.html" data-menu-height="370"></div>  
     <div id="menu-colors" class="menu menu-box-bottom rounded-m" data-menu-load="menu-colors.html" data-menu-height="480"></div> 
 
