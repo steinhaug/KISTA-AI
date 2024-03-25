@@ -12,7 +12,6 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, help section explaining avatarify and ai-jargon
 - changed, new Avatarify main logo
 
-
 ### v0.11.4
 - fixed, index had old links to kista-ai.steinhaug.no, now set in _vars.php
 - fixed, Google API has updated syntax for oauth login.

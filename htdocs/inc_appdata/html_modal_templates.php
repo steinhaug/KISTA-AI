@@ -25,10 +25,14 @@ function write_modal_tpls(){
                 $data = ['image'=>'/images/avatars/person.png','email'=>'example-email@gmail.com','name'=>'Ola Nordmann'];
             }
             $html .= str_replace(
-                ['{{USER_IMAGE}}',  '{{USER_EMAIL}}',   '{{USER_NAME}}'], 
-                [   $data['image'],    $data['email'],     $data['name']], 
+                ['{{USER_IMAGE}}',  '{{USER_EMAIL}}',   '{{USER_NAME}}', '{{URL_LOGOUT}}'], 
+                [  $data['image'],    $data['email'],     $data['name'], 'index.php?action=logout&returl=' . rawurlencode(prepareLocation())], 
                 $_html_modal_templates[$key]
             );
+
+            
+
+
         } else {
             $html .= $_html_modal_templates[$key];
         } 
@@ -102,7 +106,7 @@ $_html_modal_templates['logout'] = '
                 </div>
             </div>
             <br>
-            <p><a href="index.php?action=logout" class="close-menu btn btn-full btn-m shadow-l rounded-s text-uppercase font-600 gradient-blue mt-n2 external-link">' . $_l['logout'] . '</a></p>
+            <p><a href="{{URL_LOGOUT}}" class="close-menu btn btn-full btn-m shadow-l rounded-s text-uppercase font-600 gradient-blue mt-n2 external-link">' . $_l['logout'] . '</a></p>
         </div>
     </div>
 ';

@@ -35,6 +35,7 @@ if(isset($_GET['code'])):
         // checking user already exists or not
         if( ($user_google_id = $mysqli->prepared_query1("SELECT `user_google_id` FROM `" . $kista_dp . "users__google` WHERE `account_id`=?", 's', [$google_account_info->id], 0)) !== null ){
             $_SESSION['USER_GOOGLE_LOGIN'] = [$user_google_id, $google_account_info->id, ['image'=>$google_account_info->picture, 'name'=>trim($google_account_info->name), 'email'=>$google_account_info->email]];
+            logfile('user_google_id already exist, ' . $user_google_id);
             setGoogleID4Session($user_google_id);
             if(!empty($_SESSION['logged_in_location'])){
                 $_SESSION['logged_in_alert'] = true;

@@ -16,5 +16,26 @@ if (ini_get("session.use_cookies")) {
 }
 // Finally, destroy the session.
 session_destroy();
-header("Location: index.php");
+
+
+$uri = false;
+if( !empty($_GET['returl']) ){
+    $uri = rawurldecode($_GET['returl']);
+}
+
+
+if($uri!==false){
+
+    if(!str_contains($uri, '?'))
+        $uri .= '?';
+    $uri .= '&logged_out=true';
+
+}
+
+
+if($uri!==false)
+    header('Location: ' . $uri);
+    else
+    header("Location: index.php");
+
 exit;
