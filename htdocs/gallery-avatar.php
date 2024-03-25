@@ -56,7 +56,7 @@ if($lang == 'en'){
 
     <div class="header header-fixed header-logo-center">
         <a href="gallery.php" class="header-title"><?=$txts['pageTitle']?></a>
-        <?=HTML_HEADER('header-fixed')?>
+        <?=$HTML_HEADER('header-fixed')?>
     </div>
 
     <?=HTML_FOOTER_AVATAR(4)?>
@@ -143,7 +143,7 @@ if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename`
 }
 ?>
 
-        <div data-menu-load="<?=$appConf['menuFooterAvatar']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
     
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>

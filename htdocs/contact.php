@@ -53,10 +53,10 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
 
     <div class="header header-fixed header-logo-center">
         <a href="contact.php" class="header-title">Contact</a>
-        <?=HTML_HEADER('header-fixed')?>
+        <?=$HTML_HEADER('header-fixed')?>
     </div>
 
-    <?=HTML_FOOTER(4)?>
+    <?=$HTML_FOOTER(4)?>
 
     <div class="page-content header-clear-medium">
 
@@ -110,8 +110,6 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
             </div>
         </div>
 
-
-
         <div class="card card-style">
             <div class="content mb-0">        
                 <h3>Kontakt skjema</h3>
@@ -121,8 +119,7 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
 
                 <form action="contact.php" method="post" id="contactForm">
 
-                <div class="input-style has-borders has-icon validate-field mb-4">
-                    <i class="fa fa-user"></i>
+                <div class="input-style has-borders no-icon validate-field mb-4">
                     <input name="name" type="text" class="form-control validate-name" id="fname" placeholder="Name">
                     <label for="form1" class="color-highlight">Name</label>
                     <i class="fa fa-times disabled invalid color-red-dark"></i>
@@ -172,7 +169,7 @@ if( !empty($_POST['name']) and !empty($_POST['email']) and !empty($_POST['messag
 
 
 
-        <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
     <!-- Page content ends here-->
     

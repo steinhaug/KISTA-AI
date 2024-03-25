@@ -156,10 +156,10 @@ if($lang == 'en'){
 
     <div class="header header-fixed header-logo-center header-auto-show">
         <a href="upload.php" class="header-title"><?=$txts['pageTitle']?></a>
-        <?=HTML_HEADER('header-fixed')?>
+        <?=$HTML_HEADER('header-fixed')?>
     </div>
 
-    <?=HTML_FOOTER(3)?>
+    <?=$HTML_FOOTER(3)?>
 
     <div class="page-title page-title-fixed">
         <h1><?=$txts['pageTitle']?></h1>
@@ -213,7 +213,7 @@ if($lang == 'en'){
 
 
 
-        <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
     <!-- Page content ends here-->
 

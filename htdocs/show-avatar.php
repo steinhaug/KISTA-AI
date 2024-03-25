@@ -64,7 +64,7 @@ if (($item = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate
 
     <div class="header header-fixed header-logo-center">
         <a href="reciepe.php" class="header-title">AI Avatar Image</a>
-        <?=HTML_HEADER('header-fixed')?>
+        <?=$HTML_HEADER('header-fixed')?>
     </div>
 
     <?=HTML_FOOTER_AVATAR(2)?>
@@ -137,7 +137,7 @@ if (($items = $mysqli->prepared_query("SELECT * FROM `" . $kista_dp . "replicate
 
 
 
-        <div data-menu-load="<?=$appConf['menuFooterAvatar']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
     <!-- Page content ends here-->
     

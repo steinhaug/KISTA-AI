@@ -66,10 +66,10 @@ if($lang=='en'){
 
     <div class="header header-fixed header-logo-center header-auto-show">
         <a href="index.php" class="header-title">Magic Meal Maker</a>
-        <?=HTML_HEADER('header-fixed')?>
+        <?=$HTML_HEADER('header-fixed')?>
     </div>
 
-    <?=HTML_FOOTER(2)?>
+    <?=$HTML_FOOTER(2)?>
 
     <div class="page-content">
 
@@ -210,7 +210,7 @@ if($lang=='en'){
             </div>
 <?php } ?>
 
-        <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
     <!-- Page content ends here-->
         

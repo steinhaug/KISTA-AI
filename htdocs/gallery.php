@@ -56,10 +56,10 @@ if($lang == 'en'){
 
     <div class="header header-fixed header-logo-center">
         <a href="gallery.php" class="header-title"><?=$txts['pageTitle']?></a>
-        <?=HTML_HEADER('header-fixed')?>
+        <?=$HTML_HEADER('header-fixed')?>
     </div>
 
-    <?=HTML_FOOTER(4)?>
+    <?=$HTML_FOOTER(4)?>
 
     <div class="page-content header-clear-medium">
 
@@ -297,7 +297,7 @@ foreach($items as $item){
                 </div>
             </div>
 
-        <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
     
     <div id="menu-main" class="menu menu-box-left rounded-0" data-menu-load="menu-main.html" data-menu-width="280" data-menu-active="nav-media"></div>

@@ -20,3 +20,7 @@ $PWA_LANG = [
     'en' => ['title'=>'Avatarify! - KISTA AI'],
     'highlight' => '<link rel="stylesheet" class="page-highlight" type="text/css" href="styles/highlights/highlight_red.css">'
 ];
+
+$_menuSuffix = '_AVATAR';
+$HTML_HEADER = 'HTML_HEADER' . $_menuSuffix;
+$HTML_FOOTER = 'HTML_FOOTER' . $_menuSuffix;

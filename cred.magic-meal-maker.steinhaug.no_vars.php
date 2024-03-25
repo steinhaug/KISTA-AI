@@ -20,3 +20,7 @@ $PWA_LANG = [
     'en' => ['title'=>'Your Refrigerator\'s Secret Chef! - KISTA AI'],
     'highlight' => ''
 ];
+
+$_menuSuffix = '';
+$HTML_HEADER = 'HTML_HEADER' . $_menuSuffix;
+$HTML_FOOTER = 'HTML_FOOTER' . $_menuSuffix;

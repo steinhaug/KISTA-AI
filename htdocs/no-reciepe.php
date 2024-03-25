@@ -88,10 +88,10 @@ echo '</style>';
 
     <div class="header header-fixed header-logo-center">
         <a href="upload.php" class="header-title"><?=$txts['pageTitle']?></a>
-        <?=HTML_HEADER('header-fixed')?>
+        <?=$HTML_HEADER('header-fixed')?>
     </div>
 
-    <?=HTML_FOOTER(2)?>
+    <?=$HTML_FOOTER(2)?>
 
     <div class="page-content pb-0">
         <div data-card-height="cover" class="card card-style no-fridge m-0" style="<?=$bgImgStyle?>">

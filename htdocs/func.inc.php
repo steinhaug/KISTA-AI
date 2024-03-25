@@ -108,14 +108,14 @@ if( str_contains($HTTP_ACCEPT_LANGUAGE, 'nb-NO') ){
     $appConf = [
         'headTitle' => $PWA_LANG['nb']['title'],
         'menuFooter' => 'menu-footer-nb.html',
-        'menuFooterAvatar' => 'menu-footer-avatar-nb.html'
+        'menuFooter_AVATAR' => 'menu-footer-avatar-nb.html'
     ];
 } else {
     $lang = 'en';
     $appConf = [
         'headTitle' => $PWA_LANG['en']['title'],
         'menuFooter' => 'menu-footer-en.html',
-        'menuFooterAvatar' => 'menu-footer-avatar-en.html'
+        'menuFooter_AVATAR' => 'menu-footer-avatar-en.html'
     ];
 }
 
@@ -204,7 +204,7 @@ function HTML_FOOTER_AVATAR($i){
         <a href="index.php" class="' . setActiveIf($i,2) . '"><i class="fa fa-file"></i><span>' . $titles[0] . '</span></a>
         <a href="upload-face.php" class="circle-nav ' . setActiveIf($i,3) . ' external-link"><i class="fa fa-home"></i><span>' . $titles[1] . '</span></a>
         <a href="gallery-avatar.php" class="' . setActiveIf($i,4) . '"><i class="fa fa-camera"></i><span>' . $titles[2] . '</span></a>
-        <!-- <a href="#" data-menu="menu-colors" class="' . setActiveIf($i,5) . '"><i class="fa fa-bars"></i><span>Menu</span></a> -->
+        <a href="#" data-menu="menu-main" class="' . setActiveIf($i,5) . '"><i class="fa fa-bars"></i><span>Menu</span></a>
     </div>
     ';
 }
@@ -259,7 +259,9 @@ function HTML_HEADER($part, $user_image=null){
         ';
     }
 }
-
+function HTML_HEADER_AVATAR($part, $user_image=null){
+    return HTML_HEADER($part, $user_image);
+}
 
 /**
  * Prepare URL for use in header.location

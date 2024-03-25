@@ -149,7 +149,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
 
     <div class="header header-fixed header-logo-center">
         <a href="error.php" class="header-title">AI Avatar Maker</a>
-        <?=HTML_HEADER('header-fixed')?>
+        <?=$HTML_HEADER('header-fixed')?>
     </div>
 
     <?=HTML_FOOTER_AVATAR(3)?>
@@ -316,7 +316,7 @@ switch($modulus) {
 
 
 
-        <div data-menu-load="<?=$appConf['menuFooterAvatar']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
     <!-- Page content ends here-->
     

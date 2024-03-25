@@ -42,7 +42,7 @@ if( empty($_GET['reid']) ){
 
     <div class="header header-fixed header-logo-center">
         <a href="processing.php" class="header-title">Processing</a>
-        <?=HTML_HEADER('header-fixed')?>
+        <?=$HTML_HEADER('header-fixed')?>
     </div>
 
     <?=HTML_FOOTER_AVATAR(3)?>
@@ -68,7 +68,7 @@ if( empty($_GET['reid']) ){
             </div>
 
 
-        <div data-menu-load="<?=$appConf['menuFooterAvatar']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
     <!-- Page content ends here-->
     

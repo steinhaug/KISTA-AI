@@ -67,7 +67,7 @@ if($lang=='en'){
 
     <div class="header header-fixed header-logo-center header-auto-show">
         <a href="index.php" class="header-title">Avatarify</a>
-        <?=HTML_HEADER('header-fixed')?>
+        <?=$HTML_HEADER('header-fixed')?>
     </div>
 
     <?=HTML_FOOTER_AVATAR(2)?>
@@ -220,7 +220,7 @@ if($lang=='en'){
 <?php } ?>
 
 
-        <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
     <!-- Page content ends here-->
         

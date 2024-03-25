@@ -37,10 +37,10 @@ require_once 'func.login.php';
 
     <div class="header header-fixed header-logo-center">
         <a href="index.html" class="header-title">Privacy Policy</a>
-        <?=HTML_HEADER('header-fixed')?>
+        <?=$HTML_HEADER('header-fixed')?>
     </div>
 
-    <?=HTML_FOOTER(4)?>
+    <?=$HTML_FOOTER(4)?>
 
     <div class="page-content header-clear-medium">
 
@@ -93,7 +93,7 @@ echo $Parsedown->text( $privacy );
             </div>
 
 
-        <div data-menu-load="<?=$appConf['menuFooter']?>"></div>
+        <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
     <!-- Page content ends here-->
     
