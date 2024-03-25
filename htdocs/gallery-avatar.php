@@ -65,7 +65,17 @@ if($lang == 'en'){
 
 
 
-
+        <div class="card card-style">
+            <div class="content mt-3">
+                <p class="mb-n1 color-highlight font-600 mb-n1">Project Briefing </p>
+                <h2>Description</h2>
+                <p><?php
+                    echo 'USER_ID: ' . $_SESSION['USER_ID'] . '<br>';
+                    $user_google_id = $_SESSION['USER_GOOGLE_LOGIN'][0] ?? 0;
+                    echo 'user_google_id: ' . $user_google_id . '<br>';
+                ?></p>
+            </div>
+		</div>
 
 
         <div class="content mt-0 mb-0">
@@ -161,7 +171,7 @@ if (($items = $mysqli->prepared_query("SELECT *, `reim`.`filename` AS `filename`
 <script type="text/javascript" src="scripts/custom.js.php?<?=$html_NoCache_Version?>"></script>
 
 <script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="scripts/gallery-controller.js?<?=$html_NoCache_Version?>"></script>
+<script type="text/javascript" src="scripts/avatarify-app.js?<?=$html_NoCache_Version?>"></script>
 
 <style>
 .working {

@@ -16,7 +16,7 @@ async function _compress () {
 
     (async () => {
         const deletedPaths = await del([
-            'scripts/gallery-controller.js'
+            'scripts/avatarify-app.js'
         ], {force: true, dryRun: false, onlyFiles:true});
     })();
 
@@ -24,7 +24,7 @@ async function _compress () {
             'htdocs/scripts/src/_functions/*.js'
         ])
         .pipe(debug())
-        .pipe(concat('gallery-controller.js'))
+        .pipe(concat('avatarify-app.js'))
         .pipe(uglify())
         .pipe(gulp.dest('htdocs/scripts'));
 }
