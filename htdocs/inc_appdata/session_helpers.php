@@ -10,10 +10,12 @@
  * @return mixed Null if ignored and update result as boolean.
  */
 function setGoogleID4Session($user_google_id){
-    global $mysqli;
+    global $mysqli, $kista_dp;
 
-    if(!empty($_SESSION['USER_ID']))
+    if(empty($_SESSION['USER_ID'])){
+        logfile('setGoogleID4Session(skipped)');
         return null;
+    }
 
     $sql = [
         "UPDATE `" . $kista_dp . "users__sessions` SET `google_id`=? WHERE `user_id`=?",
