@@ -37,6 +37,7 @@ try {
                     $size = filesize($download_savePath);
 
                     $sql = new sqlbuddy;
+                    $sql->que('deleted', 0, 'int');
                     $sql->que('uuid', generateUuid4(), 'string');
                     $sql->que('reid', $item['reid'], 'int');
                     $sql->que('created', 'NOW()', 'raw');
