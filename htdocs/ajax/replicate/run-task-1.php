@@ -3,7 +3,6 @@ class ReplicateAPIException extends Exception { }
 class RepliImage extends Exception { }
 
 
-
 $error = null;
 $reid = (int) $_SESSION['task'][$curentTaskID]['reid'];
 $res = $mysqli->query("SELECT * FROM `" . $kista_dp . "replicate__uploads` WHERE `reid`=" . $reid . " AND `user_id`=" . $USER_ID);
