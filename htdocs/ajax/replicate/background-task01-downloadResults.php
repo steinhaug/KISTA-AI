@@ -70,6 +70,7 @@ try {
                         REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . get_name_only($image_filename) . '_m.jpg'
                     );
                     logfile('Created replicate thumb 3/3: ' . get_name_only($image_filename) . '_m.jpg');
+                    unlink( REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . get_name_only($image_filename) . '_m.png' );
 
                     $sql = new sqlbuddy;
                     $sql->que('thumbnail', 'm, s', 'string');

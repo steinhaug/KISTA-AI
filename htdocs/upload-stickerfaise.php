@@ -32,10 +32,10 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
         'instant_id_strength' => $_POST['conf']['instantIdStrength'] ?? 70,
     ];
     $conf = [
-        'steps' => make_sure_value_fits_specs($_conf['steps'],                              [20, 'int', 10,  50],   [])
-        'ip_adapter_noise' => make_sure_value_fits_specs($_conf['ip_adapter_noise'],        [75, 'int', 10, 100], ['d',100])
-        'ip_adapter_weight' => make_sure_value_fits_specs($_conf['ip_adapter_weight'],      [50, 'int', 10, 100], ['d',100])
-        'instant_id_strength' => make_sure_value_fits_specs($_conf['instant_id_strength'],  [70, 'int', 10, 100], ['d',100])
+        'steps' => make_sure_value_fits_specs($_conf['steps'],                              [20, 'int', 10,  50],   []),
+        'ip_adapter_noise' => make_sure_value_fits_specs($_conf['ip_adapter_noise'],        [75, 'int', 10, 100], ['d',100]),
+        'ip_adapter_weight' => make_sure_value_fits_specs($_conf['ip_adapter_weight'],      [50, 'int', 10, 100], ['d',100]),
+        'instant_id_strength' => make_sure_value_fits_specs($_conf['instant_id_strength'],  [70, 'int', 10, 100], ['d',100]),
     ];
 
 
@@ -100,7 +100,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                 $sql->que('filesize', $file1_size, 'int');
                 $sql->que('thumbnail', '', 'string');
                 $sql->que('status', 'start', 'string');
-                $sql->que('data', '', 'string');
+                $sql->que('data', json_encode($conf), 'string');
                 $sql->que('log', '', 'string');
                 $sql->que('error', '', 'string');
                 $mysqli->query( $sql->build('insert', $kista_dp . "replicate__uploads") );
