@@ -267,7 +267,7 @@ $(document).ready(function() {
             $('#' + CSSID + ' .spinner').height(height).find('div.center').css('margin-top', parseInt((height / 2) - 20) + 'px');
             getAjaxObj2(action, {url: KistaJS.ajaxurl, mod: 'image-controls'}, { CMD: 'init', CSSID: CSSID, IMID: $(this).data('imid'), UserID: KistaJS.userid }, function (response){
                 $('#' + response.CSSID).find('.img-preview img').attr('src', response.src);
-                quickToast('info','Rotation success', response.message);
+                //quickToast('info','Rotation success', response.message);
                 $('#' + response.CSSID + ' .spinner').remove();
             });
         } else {

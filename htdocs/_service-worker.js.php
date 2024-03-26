@@ -45,11 +45,11 @@ var REQUIRED_FILES = [
     'docs/figs/style-transfer-01.jpg',
     'docs/figs/style-transfer-02.jpg',
     'docs/figs/style-transfer-03.jpg',
-    'docs/figs/extra-legs-02_thumb.jpg',
-    'docs/figs/missing-legs-01_thumb.jpg',
-    'docs/figs/extra-arms-01_thumb.jpg',
-    'docs/figs/extra-legs-02.jpg',
     'docs/figs/missing-legs-01.jpg',
+    'docs/figs/missing-legs-01_thumb.jpg',
+    'docs/figs/extra-legs-02_thumb.jpg',
+    'docs/figs/extra-legs-02.jpg',
+    'docs/figs/extra-arms-01_thumb.jpg',
     'docs/figs/extra-arms-01.jpg',
 
 	// Styles

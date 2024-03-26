@@ -220,4 +220,3 @@ ALTER TABLE `kistaai_replicate__images`
 
 ALTER TABLE `kistaai_replicate__images`
 	ADD COLUMN `updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP() AFTER `created`;
-
