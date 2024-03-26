@@ -4,6 +4,9 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 
 ## changelog
 
+### v0.11.6
+- fixed, images uploaded with exif orientation data were rotatet when being made thumbnail
+- added, rotate left and right active
 
 ### v0.11.5
 - changed, _vars.php renamed for ../cred.{domain}_vars.php
