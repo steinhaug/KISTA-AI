@@ -218,3 +218,6 @@ ALTER TABLE `kistaai_replicate__uploads`
 ALTER TABLE `kistaai_replicate__images`
 	ADD COLUMN `deleted` TINYINT NOT NULL DEFAULT 0 AFTER `image_id`;
 
+ALTER TABLE `kistaai_replicate__images`
+	ADD COLUMN `updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP() AFTER `created`;
+

@@ -7445,3 +7445,24 @@ a.img-fluid img.img-fluid {
     background-image: url(/images/avatarify/700x466-bg.jpg);
 }
 
+
+
+/* * *  */
+
+.splide__slide {
+    position: relative;
+}
+.splide__slide .spinner {
+    position: absolute;
+    z-index: 1;
+    width: 99%;
+    border-radius: 30px;
+    background-color: #fffd;
+    text-align: center;
+}
+.splide__slide .spinner .center {
+    background-color: transparent;
+}
+.splide__slide .spinner .center img {
+    display: inline-block;
+}
