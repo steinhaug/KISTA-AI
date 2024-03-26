@@ -269,8 +269,15 @@ function make_sure_value_fits_specs($val, $rules, $post_rules=[]){
         if( !(($val <= $rules[3]) and ($val >= $rules[2])) ){
             $val = $rules[0];
         }
-        if(($post_rules[0] == 'devide') or ($post_rules[0] == 'd'))
-            $val = number_format($val / $post_rules[1], 2, '.', '');
+
+        if(!empty($post_rules)){
+            if(($post_rules[0] == 'devide') or ($post_rules[0] == 'd'))
+                $val = number_format($val / $post_rules[1], 2, '.', '');
+        }
+
+
+
+
     } else {
         throw new Exception('make_sure_value_fits_specs(): Ruleset needs to be made: ' . $rules[1]);
     }
