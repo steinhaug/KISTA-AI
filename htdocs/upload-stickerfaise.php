@@ -1,15 +1,6 @@
 <?php
 use Intervention\Image\ImageManagerStatic as Image;
 
-$transferable_style_presets = [
-    '-9c3a6E911o.png','advance-sketch-3.png','advance-sketch-5.png','angrybird.png','anime-1.png','antheia4.png','art-1.png',
-    'art-2.png','art-from-renaissance.png','blyant.png','graffiti-art.png','great-wave-off-kanagawa-crop.png','karrikatur-1.png',
-    'kim-jong-1.png','kim-jung-2.png','lennon-blue.png','maleri.png','mona-lisa.png','pastel.png','putin-1.png','sketch.png','starry-night.png',
-    'stefano_phen.png','van-gogh.png','van-gogh-2.png','vladimir-putin.png','VrQAuHMYfxA.png',
-    'tattoo-1.png','tattoo-2.png',
-    'alien-01.png','indian-01.png','indian-02.png','moody-01.png','skullman-01.png','skullman-02.png','skullman-03.png','tiled-01.png','tiled-02.png','weird-01.png','weird-02.png','weird-03.png'
-];
-
 ob_start();
 session_cache_expire(720);
 session_start();
@@ -34,9 +25,23 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
     $file1_name = $_FILES['file1']['name'];
     $file1_size = $_FILES['file1']['size'];
 
-    if(!empty($_FILES['file1']['size']) and !empty($_POST['selected_style_transfer']) and in_array($_POST['selected_style_transfer'], $transferable_style_presets)){
+    $_conf = [
+        'steps' => $_POST['conf']['steps'] ?? 20,
+        'ip_adapter_noise' => $_POST['conf']['ipAdapterNoise'] ?? 75,
+        'ip_adapter_weight' => $_POST['conf']['ipAdapterWeight'] ?? 50,
+        'instant_id_strength' => $_POST['conf']['instantIdStrength'] ?? 70,
+    ];
+    $conf = [
+        'steps' => make_sure_value_fits_specs($_conf['steps'],                              [20, 'int', 10,  50],   [])
+        'ip_adapter_noise' => make_sure_value_fits_specs($_conf['ip_adapter_noise'],        [75, 'int', 10, 100], ['d',100])
+        'ip_adapter_weight' => make_sure_value_fits_specs($_conf['ip_adapter_weight'],      [50, 'int', 10, 100], ['d',100])
+        'instant_id_strength' => make_sure_value_fits_specs($_conf['instant_id_strength'],  [70, 'int', 10, 100], ['d',100])
+    ];
 
-        $upload_path = UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r';
+
+    if(!empty($_FILES['file1']['size'])){
+
+       $upload_path = UPLOAD_PATH . DIRECTORY_SEPARATOR . 'r';
 
         require APPDATA_PATH . '/XUploadFile.inc.php';
         $myU1 = new Xupload("file1",1);
@@ -83,11 +88,11 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
 
                 $sql->que('uuid', generateUuid4(),'string');
                 $sql->que('replicate_id', '','int');
-                $sql->que('replicate_task', 1,'int');
+                $sql->que('replicate_task', 2,'int');
                 $sql->que('user_id', $USER_ID,'int');
                 $sql->que('created', 'NOW()','raw');
                 $sql->que('updated', 'NULL','raw');
-                $sql->que('stylename', $_POST['selected_style_transfer'], 'string');
+                $sql->que('stylename', '', 'string');
                 $sql->que('realname', $_real_filename_from_upload, 'string');
                 $sql->que('filehash', $filehash, 'string');
                 $sql->que('filename', $filename['file'], 'string');
@@ -100,7 +105,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                 $sql->que('error', '', 'string');
                 $mysqli->query( $sql->build('insert', $kista_dp . "replicate__uploads") );
                 $reid = $mysqli->insert_id;
-                addSessionTask( ['reid'=>$reid, 'rtask'=>1, 'status'=>'start', 'progress'=>0] );
+                addSessionTask( ['reid'=>$reid, 'rtask'=>2, 'status'=>'start', 'progress'=>0] );
                 header('Location: ' . $continueURL . '?reid=' . $reid);
                 exit;
 
@@ -149,7 +154,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
 <div id="page">
 
     <div class="header header-fixed header-logo-center">
-        <a href="error.php" class="header-title">AI Avatar Maker</a>
+        <a href="error.php" class="header-title">get your StickerfAIse</a>
         <?=$HTML_HEADER('header-fixed')?>
     </div>
 
@@ -165,152 +170,123 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
     }
     </style>
 
-    <div class="page-content header-clear-medium">
+    <div class="page-content header-clear-medium bg-green-dark">
 
 
-            <div class="card card-style ms-0 me-0 rounded-0">
+            <div class="card card-style ms-0 me-0 rounded-0 bg-grass-dark">
                 <div class="content">
-                    <p class="mb-n1 color-highlight font-600">The Awesome</p>
-                    <h1>Create your AI Avatar in 1,2,3</h1>
-                    <p>Select your style and upload your image, let the AI do the rest!</p>
+                    <p class="mb-n1 color-white font-600">This is where you get your</p>
+                    <h1 class="color-white">StickerfAIse</h1>
+                    <p class="color-black">Select a photo of yourself to create stickers from</p>
                 </div>
             </div>      
 
-        <form action="upload-face.php" method="post" enctype="multipart/form-data" id="faceForm">
+
+        <form action="upload-stickerfaise.php" method="post" enctype="multipart/form-data" id="faceForm">
+
             <input type="hidden" name="bonus_conf" id="bonus_conf" value="">
             <input type="hidden" name="selected_style_transfer" class="form-control" id="sel_style">
 
-            <div class="card card-style ms-0 me-0 rounded-0 mb-4" id="step1">
+
+
+
+            <div class="card card-style ms-0 me-0 rounded-0 mb-4 bg-green-dark" id="step1">
                 <div class="content">
-                    <p class="mb-n1 color-highlight font-600">AI Avatar</p>
-                    <h1 class="mt-4">1: Select your image:</h1>
-                    <p class="mb-3">
+                    <p class="mb-n1 color-white opacity-50 font-600">StickerfAIse creator</p>
+                    <h1 class="mt-1 color-white">1: Chose image</h1>
+                    <p class="mb-3 color-white opacity-60">
                         Select a half-body portrait and you are ready for some AI-Goodiness.
                     </p>
 
 
-                    <div class="row" hidden><div class="col">
-                        <input name="file1" type="file" accept="image/*" class="" id="file1_inp">
-                    </div></div>
-                    <div class="row mt-4"><div class="col" style="text-align:center">
-                        <div id="upload_preview" hidden><a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a><img /></div>
-                        <a href="#" id="file1_inp_extraBtn" class="btn btn-xxl mb-3 rounded-s text-uppercase font-700 shadow-s bg-highlight">Select image</a>
-                    </div></div>
-
-
                 </div>
-            </div>
 
-            <div class="card card-style ms-0 me-0 rounded-0 mb-4" id="step2">
-                <div class="content">
-                    <p class="mb-n1 color-highlight font-600">AI Avatar</p>
-                    <h1>2: Select style:</h1>
-                    <p class="mb-3">
-                        Swipe to browse the available styles, pick one.
-                    </p>
+                <div class="card card-style" id="step1-file">
+                    <div class="content">
 
-                    <div data-splide='{"autoplay":false}' class="transfStylesGrid splide single-slider slider-arrows slider-no-dots" id="single-slider-1"><div class="splide__track"><div class="splide__list">
-<?php
-$i = 0;
-foreach( $transferable_style_presets as $style ){
+                        <div class="row" hidden><div class="col">
+                            <input name="file1" type="file" accept="image/*" class="" id="file1_inp">
+                        </div></div>
+                        <div class="row mt-4 mb-4"><div class="col" style="text-align:center">
+                            <div id="upload_preview" hidden><a href="#" class="close-menu"><i class="fa fa-times-circle"></i></a><img /></div>
+                            <a href="#" id="file1_inp_extraBtn" class="btn btn-xxl rounded-s text-uppercase font-700 shadow-s bg-grass-light">Select image</a>
+                        </div></div>
 
-        $dirPath = dirname(UPLOAD_PATH) . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'style-transfers' . DIRECTORY_SEPARATOR;
-
-        /*
-        $imgName = get_name_only($style) . '_thumb.jpg';
-        if( !file_exists($dirPath . $imgName) ){
-            if( file_exists($dirPath . $style) ){
-                $img = Image::make($dirPath . $style);
-                $width = $img->width();
-                $height = $img->height();
-                if(anyHigher(700, $width)){
-                    [$new_x, $new_y] = calc__fit_constraints_lspt($width, $height, 832, 704, 704, 832);
-                    logfile('Resizing ' . $style . ' from ' . $width . 'x' . $height . ' to ' . $new_x . 'x' . $new_y);
-                    $img->resize($new_x, $new_y)->save($dirPath . $imgName, 90);
-                }
-            }
-        }
-        */
-
-        $imgName = get_name_only($style) . '_fit.jpg';
-        if( !file_exists($dirPath . $imgName) ){
-            if( file_exists($dirPath . $style) ){
-                $img = Image::make($dirPath . get_name_only($style) . '.jpg')->fit(500,600)->save($dirPath . $imgName, 90);
-            }
-        }
-
-        //$imgName = get_name_only($style) . '.jpg';
-
-        $modulus = ($i % 4) + 1;
-        switch($modulus){
-            case 1:
-            echo '
-                <div class="splide__slide">
-                    <div class="row row-cols-2 px-1 mb-0">
-                        <a class="col p-2" href="#" data-style="' . $style . '">
-                            <img src="/images/style-transfers/' . $imgName . '" alt="img" class="img-fluid rounded-sm shadow-xl">
-                        </a>';
-                break;
-            case 2:
-            echo '
-                        <a class="col p-2" href="#" data-style="' . $style . '">
-                            <img src="/images/style-transfers/' . $imgName . '" alt="img" class="img-fluid rounded-sm shadow-xl">
-                        </a>
-                    </div>';
-                break;
-            case 3:
-            echo '
-                    <div class="row row-cols-2 px-1 mb-0">
-                        <a class="col p-2" href="#" data-style="' . $style . '">
-                            <img src="/images/style-transfers/' . $imgName . '" alt="img" class="img-fluid rounded-sm shadow-xl">
-                        </a>';
-                break;
-            case 4:
-            echo '
-                        <a class="col p-2" href="#" data-style="' . $style . '">
-                            <img src="/images/style-transfers/' . $imgName . '" alt="img" class="img-fluid rounded-sm shadow-xl">
-                        </a>
                     </div>
-                </div>';
-                break;
-            default:
-                break;
-        }
-        $i++;
-}
-
-$modulus = $i % 4;
-switch($modulus) {
-    case 1:
-        echo '</div></div>';
-        break;
-    case 2:
-        echo '</div>';
-        break;
-    case 3:
-        echo '</div>';
-        break;
-}
-
-?>
-
-                    </div></div></div>
-                   
                 </div>
-            </div>
- 
 
 
+                <div class="card card-style bg-teal-dark bg-transparent">
+                    <div class="content">
 
-            <div class="card card-style" id="step3">
-                <div class="content mb-0">
-                    <p class="mb-n1 color-highlight font-600">AI Avatar</p>
-                    <h1>3: Upload</h1>
-                    <div class="row mt-4"><div class="col" style="text-align:center">
-                        <button id="submitBtn" type="submit" class="btn btn-xxl mb-3 rounded-s text-uppercase font-700 shadow-s bg-green-dark" disabled="">Upload and create my new AI Images</button>
-                    </div></div>
+                    <p class="mb-n1 color-white opacity-50 font-600">Configurable settings</p>
+                    <h1 class="mt-1 color-white">2: Settings</h1>
+
+                        <div class="row mb-0">
+                            <div class="col-4 text-center">instant id strength</div>
+                            <div class="col-4 text-center">ip adapter weight</div>
+                            <div class="col-4 text-center">ip adapter noise</div>
+                        </div>
+                        <div class="row steppers">
+                            <div class="col-4">
+                                <div class="mx-auto">
+                                    <div class="stepper rounded-s float-start">
+                                        <a href="#" class="stepper-sub"><i class="fa fa-minus color-theme opacity-40"></i></a>
+                                        <input name="conf[instantIdStrength]" type="number" min="1" max="100" value="70" data-step="2">
+                                        <a href="#" class="stepper-add"><i class="fa fa-plus color-theme opacity-40"></i></a>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mx-auto">
+                                    <div class="stepper rounded-s float-none">
+                                        <a href="#" class="stepper-sub"><i class="fa fa-minus color-red-dark"></i></a>
+                                        <input name="conf[ipAdapterWeight]" type="number" min="1" max="100" value="50" data-step="2">
+                                        <a href="#" class="stepper-add"><i class="fa fa-plus color-green-dark"></i></a>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="mx-auto">
+                                    <div class="stepper rounded-s float-end">
+                                        <a href="#" class="stepper-sub"><i class="fa fa-minus color-red-dark"></i></a>
+                                        <input name="conf[ipAdapterNoise]" type="number" min="1" max="100" value="75" data-step="2">
+                                        <a href="#" class="stepper-add"><i class="fa fa-plus color-green-dark"></i></a>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-0">
+                            <div class="col-2 text-left">10</div>
+                            <div class="col-2 text-center">17</div>
+                            <div class="col-2 text-center">24</div>
+                            <div class="col-2 text-center">36</div>
+                            <div class="col-2 text-center">43</div>
+                            <div class="col-2 text-right">50</div>
+                        </div>
+                        <div class="range-slider">
+                            <input class="classic-slider" type="range" min="10" max="50" value="20" step="1" name="conf[steps]">
+                        </div>
+                        <div class="row mb-0"><div class="col-12 text-center">steps</div></div>
+
+                    </div>
                 </div>
+
+                <div class="card card-style" id="step2">
+                    <div class="content">
+                        <div class="row mt-4 mb-4"><div class="col" style="text-align:center">
+                            <button id="submitBtn" type="submit" class="btn btn-xxl rounded-s text-uppercase font-700 shadow-s bg-gray-dark" disabled="">Upload your image and get your StickerfAIse</button>
+                        </div></div>
+                    </div>
+                </div>
+
             </div>
+
 
 
         </form>
@@ -334,43 +310,10 @@ switch($modulus) {
 
 <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
 <script type="text/javascript" src="scripts/custom.js.php?<?=$html_NoCache_Version?>"></script>
-<script type="text/javascript" src="scripts/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="scripts/avatarify-app.js?<?=$html_NoCache_Version?>"></script>
+<script type="text/javascript" src="scripts/jquery-3.7.1.min.js" defer="defer"></script>
+<script type="text/javascript" src="scripts/avatarify-app.js?<?=$html_NoCache_Version?>" defer="defer"></script>
 
 <script>
-
-document.addEventListener("DOMContentLoaded", function() {
-  // Select all the links within the .transfStylesGrid div
-  var links = document.querySelectorAll('.transfStylesGrid a');
-
-  // Function to handle link click
-  function handleLinkClick(event) {
-    event.preventDefault(); // Disable the link's default action
-
-    // Remove .selStyleTrans class from all links
-    links.forEach(function(link) {
-      link.classList.remove('selStyleTrans');
-    });
-
-    // Add .selStyleTrans class to the clicked link
-    this.classList.add('selStyleTrans');
-
-    // Update the value of the #sel_style input field
-    var styleValue = this.getAttribute('data-style');
-    document.getElementById('sel_style').value = styleValue;
-
-    var element = document.getElementById("step3");
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-  }
-
-  // Attach the click event listener to each link
-  links.forEach(function(link) {
-    link.addEventListener('click', handleLinkClick);
-  });
-});
 
 document.addEventListener("DOMContentLoaded", function() {
   var extraBtn = document.getElementById('file1_inp_extraBtn');
@@ -382,8 +325,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Task 1: Trigger file input click and handle image selection
   extraBtn.addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent the default anchor behavior
-    fileInput.click(); // Trigger the file input click
+    event.preventDefault();
+    fileInput.click(); 
   });
 
   fileInput.addEventListener('change', function(event) {
@@ -393,9 +336,14 @@ document.addEventListener("DOMContentLoaded", function() {
       
       fileReader.onload = function(e) {
         previewImage.src = e.target.result;
-        previewContainer.hidden = false; // Show the preview container
-        extraBtn.setAttribute('hidden', true); // Hide the extra button
-        submitBtn.disabled = false; // Enable the submit button
+        previewContainer.hidden = false; 
+        extraBtn.setAttribute('hidden', true);
+
+        $('#step1-file').addClass('bg-green-light')
+
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('bg-gray-dark');
+        submitBtn.classList.add('bg-grass-dark');
         var element = document.getElementById("step2");
         if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -410,10 +358,10 @@ document.addEventListener("DOMContentLoaded", function() {
   // Task 2: Reset input and adjust buttons when close link is clicked
   closeLink.addEventListener('click', function(event) {
     event.preventDefault();
-    fileInput.value = ''; // Reset the file input
-    previewContainer.hidden = true; // Hide the preview container
-    extraBtn.removeAttribute('hidden'); // Show the extra button
-    submitBtn.disabled = true; // Disable the submit button
+    fileInput.value = '';
+    previewContainer.hidden = true;
+    extraBtn.removeAttribute('hidden');
+    submitBtn.disabled = true;
   });
 });
 

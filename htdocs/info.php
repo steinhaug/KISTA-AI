@@ -7,6 +7,10 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 require_once 'func.inc.php';
 
 
+
+
+
+
 echo '<pre>';
 echo print_r($_SERVER,1);
 echo '</pre>';

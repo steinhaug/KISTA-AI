@@ -46,7 +46,17 @@ if( isset($_POST['module']) AND ($_POST['module'] == 'image-controls') ){
 if (($curentTaskID = getSessionTaskKey(['aiid'=> _GET('aiid', 0, 'int')])) !== null) {
     require_once AJAX_FOLDER_PATH . '/openai/run-tasks.php';
 } else if( ($curentTaskID = getSessionTaskKey(['reid'=> _GET('reid', 0, 'int')])) !== null ){
-    require_once AJAX_FOLDER_PATH . '/replicate/run-tasks.php';
+
+    $reid = (int) $_SESSION['task'][$curentTaskID]['reid'];
+    $rtask = (int) $_SESSION['task'][$curentTaskID]['rtask'];
+    if ($rtask == 1) {
+        require_once AJAX_FOLDER_PATH . '/replicate/run-task-1.php';
+    } else if($rtask == 2){
+        require_once AJAX_FOLDER_PATH . '/replicate/run-task-2.php';
+    } else {
+        throw new Exception('Replicate task-type error, unknown: ' . $rtask);
+    }
+
 } else {
 
     /*

@@ -764,18 +764,33 @@ EOD;
             });
         }
 
-        //Stepper
+
+        // Stepper
+        // 
+        // Update, has extra settigns in markup
+        // <input type="number" min="0.01" max="1" value="0.7" step="0.05">
+
         var stepperAdd = document.querySelectorAll('.stepper-add');
         var stepperSub = document.querySelectorAll('.stepper-sub');
         if(stepperAdd.length){
             stepperAdd.forEach(el => el.addEventListener('click', event => {
+                var stepRange = el.parentElement.querySelector('input').getAttribute('data-step') ?? el.parentElement.querySelector('input').getAttribute('step') ?? 1;
                 var currentValue = el.parentElement.querySelector('input').value
-                el.parentElement.querySelector('input').value = +currentValue + 1
+                var newVal = parseFloat( parseFloat(currentValue) + parseFloat(stepRange) ).toFixed(2);
+                var maxVal = parseFloat( el.parentElement.querySelector('input').getAttribute('max') ).toFixed(2);
+                if( newVal > maxVal )
+                    newVal = maxVal;
+                el.parentElement.querySelector('input').value = newVal
             }))
 
             stepperSub.forEach(el => el.addEventListener('click', event => {
+                var stepRange = el.parentElement.querySelector('input').getAttribute('data-step') ?? el.parentElement.querySelector('input').getAttribute('step') ?? 1;
                 var currentValue = el.parentElement.querySelector('input').value
-                el.parentElement.querySelector('input').value = +currentValue - 1
+                var newVal = parseFloat( parseFloat(currentValue) - parseFloat(stepRange) ).toFixed(2);
+                var lowVal = parseFloat( el.parentElement.querySelector('input').getAttribute('min') ).toFixed(2);
+                if( newVal < lowVal )
+                    newVal = lowVal;
+                el.parentElement.querySelector('input').value = newVal;
             }))
         }
 

@@ -248,3 +248,34 @@ function _bool($var, $g=null){
     return true;// Whatever came though must be something,  OK for crazy logic
   }
 }
+
+
+
+
+
+/**
+ * Make sure value is in defined space, or set default value
+ *
+ * @param mixed $val The value to check
+ * @param array $rules [fail value, comparison mode, low, high]
+ * @param array $post_rules [action, value]
+ * 
+ * @return mixed The qualified value
+ */
+function make_sure_value_fits_specs($val, $rules, $post_rules=[]){
+
+    if($rules[1]=='int'){
+        $val = (int) $val;
+        if( !(($val <= $rules[3]) and ($val >= $rules[2])) ){
+            $val = $rules[0];
+        }
+        if(($post_rules[0] == 'devide') or ($post_rules[0] == 'd'))
+            $val = number_format($val / $post_rules[1], 2, '.', '');
+    } else {
+        throw new Exception('make_sure_value_fits_specs(): Ruleset needs to be made: ' . $rules[1]);
+    }
+
+    return $val;
+
+}
+

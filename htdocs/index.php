@@ -124,7 +124,10 @@ if($lang=='en'){
                             <li><b>Transform:</b> With just a click, our advanced AI blends your photo with your selected theme, crafting a personalized masterpiece that mirrors your individuality.</li>
                             <li><b>Share and Impress:</b> Download your transformed avatar and share it with the world. Be it for your social media profiles, a fun project, or a digital keepsake, your Avatarify creation is sure to turn heads and spark conversations.</li>
                         </ol>
-                        <p><a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start external-link">Avatarify Yourself</a></p>
+                        <p>
+                            <a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start me-3 external-link">Avatarify Yourself</a>
+                            <a href="/upload-stickerfaise.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start me-3 external-link">StickerfAIce</a>
+                        </p>
                     </div></div>
                 </div>
             </div>
@@ -160,7 +163,10 @@ if($lang=='en'){
                         <p>
                             Legg ut på en kreativ reise med Avatarify Yourself og se dine selfies forvandles til fengslende kunstverk som forteller din historie på måter ord aldri kunne.
                         </p>
-                        <p><a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start external-link">Avatarify Yourself</a></p>
+                        <p>
+                            <a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start me-3 external-link">Avatarify Yourself</a>
+                            <a href="/upload-stickerfaise.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start me-3 external-link">StickerfAIce</a>
+                        </p>
                     </div></div>
                 </div>
             </div>
