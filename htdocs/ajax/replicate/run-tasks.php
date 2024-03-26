@@ -21,8 +21,15 @@ if ($res->num_rows) {
                 throw new Exception('Image format not supported');
             }
 
-            require AJAX_FOLDER_PATH . '/replicate/task01-pushInferences.php';
-            //updateStatus__replicate($reid, ['status'=>'task1', 'log'=>$log]);
+            try {
+                require AJAX_FOLDER_PATH . '/replicate/task01-pushInferences.php';
+            } catch (RepliImage $e) {
+                throw new RepliImage('Image error: ' . $e->getMessage());
+            } catch (ReplicateAPIException $e) {
+                throw new ReplicateAPIException('Replicate API error: ' . $e->getMessage());
+            } catch (Exception $e) {
+                throw new Exception('Replicate API request error, ' . $e->getMessage());
+            }
 
             $sql = new sqlbuddy;
             $sql->que('status', 'waiting', 'string');
