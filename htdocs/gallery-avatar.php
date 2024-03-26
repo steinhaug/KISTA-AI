@@ -64,7 +64,6 @@ if($lang == 'en'){
     <div class="page-content header-clear-medium">
 
 
-
 <!--
         <div class="card card-style">
             <div class="content mt-3">
@@ -97,7 +96,7 @@ define('REPLICATE_INFERENCE_FOLDER', UPLOAD_PATH . '/ri');
 $user_google_id = $_SESSION['USER_GOOGLE_LOGIN'][0] ?? 0;
 if($user_google_id){
     $p_sql = [
-        "SELECT *, `reim`.`filename` AS `filename` 
+        "SELECT *, `reim`.`filename` AS `filename`, UNIX_TIMESTAMP(`reim`.`updated`) AS `noCache` 
          FROM `" . $kista_dp . "replicate__images` `reim` 
          INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.`reid` = `reup`.`reid` 
          INNER JOIN `" . $kista_dp . "users__sessions` `s` ON `reup`.`user_id` = `s`.`user_id` 
@@ -107,7 +106,7 @@ if($user_google_id){
     ];
 } else {
     $p_sql = [
-        "SELECT *, `reim`.`filename` AS `filename` 
+        "SELECT *, `reim`.`filename` AS `filename`, UNIX_TIMESTAMP(`reim`.`updated`) AS `noCache` 
          FROM `" . $kista_dp . "replicate__images` `reim` 
          INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.`reid` = `reup`.`reid` 
          WHERE `reim`.`deleted` = 0 AND `reup`.user_id = ?", 
@@ -146,7 +145,7 @@ if (($items = $mysqli->prepared_query($p_sql)) !== []) {
         echo '
                     <div class="splide__slide" style="overflow:hidden;">
                         <div class="card m-2 card-style">
-                            <a href="' . $webUrl . $img['filename'] . '" data-gallery="new-inference" class="img-preview"><img src="' . $webUrl . $src_name . '" class="img-fluid"></a>
+                            <a href="' . $webUrl . $img['filename'] . '" data-gallery="new-inference" class="img-preview"><img src="' . $webUrl . $src_name . '?' . $img['noCache'] . '" class="img-fluid"></a>
                             <div class="p-2 bg-theme rounded-sm">
 
                                 <h4 class="mb-n1 font-14 line-height-xs pb-2">' . $img['created'] . '</h4>
@@ -154,8 +153,8 @@ if (($items = $mysqli->prepared_query($p_sql)) !== []) {
                                     <div class="ms-auto">
 
                                         <a href="show-avatar.php?reid=' . $reid . '&download=' . $img['filename'] . '" class="icon icon-s bg-theme shadow-xl rounded-xl float-end external-link"><i class="fa color-theme fa-download"></i></a>
-                                        <a href="#" class="controller-button icon icon-s bg-theme shadow-xl rounded-xl float-end me-2 external-link" data-imid="' . $img['image_id'] . '" data-action="rotate-left"><i class="fa color-theme fa-rotate-left"></i></a>
                                         <a href="#" class="controller-button icon icon-s bg-theme shadow-xl rounded-xl float-end me-2 external-link" data-imid="' . $img['image_id'] . '" data-action="rotate-right"><i class="fa color-theme fa-rotate-right"></i></a>
+                                        <a href="#" class="controller-button icon icon-s bg-theme shadow-xl rounded-xl float-end me-2 external-link" data-imid="' . $img['image_id'] . '" data-action="rotate-left"><i class="fa color-theme fa-rotate-left"></i></a>
                                         <a href="#" class="controller-button icon icon-s bg-theme shadow-xl rounded-xl float-end me-2 external-link" data-imid="' . $img['image_id'] . '" data-action="delete"><i class="fa color-theme fa-trash"></i></a>
 
                                     </div>
@@ -175,6 +174,8 @@ if (($items = $mysqli->prepared_query($p_sql)) !== []) {
 
 }
 ?>
+
+
 
         <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
@@ -259,6 +260,16 @@ $(document).ready(function() {
             // Trigger the confirmation dialog
             showConfirmationDialog();
 
+        } else if( (action == 'rotate-left') || (action == 'rotate-right') ){
+            var height =  parseInt($('#' + CSSID + ' > div.card').height());
+            var spinnerhtml = $('#spinner').html();
+            $('#' + CSSID).prepend( spinnerhtml );
+            $('#' + CSSID + ' .spinner').height(height).find('div.center').css('margin-top', parseInt((height / 2) - 20) + 'px');
+            getAjaxObj2(action, {url: KistaJS.ajaxurl, mod: 'image-controls'}, { CMD: 'init', CSSID: CSSID, IMID: $(this).data('imid'), UserID: KistaJS.userid }, function (response){
+                $('#' + response.CSSID).find('.img-preview img').attr('src', response.src);
+                quickToast('info','Rotation success', response.message);
+                $('#' + response.CSSID + ' .spinner').remove();
+            });
         } else {
             quickToast('alert','Error', 'Funksjon ikke aktivert!');
         }
@@ -268,6 +279,17 @@ $(document).ready(function() {
 });
 
 </script>
+
+
+
+<div style="display: none;" id="spinner">
+    <div class="spinner" style="display:block;">
+        <div class="center">
+            <img src="/images/spinner.balls.gif" width="64" height="64" alt=""><br>
+            Loading..
+        </div>
+    </div>
+</div>
 
 <?php
 output_session_notification();
