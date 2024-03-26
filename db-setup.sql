@@ -220,3 +220,22 @@ ALTER TABLE `kistaai_replicate__images`
 
 ALTER TABLE `kistaai_replicate__images`
 	ADD COLUMN `updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP() AFTER `created`;
+ALTER TABLE `kistaai_replicate__uploads`
+	ADD COLUMN `replicate_task` INT NOT NULL DEFAULT 1 COMMENT '1=become-image, 2=face-to-sticker' AFTER `replicate_id`;
+
+
+
+
+
+
+
+
+
+
+
+
+ALTER TABLE `kistaai_replicate__uploads`
+	ADD COLUMN `replicate_task` INT NOT NULL DEFAULT 1 COMMENT '1=become-image, 2=face-to-sticker' AFTER `replicate_id`;
+ALTER TABLE `avatarify_replicate__uploads`
+	ADD COLUMN `replicate_task` INT NOT NULL DEFAULT 1 COMMENT '1=become-image, 2=face-to-sticker' AFTER `replicate_id`;
+
