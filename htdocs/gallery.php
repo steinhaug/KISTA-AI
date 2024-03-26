@@ -82,7 +82,7 @@ foreach ($items as $item) {
     $items_list[] = [$title, $link, $src];
 }
 
-echo count($items_list);
+// echo count($items_list);
 
 
 

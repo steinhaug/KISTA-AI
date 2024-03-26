@@ -135,6 +135,36 @@ function task_validation__replicate_tasks($item){
     return removeSessionTask(['reid'=>$item['reid']]);
 }
 
+
+
+/**
+ * json_encode string if array or object
+ *
+ * @param mixed $rawData String, array or object.
+ * @return string Will return a string for insertion
+ */
+function json_encode_if_arrobj($rawData){
+    if( is_array($rawData) or is_object($rawData) ){
+        try {
+            $jsonData = json_encode((string) $rawData);
+            if (JSON_ERROR_NONE !== json_last_error()) {
+                throw new RuntimeException('json_encode_if_array(): ' . json_last_error());
+            }
+            return $jsonData;
+        } catch(RuntimeException $e) {
+            $error_id = debug_log_error($e->getMessage());
+            return 'Json encode error, ErrorID: ' . $error_id;
+        } catch(Exception $e) {
+            $error_id = debug_log_error($e->getMessage());
+            return 'Json encode exception, ErrorID: ' . $error_id;
+        }
+    } else {
+        return (string) $rawData;
+    }
+}
+
+
+
 /**
  * Update status for replicate task
  *
@@ -172,35 +202,40 @@ function updateStatus__replicate($reid, $props){
 }
 
 
+
 /**
- * json_encode string if array or object
+ * Hook processed with errors
  *
- * @param mixed $rawData String, array or object.
- * @return string Will return a string for insertion
+ * @param int $whid The key for the hook
+ * @param string $replicate_id The string identifyier from replicate linked with the uploaded image
+ * @param string $error_msg Error message, what went wrong
+ * @return void
  */
-function json_encode_if_arrobj($rawData){
-    if( is_array($rawData) or is_object($rawData) ){
-        try {
-            $jsonData = json_encode((string) $rawData);
-            if (JSON_ERROR_NONE !== json_last_error()) {
-                throw new RuntimeException('json_encode_if_array(): ' . json_last_error());
-            }
-            return $jsonData;
-        } catch(RuntimeException $e) {
-            $error_id = debug_log_error($e->getMessage());
-            return 'Json encode error, ErrorID: ' . $error_id;
-        } catch(Exception $e) {
-            $error_id = debug_log_error($e->getMessage());
-            return 'Json encode exception, ErrorID: ' . $error_id;
-        }
-    } else {
-        return (string) $rawData;
+function hookUpd_processError($whid, $replicate_id, $error_msg){
+    global $mysqli, $kista_dp;
+
+    hookUpd_process($whid);
+
+    if( ($item = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate__uploads` WHERE `replicate_id`=?", 's', [$replicate_id], true)) !== null ){
+
+        updateStatus__replicate($item['reid'], [
+            'status' => 'error', 
+            'error' => (string) $error_msg
+        ]);
+
     }
+
 }
 
-function processHook($whid){
+
+/**
+ * Hook processed
+ *
+ * @param int $whid The key for the hook 
+ * @return void
+ */
+function hookUpd_process($whid){
     global $mysqli, $kista_dp;
 
     return $mysqli->query("UPDATE `" . $kista_dp . "replicate__hooks` SET `processed`=1 WHERE `whid`=" . (int) $whid);
-
 }

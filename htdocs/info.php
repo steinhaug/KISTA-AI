@@ -8,9 +8,16 @@ require_once 'func.inc.php';
 
 
 
+    if( ($reid = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate__uploads` WHERE `replicate_id`=?", 's', ['2u3inelbksrzr7cbwstctxst4i'], true)) === null ){
+        echo 'NULL';
+    }
+
+echo '<pre>';
+var_dump($reid);
+echo '</pre>';
 
 
-
+exit;
 echo '<pre>';
 echo print_r($_SERVER,1);
 echo '</pre>';

@@ -5,7 +5,7 @@ logfile('Background task01 started.');
 
 if (($data = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate__hooks` `hooks` WHERE `hooks`.`replicate_id`=?", 's', [$item['replicate_id']], true)) !== null) {
     $hook = json_decode($data['json'],true);
-    processHook($data['whid']);
+    hookUpd_process($data['whid']);
     logfile('- hook found and processed.');
 } else {
     logfile('- hook not found: ' . $item['replicate_id']);
