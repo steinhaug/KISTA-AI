@@ -35,12 +35,21 @@ EOD;
     $js_snippet .= '    var pwaScope = "' . $PWA_DOMAIN . '/";' . "\n";
     $js_snippet .= '    var pwaLocation = "' . $PWA_DOMAIN . '/_service-worker.js.php";' . "\n";
 
+    $js_snippet .= "const version    = '" . $PWA_APP_VER . "';        " . "\n";
+    $js_snippet .= '
+    const cacheName = `cache-${version}`;
+    const versionCacheName = "cache-v";
+    /* var CACHE_NAME = pwaName + \'-\' + \'1.0\'; */
+    ';
+
     $js_snippet .= <<<'EOD'
 
     var pwaRemind = 1; //Days to re-remind to add to home
     var pwaNoCache = false; //Requires server and HTTPS/SSL. Will clear cache with each visit
 
-    var CACHE_NAME = pwaName + '-' + '1.0';
+
+
+
 
     //Place all your custom Javascript functions and plugin calls below this line
     function init_template(){
