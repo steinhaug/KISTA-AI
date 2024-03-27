@@ -11,9 +11,15 @@ if ($res->num_rows) {
     $log = [];
     $item = $res->fetch_assoc();
 
-    if( $item['status'] == 'start' ){
+
+
+
+    if( (_GET('t')=='init') AND ($item['status'] == 'start') ){
         // Release the session file
         session_write_close();
+
+
+        updateStatus__replicate($item['reid'], ['status'=>'init']);
         try {
 
             if (!($item['extension'] == 'png' or $item['extension'] == 'jpg')) {
@@ -70,6 +76,7 @@ if ($res->num_rows) {
         http_response_code(200);
         switch ($item['status']) {
             case 'start': $progress = 10; break;
+            case 'init':  $progress = 15; break;
             case 'task1': $progress = 20; break;
             case 'waiting':  updateStatus__replicate($item['reid'], ['status'=>'waiting2']); $progress = 30; break;
             case 'waiting2': updateStatus__replicate($item['reid'], ['status'=>'waiting3']); $progress = 33; break;

@@ -3,6 +3,8 @@
 use BenBjurstrom\Replicate\Replicate;
 use Intervention\Image\ImageManagerStatic as Image;
 
+logfile('Task 2 - Replicate - Initiate');
+
 $api = new Replicate(
     apiToken: $replicate_api_token,
 );
@@ -63,7 +65,7 @@ $version = '764d4827ea159608a07cdde8ddf1c6000019627515eb02b6b449695fd547e5ef';
 
 $user_settings = json_decode($item['data'], true);
 $conf = [
-    'steps' => make_sure_value_fits_specs($user_settings['steps'],                              [20, 'int', 10,  50], []),
+    'steps' => make_sure_value_fits_specs($user_settings['steps'],                              [ 20, 'int', 10,  50], []),
     'ip_adapter_noise' => make_sure_value_fits_specs($user_settings['ip_adapter_noise'],        [.75, 'int', 0.1, 1], []),
     'ip_adapter_weight' => make_sure_value_fits_specs($user_settings['ip_adapter_weight'],      [.50, 'int', 0.1, 1], []),
     'instant_id_strength' => make_sure_value_fits_specs($user_settings['instant_id_strength'],  [.70, 'int', 0.1, 1], []),
@@ -91,11 +93,12 @@ $input = [
 try {
 
     $data = $api->predictions()->withWebhook($hook_WWW_path . 'webhook.php')->create($version, $input);
+
     //echo $data->id;
-    logfile('replicate_id: ' . $data->id);
+    logfile('Replicate_id: ' . $data->id);
 
     $status = updateStatus__replicate($item['reid'], ['status'=>'task1', 'replicate_id'=>$data->id ]);
-    logfile('- TASK 1 completed.');
+    logfile('TASK 2 - Completed.');
 
 } catch (Exception $e) {
 

@@ -7435,6 +7435,10 @@ a.img-fluid img.img-fluid {
 
 /* * * */
 
+
+.bg-6sm {
+    background-image: url(/images/avatarify/700x250.jpg);
+}
 .bg-6 {
     background-image: url(/images/avatarify/700x466.jpg);
 }
@@ -7444,6 +7448,20 @@ a.img-fluid img.img-fluid {
 .bg-6bg {
     background-image: url(/images/avatarify/700x466-bg.jpg);
 }
+
+.bg-13sm {
+    background-image: url(/images/avatarify/700x250-stickerfAIce.jpg);
+}
+.bg-13 {
+    background-image: url(/images/avatarify/700x466-stickerfAIce-top.jpg);
+}
+.bg-13s {
+    background-image: url(/images/avatarify/700x466-stickerfAIce-symbol.jpg);
+}
+.bg-13bg {
+    background-image: url(/images/avatarify/700x466-stickerfAIce.jpg);
+}
+
 
 
 
