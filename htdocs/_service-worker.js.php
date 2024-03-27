@@ -15,11 +15,15 @@ $swlib->start_ob(false,false);
 
     $js_snippet  = "var APP_NAME   = '" . $PWA_APP_NAME . "';                     " . "\n";
     $js_snippet .= "var APP_VER    = '" . $PWA_APP_VER . "';        " . "\n";
+    $js_snippet .= "const version    = '" . $PWA_APP_VER . "';        " . "\n";
     $js_snippet .= <<<'EOD'
+
+const cacheName = `cache-${version}`;
+const versionCacheName = "cache-v";
 
 // To clear cache on devices, always increase APP_VER number after making changes.
 // The app will serve fresh content right away or after 2-3 refreshes (open / close)
-var CACHE_NAME = APP_NAME + '-' + APP_VER;
+//var CACHE_NAME = APP_NAME + '-' + APP_VER;
 
 // Leave REQUIRED_FILES = [] to disable offline.
 var REQUIRED_FILES = [
@@ -89,21 +93,18 @@ var REQUIRED_FILES = [
 ];
 
 // Service Worker Diagnostic. Set true to get console logs.
-var APP_DIAG = false;
+var APP_DIAG = true;
 
 //Service Worker Function Below.
 self.addEventListener('install', function(event) {
 	event.waitUntil(
-		caches.open(CACHE_NAME)
+		caches.open(cacheName)
 		.then(function(cache) {
-			//Adding files to cache
 			return cache.addAll(REQUIRED_FILES);
 		}).catch(function(error) {
-			//Output error if file locations are incorrect
-			if(APP_DIAG){console.log('Service Worker Cache: Error Check REQUIRED_FILES array in _service-worker.js - files are missing or path to files is incorrectly written -  ' + error);}
+			if(APP_DIAG){console.log('Service Worker Cache: Error Check REQUIRED_FILES array in _service-worker.js - ' + error);}
 		})
 		.then(function() {
-			//Install SW if everything is ok
 			return self.skipWaiting();
 		})
 		.then(function(){
@@ -113,18 +114,44 @@ self.addEventListener('install', function(event) {
 	if(APP_DIAG){console.log('Service Worker: Installed');}
 });
 
+
+
 self.addEventListener('fetch', function(event) {
-	event.respondWith(
-		//Fetch Data from cache if offline
-		caches.match(event.request)
-			.then(function(response) {
-				if (response) {return response;}
-				return fetch(event.request);
-			}
-		)
-	);
+
+	event.respondWith(networkRevalidateAndCache(event));
+	// event.respondWith(networkOnly(event));
 	if(APP_DIAG){console.log('Service Worker: Fetching '+APP_NAME+'-'+APP_VER+' files from Cache');}
 });
+
+async function networkRevalidateAndCache(self) {
+  try {
+    const fetchResponse = await fetch(self.request);
+
+    if (!fetchResponse || fetchResponse.status !== 200 || fetchResponse.type !== 'basic') {
+        console.log('Harry Klein ist politzei');
+        return fetchResponse;
+    }
+
+    if (fetchResponse.ok) {
+      const cache = await caches.open(cacheName);
+      await cache.put(self.request, fetchResponse.clone());
+      return fetchResponse;
+    } else {
+      const cacheResponse = await caches.match(self.request);
+      return cacheResponse;
+    }
+  } catch (err) {
+    console.log("Could not return cache or fetch NF", err);
+  }
+}
+
+function networkOnly(self) {
+  return fetch(self.request);
+}
+
+
+
+
 
 self.addEventListener('activate', function(event) {
 	event.waitUntil(self.clients.claim());
@@ -133,8 +160,8 @@ self.addEventListener('activate', function(event) {
 		caches.keys().then(cacheNames => {
 			return Promise.all(
 				cacheNames
-					.filter(cacheName => (cacheName.startsWith(APP_NAME + "-")))
-					.filter(cacheName => (cacheName !== CACHE_NAME))
+					//.filter(cacheName => (cacheName.startsWith(APP_NAME + "-")))
+					//.filter(cacheName => (cacheName !== cacheName))
 					.map(cacheName => caches.delete(cacheName))
 			);
 		})
