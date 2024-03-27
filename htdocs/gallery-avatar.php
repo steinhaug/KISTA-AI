@@ -11,23 +11,54 @@ define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 require_once 'func.inc.php';
 require_once 'func.login.php';
 
-if($lang == 'en'){
-    $txts = [
-        'pageTitle' => 'Gallery',
-        'supTitle' => 'Gallery',
-        'title' => 'Your avatars',
-        'paragraph' => 'Click on the thumbnail to view more.',
-        'reciepe' => 'Reciepe'
-    ];
+
+
+$type = _GET('type');
+if($type == 'stickerfaice'){
+    if($lang == 'en'){
+        $txts = [
+            'pageTitle' => 'stickerfAIce',
+            'supTitle' => 'Gallery',
+            'title' => 'Your stickers',
+            'gallery_title' => 'Your stickers images',
+            'paragraph' => 'Click on the thumbnail to view more.',
+        ];
+    } else {
+        $txts = [
+            'pageTitle' => 'stickerfAIce',
+            'supTitle' => 'Galleri',
+            'title' => 'Mine stickers',
+            'gallery_title' => 'Dine stickers bilder',
+            'paragraph' => 'Klikk på bilde for å se mer.',
+        ];
+    }
+    $RTASK = 2;
+
 } else {
-    $txts = [
-        'pageTitle' => 'Galleri',
-        'supTitle' => 'Galleri',
-        'title' => 'Mine avatarer',
-        'paragraph' => 'Klikk på bilde for å se mer.',
-        'reciepe' => 'Oppskrift'
-    ];
+    if($lang == 'en'){
+        $txts = [
+            'pageTitle' => 'Gallery',
+            'supTitle' => 'Gallery',
+            'title' => 'Your avatars',
+            'gallery_title' => 'Your avatar images',
+            'paragraph' => 'Click on the thumbnail to view more.',
+        ];
+    } else {
+        $txts = [
+            'pageTitle' => 'Galleri',
+            'supTitle' => 'Galleri',
+            'title' => 'Mine avatarer',
+            'gallery_title' => 'Dine avatar bilder',
+            'paragraph' => 'Klikk på bilde for å se mer.',
+        ];
+    }
+    $RTASK = 1;
 }
+
+
+
+
+
 
 
 ?>
@@ -64,6 +95,38 @@ if($lang == 'en'){
     <div class="page-content header-clear-medium">
 
 
+        <div class="content mb-0">
+            <div class="row mb-3">
+                <div class="col-6 pe-2">
+                    <a href="gallery-avatar.php?type=avatarify" class="card card-style mx-0 mb-3 bg-6sm" data-card-height="150">
+                        <div class="card-center ps-3">
+                            <h1 class="color-white mb-n1 font-24">Avatarify Images</h1>
+                            <p class="color-white opacity-50 mb-0 font-11 mt-n2">InstantID powered</p>
+                        </div>
+                        <div class="card-overlay bg-black opacity-60"></div>
+                    </a>
+                </div>
+                <div class="col-6 ps-2">
+                    <a href="gallery-avatar.php?type=stickerfaice" class="card card-style mx-0 mb-3 bg-13sm" data-card-height="150">
+                        <div class="card-center ps-3">
+                            <h1 class="color-white mb-n1 font-24">StickerfAIce</h1>
+                            <p class="color-white opacity-50 mb-0 font-11 mt-n2">InstantID powered</p>
+                        </div>
+                        <div class="card-overlay bg-black opacity-60"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
 <!--
         <div class="card card-style">
             <div class="content mt-3">
@@ -82,7 +145,7 @@ if($lang == 'en'){
         <div class="content mt-0 mb-0">
             <div class="d-flex">
                 <div class="align-self-center">
-                    <h1 class="mb-0 font-18">AI Avatar result</h1>
+                    <h1 class="mb-0 font-18"><?=$txts['gallery_title']?></h1>
                 </div>
                 <!-- <div class="ms-auto align-self-center">
                     <a href="#" class="float-end font-12 font-400">See All</a>
@@ -100,18 +163,18 @@ if($user_google_id){
          FROM `" . $kista_dp . "replicate__images` `reim` 
          INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.`reid` = `reup`.`reid` 
          INNER JOIN `" . $kista_dp . "users__sessions` `s` ON `reup`.`user_id` = `s`.`user_id` 
-         WHERE `reim`.`deleted` = 0 AND (`s`.`user_id` = ? OR `s`.`google_id` = ?)", 
-        'ii', 
-        [$USER_ID, $user_google_id]
+         WHERE `reim`.`deleted` = 0 AND `reup`.`replicate_task` = ? AND (`s`.`user_id` = ? OR `s`.`google_id` = ?)", 
+        'iii', 
+        [$RTASK, $USER_ID, $user_google_id]
     ];
 } else {
     $p_sql = [
         "SELECT *, `reim`.`filename` AS `filename`, UNIX_TIMESTAMP(`reim`.`updated`) AS `noCache` 
          FROM `" . $kista_dp . "replicate__images` `reim` 
          INNER JOIN `" . $kista_dp . "replicate__uploads` `reup` ON `reim`.`reid` = `reup`.`reid` 
-         WHERE `reim`.`deleted` = 0 AND `reup`.user_id = ?", 
-        'i', 
-        [$USER_ID]
+         WHERE `reim`.`deleted` = 0 AND `reup`.`replicate_task` = ? AND `reup`.user_id = ?", 
+        'ii', 
+        [$RTASK, $USER_ID]
     ];
 }
 
@@ -175,7 +238,7 @@ if (($items = $mysqli->prepared_query($p_sql)) !== []) {
 }
 ?>
 
-
+        <br><br>
 
         <div data-menu-load="<?=$appConf['menuFooter' . $_menuSuffix]?>"></div>
     </div>
