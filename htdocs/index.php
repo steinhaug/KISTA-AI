@@ -126,7 +126,7 @@ if($lang=='en'){
                         </ol>
                         <p>
                             <a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start me-3 external-link">Avatarify Yourself</a>
-                            <a href="/upload-stickerfaise.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start me-3 external-link">StickerfAIce</a>
+                            <a href="/upload-stickerfaice.php" class="btn btn-full btn-s font-600 rounded-s bg-fade-magenta-dark mt-1 float-start me-3 external-link">Ditt stickerfAIce</a>
                         </p>
                     </div></div>
                 </div>
@@ -165,7 +165,7 @@ if($lang=='en'){
                         </p>
                         <p>
                             <a href="/upload-face.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start me-3 external-link">Avatarify Yourself</a>
-                            <a href="/upload-stickerfaise.php" class="btn btn-full btn-s font-600 rounded-s gradient-highlight mt-1 float-start me-3 external-link">StickerfAIce</a>
+                            <a href="/upload-stickerfaice.php" class="btn btn-full btn-s font-600 rounded-s bg-fade-magenta-dark mt-1 float-start me-3 external-link">Ditt stickerfAIce</a>
                         </p>
                     </div></div>
                 </div>
