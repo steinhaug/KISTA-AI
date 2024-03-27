@@ -9,7 +9,7 @@ Added, Changed, Deprecated, Removed, Fixed, Securit
 - added, new replicate mode using the sticker model - StickerfAIse.
 - added, new StickerfAIse upload page added in full green color + some of the options available on the upload page so people may edit the settings.
 - changed, custom.js updated to handle input ranges and steppers better with minimum and maximum values.
-
+- changed, service_worker now works online, then checks cache.
 
 ### v0.11.6
 - fixed, images uploaded with exif orientation data were rotatet when being made thumbnail

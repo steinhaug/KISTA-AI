@@ -1,8 +1,8 @@
 <?php
 
 // Parameter added script tags to prevent caching
-$PWA_APP_VER = '1.0';
-$html_NoCache_Version = 'v1.0';
+$PWA_APP_VER = '1.0.2';
+$html_NoCache_Version = 'v1.0.2';
 $include_login_button = true;
 
 $PWA_APP_NAME       = 'Magic Meal Maker';
