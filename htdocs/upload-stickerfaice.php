@@ -232,7 +232,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                                 <div class="mx-auto">
                                     <div class="stepper rounded-s float-start">
                                         <a href="#" class="stepper-sub"><i class="fa fa-minus color-theme opacity-40"></i></a>
-                                        <input name="conf[instantIdStrength]" type="number" min="1" max="100" value="70" data-step="2">
+                                        <input name="conf[instantIdStrength]" type="number" min="1" max="100" value="95" data-step="2">
                                         <a href="#" class="stepper-add"><i class="fa fa-plus color-theme opacity-40"></i></a>
                                     </div>
                                     <div class="clearfix"></div>
@@ -242,7 +242,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                                 <div class="mx-auto">
                                     <div class="stepper rounded-s float-none">
                                         <a href="#" class="stepper-sub"><i class="fa fa-minus color-red-dark"></i></a>
-                                        <input name="conf[ipAdapterWeight]" type="number" min="1" max="100" value="50" data-step="2">
+                                        <input name="conf[ipAdapterWeight]" type="number" min="1" max="100" value="35" data-step="2">
                                         <a href="#" class="stepper-add"><i class="fa fa-plus color-green-dark"></i></a>
                                     </div>
                                     <div class="clearfix"></div>
@@ -252,7 +252,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                                 <div class="mx-auto">
                                     <div class="stepper rounded-s float-end">
                                         <a href="#" class="stepper-sub"><i class="fa fa-minus color-red-dark"></i></a>
-                                        <input name="conf[ipAdapterNoise]" type="number" min="1" max="100" value="75" data-step="2">
+                                        <input name="conf[ipAdapterNoise]" type="number" min="1" max="100" value="90" data-step="2">
                                         <a href="#" class="stepper-add"><i class="fa fa-plus color-green-dark"></i></a>
                                     </div>
                                     <div class="clearfix"></div>
@@ -270,7 +270,7 @@ if( isset( $_POST ) && is_array( $_POST ) && isset($_SERVER['CONTENT_TYPE']) ) {
                             <div class="col-2 text-right">50</div>
                         </div>
                         <div class="range-slider">
-                            <input class="classic-slider" type="range" min="10" max="50" value="20" step="1" name="conf[steps]">
+                            <input class="classic-slider" type="range" min="10" max="50" value="25" step="1" name="conf[steps]">
                         </div>
                         <div class="row mb-0"><div class="col-12 text-center">steps</div></div>
 

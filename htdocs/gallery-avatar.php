@@ -180,6 +180,8 @@ if($user_google_id){
 
 if (($items = $mysqli->prepared_query($p_sql)) !== []) {
 
+    //echo '<h1>' . count($items) . '</h1>';
+
     echo '
         <div data-splide=\'{"autoplay":false}\' class="splide double-slider visible-slider slider-no-arrows slider-no-dots" id="double-slider-1">
             <div class="splide__track">
@@ -188,8 +190,9 @@ if (($items = $mysqli->prepared_query($p_sql)) !== []) {
 
     foreach($items as $img){
 
-        if( !file_exists(REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . $img['filename']) )
+        if( !file_exists(REPLICATE_INFERENCE_FOLDER . DIRECTORY_SEPARATOR . $img['filename']) ){
             continue;
+        }
 
         $reid = $img['reid'];
         $src_name = $img['filename'];

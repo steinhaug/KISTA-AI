@@ -65,25 +65,25 @@ $version = '764d4827ea159608a07cdde8ddf1c6000019627515eb02b6b449695fd547e5ef';
 
 $user_settings = json_decode($item['data'], true);
 $conf = [
-    'steps' => make_sure_value_fits_specs($user_settings['steps'],                              [ 20, 'int', 10,  50], []),
-    'ip_adapter_noise' => make_sure_value_fits_specs($user_settings['ip_adapter_noise'],        [.75, 'int', 0.1, 1], []),
-    'ip_adapter_weight' => make_sure_value_fits_specs($user_settings['ip_adapter_weight'],      [.50, 'int', 0.1, 1], []),
-    'instant_id_strength' => make_sure_value_fits_specs($user_settings['instant_id_strength'],  [.70, 'int', 0.1, 1], []),
+    'steps' => make_sure_value_fits_specs($user_settings['steps'],                              [ 25, 'int', 10,  50], []),
+    'instant_id_strength' => make_sure_value_fits_specs($user_settings['instant_id_strength'],  [.95, 'int', 0.1,  1], []),
+    'ip_adapter_weight' => make_sure_value_fits_specs($user_settings['ip_adapter_weight'],      [.35, 'int', 0.1,  1], []),
+    'ip_adapter_noise' => make_sure_value_fits_specs($user_settings['ip_adapter_noise'],        [.90, 'int', 0.1,  1], []),
 ];
 
 $input = [
     "image" => $user_WWW_path . $imgName,
-    "width" => 1024,
-    "height" => 1024,
+    "width" => 1250,
+    "height" => 1250,
     "prompt" => "a person",
     "negative_prompt" => "",
     "upscale" => false,
     "upscale_steps" => 10,
-    "prompt_strength" => 3.5,
+    "prompt_strength" => 2.5,
     "steps" => $conf['steps'],
-    "ip_adapter_noise" => $conf['ip_adapter_noise'],
-    "ip_adapter_weight" => $conf['ip_adapter_weight'],
     "instant_id_strength" => $conf['instant_id_strength'],
+    "ip_adapter_weight" => $conf['ip_adapter_weight'],
+    "ip_adapter_noise" => $conf['ip_adapter_noise'],
     "disable_safety_checker"=>true,
 ];
 

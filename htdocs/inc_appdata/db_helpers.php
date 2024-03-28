@@ -239,3 +239,36 @@ function hookUpd_process($whid){
 
     return $mysqli->query("UPDATE `" . $kista_dp . "replicate__hooks` SET `processed`=1 WHERE `whid`=" . (int) $whid);
 }
+
+
+
+
+
+
+function getDirContents($path, $recursive = false, $level = 0) {
+    $files = [];
+    $contents = scandir($path);
+
+    foreach ($contents as $item) {
+        // Skip current and parent directory links
+        if ($item === '.' || $item === '..') {
+            continue;
+        }
+
+        $itemPath = $path . DIRECTORY_SEPARATOR . $item;
+
+        if (is_dir($itemPath)) {
+            $files[] = [$item, true, $level];
+            if ($recursive) {
+                $subFiles = getDirContents($itemPath, true, $level + 1);
+                foreach ($subFiles as $subItem) {
+                    $files[] = [$item . DIRECTORY_SEPARATOR . $subItem[0], $subItem[1], $subItem[2]];
+                }
+            }
+        } else {
+            $files[] = [$item, false, $level];
+        }
+    }
+
+    return $files;
+}

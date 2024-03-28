@@ -4,17 +4,141 @@ use Intervention\Image\ImageManagerStatic as Image;
 define('APPDATA_PATH', dirname(__FILE__) . '/inc_appdata');
 define('UPLOAD_PATH', dirname(__FILE__) . '/uploaded_files');
 
+session_start();
+
 require_once 'func.inc.php';
+require_once 'func.login.php';
+
+echo 'USER_ID: ' . $USER_ID . '<br>';
+
+$my_reid = _GET('reid');
+
+if( ($item = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate__uploads` WHERE `reid`=?", 's', [$my_reid], true)) === null ){
+    echo 'No record found with reid: ' . $my_reid . '<br>';
+    echo '<a href="info.php?reid=1">info.php?reid=1</a><br>';
+} else {
+    echo '<img src="/uploaded_files/r/' . $item['filename'] . '" width="256" height="256"><br>';
+    echo '<a href="info.php?reid=' . $my_reid . '&continue_import=true">info.php?reid=' . $my_reid . '&continue_import=true</a><br>';
+
+}
+
+if( !_bool(_GET('continue_import')) ){
+    die('<hr><p>awaiting continue_import</p>');
+}
 
 
+$files = getDirContents(dirname(__FILE__) . '/import', 1);
 
-    if( ($reid = $mysqli->prepared_query1("SELECT * FROM `" . $kista_dp . "replicate__uploads` WHERE `replicate_id`=?", 's', ['2u3inelbksrzr7cbwstctxst4i'], true)) === null ){
-        echo 'NULL';
+foreach($files as $fileData){
+
+    [$name, $is_dir, $depth ] = $fileData;
+    if(!empty($is_dir) or !$depth)
+        continue;
+
+    $source = dirname(__FILE__) . '/import/' . $name;
+    if( !file_exists($source) )
+        continue;
+
+    echo '.';
+}
+
+
+echo '<p><a href="info.php?reid=' . $my_reid . '&continue_import=true&execute=true">Execute the import</a></p>';
+
+if( !_bool(_GET('execute')) ){
+    die('<hr><p>awaiting execute import</p>');
+}
+
+
+$_real_filename_from_upload = 'source.jpg';
+
+$source = dirname(__FILE__) . '/import/' . $_real_filename_from_upload;
+$filehash = hash_file('sha256', $source);
+$file1_size = filesize($source);
+$file_extension = get_extension($_real_filename_from_upload);
+
+$_real_filename_from_upload = $item['reid'] . '_' . 'source.jpg';
+if (!copy($source, dirname(__FILE__) . '/uploaded_files/r/' . $_real_filename_from_upload)) {
+    die('<h1 style="color:red">Copy error!</h1>');
+}
+
+
+$sql = new sqlbuddy;
+$sql->que('uuid', generateUuid4(),'string');
+$sql->que('replicate_id', '--imported--','string');
+$sql->que('replicate_task', 2,'int');
+$sql->que('user_id', $item['user_id'],'int');
+$sql->que('created', 'NOW()','raw');
+$sql->que('updated', 'NULL','raw');
+$sql->que('stylename', '', 'string');
+$sql->que('realname', $_real_filename_from_upload, 'string');
+$sql->que('filehash', $filehash, 'string');
+$sql->que('filename', $_real_filename_from_upload, 'string');
+$sql->que('extension', $file_extension, 'string');
+$sql->que('filesize', $file1_size, 'int');
+$sql->que('thumbnail', '', 'string');
+$sql->que('status', 'complete', 'string');
+$sql->que('data', '{"steps":20,"ip_adapter_noise":"0.75","ip_adapter_weight":"0.50","instant_id_strength":"0.70"}', 'string');
+$sql->que('log', '', 'string');
+$sql->que('error', '', 'string');
+$mysqli->query( $sql->build('insert', $kista_dp . "replicate__uploads") );
+$reid = $mysqli->insert_id;
+
+$files = getDirContents(dirname(__FILE__) . '/import/results');
+/*
+echo '<pre>';
+echo print_r($files, 1);
+echo '</pre>';
+*/
+foreach($files as $fileData){
+
+    [$name, $is_dir, $depth ] = $fileData;
+    if(!empty($is_dir) or $depth)
+        continue;
+
+    $source = dirname(__FILE__) . '/import/results/' . $name;
+    if( !file_exists($source) )
+        continue;
+
+    $image_filename = $reid . '-' . $name;
+    $destination = dirname(__FILE__) . '/uploaded_files/ri/' . $image_filename;
+    $size = filesize($source);
+
+    if (!copy($source, $destination)) {
+        die('<h1 style="color:red">Copy error!</h1>');
     }
 
+    $sql = new sqlbuddy;
+    $sql->que('deleted', 0, 'int');
+    $sql->que('uuid', generateUuid4(), 'string');
+    $sql->que('reid', $reid, 'int');
+    $sql->que('created', 'NOW()', 'raw');
+    $sql->que('url', '//imported', 'string');
+    $sql->que('filename', $image_filename, 'string');
+    $sql->que('extension', get_extension($image_filename), 'string');
+    $sql->que('filesize', $size, 'int');
+    $sql->que('thumbnail', '', 'string');
+    $sql->que('status', 'done', 'string');
+    $mysqli->query($sql->build('insert', $kista_dp . "replicate__images"));
+    $image_id = $mysqli->insert_id;
+
+    echo $image_filename . ', ';
+    //echo $source . '<br>';
+}
+
+
+//var_dump( $reid );
+
+
+die('Done');
+
+
+
+
 echo '<pre>';
-var_dump($reid);
+echo print_r($files, 1);
 echo '</pre>';
+exit;
 
 
 exit;
